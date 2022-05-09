@@ -18,11 +18,13 @@
   },
   "homepage": "https://github.com/krdhieu/App#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.0",
     "ejs": "^3.1.7",
     "express": "^4.18.1",
     "express-ejs-layouts": "^2.5.1",
-    "mysql2": "^2.3.3"
+    "mysql2": "^2.3.3",
+    "sass": "^1.51.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",
