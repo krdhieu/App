@@ -1,6 +1,7 @@
 import nhanvienService from '../services/nhanvienService';
 import quyenService from '../services/quyenService';
 import taikhoanService from '../services/taikhoanService';
+import bcrypt from 'bcryptjs';
 // hien thi trang them tai khoan
 let getCreateAccount = async (req, res) => {
     let allNhanVien = await nhanvienService.getAllNhanVien();
@@ -23,8 +24,10 @@ let createAccount = async (req, res) => {
     if (check.length === 1) {
         return res.send('Account already exists');
     }
-    let data = { email, password, quyen, idNhanVien };
-    let a = await taikhoanService.createAccount(data);
+    let salt = bcrypt.genSaltSync(10);
+    let hash = bcrypt.hashSync(password, salt);
+    let data = { email, hash, quyen, idNhanVien };
+    await taikhoanService.createAccount(data);
     return res.send('ok');
 };
 

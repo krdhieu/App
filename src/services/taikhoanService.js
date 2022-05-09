@@ -5,7 +5,7 @@ let createAccount = (data) => {
         try {
             await connectDB.execute(
                 'INSERT INTO `taikhoan`(`tentaikhoan`, `matkhau`, `id_nhanvien`, `id_quyen`) VALUES (?,?,?,?)',
-                [data.email, data.password, data.idNhanVien, data.quyen]
+                [data.email, data.hash, data.idNhanVien, data.quyen]
             );
             resolve('ok');
         } catch (e) {

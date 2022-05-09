@@ -1,7 +1,7 @@
-import express from 'express';
+import bcrypt from 'bcryptjs';
 import login from '../services/loginService';
 let getLogin = (req, res) => {
-    res.render('loginView.ejs');
+    return res.render('loginView.ejs');
 };
 
 let handleLogin = async (req, res) => {
@@ -13,7 +13,11 @@ let handleLogin = async (req, res) => {
     if (user.length !== 1) {
         return res.redirect('/');
     }
-    res.render('home.ejs');
+    let check = await bcrypt.compareSync(password, user[0].matkhau);
+    if (!check) {
+        return res.redirect('/');
+    }
+    return res.render('home.ejs');
 };
 module.exports = {
     getLogin: getLogin,
