@@ -1,12 +1,14 @@
 import express from 'express';
 require('dotenv').config();
-import expressLayouts from 'express-ejs-layouts';
 import viewEngine from './configs/viewEngine';
+import initRouter from './routes/route';
 const app = express();
 const port = process.env.PORT || 3001;
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 viewEngine(app);
-app.get('/', (req, res) => {
-    res.render('app.ejs');
-});
+
+initRouter(app);
 
 app.listen(port, console.log('>>>', port));
