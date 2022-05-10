@@ -7,21 +7,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/scss/styles.scss">
-    <title>Sửa phòng ban</title>
+    <title>Sửa trạng thái sáng kiến</title>
 </head>
 
 <body>
     <div>
-        <form action="/uploadphongban" method="post">
+        <form action="/uploadtrangthaisangkien" method="post">
 
             <!-- Vertical -->
             <div class="form-group">
                 <label>id</label>
-                <input type="text" name="id" class="form-control" value="<%= dataPhongban.id %>" readonly>
-                <label>Tên Phòng Ban</label>
-                <input type="text" name="tenphongban" class="form-control" value="<%= dataPhongban.tenphongban %>">
-                <label>Năm thành lập</label>
-                <input type="date" name="namthanhlap" class="form-control" value="<%= dataPhongban.namthanhlap %>">
+                <input type="text" name="id" class="form-control" value="<%= dataTrangthaisangkien.id %>" readonly>
+                <label>Tên trạng thái sáng kiến</label>
+                <input type="text" name="trangthai" class="form-control" value="<%= dataTrangthaisangkien.trangthai %>">
                 <button type=" submit" class="btn btn-primary">Submit</button>
             </div>
 

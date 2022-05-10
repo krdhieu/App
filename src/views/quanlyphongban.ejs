@@ -12,6 +12,7 @@
 
 <body>
     <div>
+        <h1>Danh sách phòng ban</h1>
         <table class="table">
             <thead>
                 <tr>
@@ -39,6 +40,20 @@
                     <% } %>
             </tbody>
         </table>
+
+        <h1>Thêm mới phòng ban</h1>
+        <form action="/addphongban" method="post">
+            <!-- Vertical -->
+            <div class="form-group">
+                <label>Tên Phòng Ban</label>
+                <input type="text" name="tenphongban" class="form-control" value="">
+                <label>Năm thành lập</label>
+                <input type="date" name="namthanhlap" class="form-control" value="">
+                <button type=" submit" class="btn btn-primary">Submit</button>
+            </div>
+
+        </form>
+
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>

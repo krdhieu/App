@@ -2,12 +2,38 @@ import express from 'express';
 import loginController from '../controller/loginController';
 import createAccountController from '../controller/createAccountController';
 import phongbanController from '../controller/phongbanController';
+import chucvuController from '../controller/chucvuController';
+import chucvuhdController from '../controller/chucvuhdController';
+import xeploaiController from '../controller/xeploaiController';
+import trangthaisangkienController from '../controller/trangthaisangkienController';
 const router = express.Router();
 
 const initRouter = (app) => {
+    //phong ban
     router.get('/quanlyphongban', phongbanController.viewPhongBan);
     router.get('/quanlyphongban/sua/:id', phongbanController.editPhongBan);
     router.post('/uploadphongban', phongbanController.uploadPhongban);
+    router.post('/addphongban', phongbanController.addPhongban);
+    // chuc vu 
+    router.get('/quanlychucvu', chucvuController.viewChucvu);
+    router.get('/quanlychucvu/sua/:id', chucvuController.editChucvu);
+    router.post('/uploadchucvu', chucvuController.uploadChucvu);
+    router.post('/addchucvu', chucvuController.addChucvu);
+    // chức vụ hội đồng 
+    router.get('/quanlychucvuhd', chucvuhdController.viewChucvuhd);
+    router.get('/quanlychucvuhd/sua/:id', chucvuhdController.editChucvuhd);
+    router.post('/uploadchucvuhd', chucvuhdController.uploadChucvuhd);
+    router.post('/addchucvuhd', chucvuhdController.addChucvuhd);
+    // xếp loại 
+    router.get('/quanlyxeploai', xeploaiController.viewXeploai);
+    router.get('/quanlyxeploai/sua/:id', xeploaiController.editXeploai);
+    router.post('/uploadxeploai', xeploaiController.uploadXeploai);
+    router.post('/addxeploai', xeploaiController.addXeploai);
+    // trạng thái sáng kiến
+    router.get('/quanlytrangthaisangkien', trangthaisangkienController.viewTrangthaisangkien);
+    router.get('/quanlytrangthaisangkien/sua/:id', trangthaisangkienController.editTrangthaisangkien);
+    router.post('/uploadtrangthaisangkien', trangthaisangkienController.uploadTrangthaisangkien);
+    router.post('/addtrangthaisangkien', trangthaisangkienController.addTrangthaisangkien);
     // tao tai khoan
     router.post('/create-account', createAccountController.createAccount);
     //mo trang tao tai khoan
