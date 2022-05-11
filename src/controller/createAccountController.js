@@ -19,14 +19,23 @@ let createAccount = async (req, res) => {
     if (!email || !password || !quyen || !idNhanVien) {
         return res.redirect('/get-create-account');
     }
+    //check password có khoảng trắng hay không
+    let haveBackspace = [...password].some((item) => {
+        return item === ' ';
+    });
+    if (haveBackspace) {
+        return res.send('Not allow backspace in password');
+    }
     //kiem tra tai khoan da ton tai hay chua
     let check = await taikhoanService.getOneAccount(email);
     if (check.length === 1) {
         return res.send('Account already exists');
     }
+    //ma hoa mat khau
     let salt = bcrypt.genSaltSync(10);
     let hash = bcrypt.hashSync(password, salt);
     let data = { email, hash, quyen, idNhanVien };
+    //them tai khoan
     await taikhoanService.createAccount(data);
     return res.send('ok');
 };
