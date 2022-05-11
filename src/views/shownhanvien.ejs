@@ -1,0 +1,144 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/scss/styles.scss">
+    <title>Danh sách nhân viên</title>
+</head>
+
+<body>
+    <div>
+        <h1>Danh sách nhân viên</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Phòng ban</th>
+                    <th scope="col">Chức vụ</th>
+                    <th scope="col">Trình độ học vấn</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Giới tính</th>
+                    <th scope="col">Năm sinh</th>
+                    <th scope="col">sdt</th>
+                    <th scope="col">Ngày vào làm</th>
+                    <th scope="col">Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for( let i=0 ; i < dataNhanvien.length; i++){ %>
+                    <tr>
+                        <th scope="row">
+                            <%= dataNhanvien[i].id %>
+                        </th>
+                        <td>
+                            <%= dataNhanvien[i].tenphongban %>
+                        </td>
+                        <td>
+                            <%= dataNhanvien[i].tenNhanvien %>
+                        </td>
+                        <td>
+                            <%= dataNhanvien[i].trinhdohocvan %>
+                        </td>
+                        <td>
+                            <%= dataNhanvien[i].tennhanvien %>
+                        </td>
+                        <td>
+                            <% if (dataNhanvien[i].gioitinh==true){%>
+                                Nam
+                                <% } else { %>
+                                    Nữ
+                                    <% } %>
+                        </td>
+                        <td>
+                            <%= moment(dataNhanvien[i].namsinh).format( 'DD-MM-YYYY' ) %>
+                        </td>
+                        <td>
+                            <%= dataNhanvien[i].sdt %>
+                        </td>
+                        <td>
+                            <%= moment(dataNhanvien[i].ngayvaolam).format( 'DD-MM-YYYY' ) %>
+                        </td>
+                        <td>
+                            <% if (dataNhanvien[i].trangthai==true){%>
+                                Còn làm
+                                <% } else { %>
+                                    Nghỉ việc
+                                    <% } %>
+                        </td>
+                        <td><a href="/quanlynhanvien/sua/<%= dataNhanvien[i].id %>" target="_self">Sửa</a></td>
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
+
+        <h1>Thêm mới nhan vien</h1>
+        <form action="/addnhanvien" method="post">
+
+            <!-- Vertical -->
+            <div class="form-group">
+                <!-- Phòng ban -->
+                <label>Phòng ban</label>
+                <br>
+                <select name="id_phongban">
+                    <% for (let i=0; i<dataPhongban.length;i++){ %>
+                        <option value="<%=dataPhongban[i].id%>">
+                            <%=dataPhongban[i].tenphongban%>
+                        </option>
+                        <% } %>
+                </select>
+                <br>
+                <!-- chức vụ -->
+                <label>Chức vụ</label>
+                <br>
+                <select name="id_chucvu">
+                    <% for (let i=0; i<dataChucvu.length;i++){ %>
+                        <option value="<%=dataChucvu[i].id%>">
+                            <%=dataChucvu[i].tenchucvu%>
+                        </option>
+                        <% } %>
+                </select>
+                <br>
+                <!-- Trình độ  -->
+                <label>Trình độ đại học</label>
+                <input type="text" name="trinhdohocvan" class="form-control" value="">
+                <!-- Tên nhân viên  -->
+                <label>Tên nhân viên</label>
+                <input type="text" name="tennhanvien" class="form-control" value="">
+                <!-- Giới tính  -->
+                <label>Giới tính</label>
+                <select name="gioitinh" value>
+                    <option value="1">Nam</option>
+                    <option value="0">Nữ</option>
+                </select>
+                <!-- Năm sinh  -->
+                <label>Năm sinh</label>
+                <input type="date" name="namsinh" class="form-control" value="">
+                <!-- Ngày vào làm  -->
+                <label>Ngày vào làm</label>
+                <input type="date" name="ngayvaolam" class="form-control" value="">
+                <!-- Số điện thoại  -->
+                <label>Số điện thoại</label>
+                <input type="text" name="sdt" class="form-control" value="">
+                <!-- Submit -->
+                <button type=" submit" class="btn btn-primary">Submit</button>
+            </div>
+
+        </form>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    </div>
+</body>
+
+</html>
