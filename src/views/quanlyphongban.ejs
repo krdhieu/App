@@ -32,8 +32,7 @@
                             <%= dataPhongban[i].tenphongban %>
                         </td>
                         <td>
-                            <%=dataPhongban[i].namthanhlap.getDay() + "/" + dataPhongban[i].namthanhlap.getMonth() + "/"
-                                + dataPhongban[i].namthanhlap.getFullYear() %>
+                            <%= moment(dataPhongban[i].namthanhlap).format( 'DD/MM/YYYY' ) %>
                         </td>
                         <td><a href="/quanlyphongban/sua/<%= dataPhongban[i].id %>" target="_self">Sửa</a></td>
                     </tr>

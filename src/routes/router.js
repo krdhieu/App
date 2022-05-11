@@ -6,7 +6,11 @@ import chucvuController from '../controller/chucvuController';
 import chucvuhdController from '../controller/chucvuhdController';
 import xeploaiController from '../controller/xeploaiController';
 import trangthaisangkienController from '../controller/trangthaisangkienController';
+
 import verifyAccessToken from '../controller/middleware/verifyAccessToken';
+
+import nhanvienController from '../controller/nhanvienController';
+
 const router = express.Router();
 
 const initRouter = (app) => {
@@ -31,22 +35,17 @@ const initRouter = (app) => {
     router.post('/uploadxeploai', xeploaiController.uploadXeploai);
     router.post('/addxeploai', xeploaiController.addXeploai);
     // trạng thái sáng kiến
-    router.get(
-        '/quanlytrangthaisangkien',
-        trangthaisangkienController.viewTrangthaisangkien
-    );
-    router.get(
-        '/quanlytrangthaisangkien/sua/:id',
-        trangthaisangkienController.editTrangthaisangkien
-    );
-    router.post(
-        '/uploadtrangthaisangkien',
-        trangthaisangkienController.uploadTrangthaisangkien
-    );
-    router.post(
-        '/addtrangthaisangkien',
-        trangthaisangkienController.addTrangthaisangkien
-    );
+
+    router.get('/quanlytrangthaisangkien', trangthaisangkienController.viewTrangthaisangkien);
+    router.get('/quanlytrangthaisangkien/sua/:id', trangthaisangkienController.editTrangthaisangkien);
+    router.post('/uploadtrangthaisangkien', trangthaisangkienController.uploadTrangthaisangkien);
+    router.post('/addtrangthaisangkien', trangthaisangkienController.addTrangthaisangkien);
+    // tạo nhân viên
+    router.get('/quanlynhanvien', nhanvienController.viewNhanvien);
+    router.get('/quanlynhanvien/sua/:id', nhanvienController.editNhanvien);
+    router.post('/uploadnhanvien', nhanvienController.uploadNhanvien);
+    router.post('/addnhanvien', nhanvienController.addNhanvien);
+
     // tao tai khoan
     router.post('/create-account', createAccountController.createAccount);
     //mo trang tao tai khoan
