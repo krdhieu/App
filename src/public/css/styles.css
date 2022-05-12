@@ -1,0 +1,60 @@
+.login-background {
+    height: 100vh;
+    background: linear-gradient(
+        135deg,
+        rgba(34, 193, 195, 1) 0%,
+        rgba(253, 187, 45, 1) 100%
+    );
+}
+
+.login-container {
+    width: 400px;
+    height: 450px;
+    margin: auto;
+    border: 1px solid red;
+    border-radius: 10px;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+.login-content {
+    padding: 10px;
+}
+.text-login {
+    text-align: center;
+    font-weight: 600;
+    font-size: 24px;
+    padding-top: 10px;
+}
+.login-input {
+    margin: 7px 0;
+}
+.custom-input-password {
+    position: relative;
+}
+
+.btn-login {
+    height: 35px;
+    width: 100%;
+    margin: 10px 0;
+    border: none;
+    border-radius: 15px;
+    outline: none;
+    background: linear-gradient(
+        135deg,
+        rgba(34, 193, 195, 1) 0%,
+        rgba(253, 187, 45, 1) 100%
+    );
+    color: white;
+    font-size: 16px;
+}
+
+.navbar-custom {
+    background-color: #425af5;
+}
+.navbar-custom a {
+    color: white;
+}

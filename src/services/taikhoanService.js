@@ -1,3 +1,4 @@
+import { get } from 'express/lib/response';
 import connectDB from '../configs/connectDB';
 // them tai khoan moi
 let createAccount = (data) => {
@@ -27,8 +28,22 @@ let getOneAccount = (email) => {
         }
     });
 };
+//lay thong tin tat ca tai khoan + loai quyen + ten nhanvien trong he thong
+let getAllAccount = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [allAccount] = await connectDB.execute(
+                'SELECT * FROM `taikhoan` INNER JOIN nhanvien on taikhoan.id_nhanvien=nhanvien.id INNER JOIN quyen on quyen.id=taikhoan.id_quyen'
+            );
+            resolve(allAccount);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 
 module.exports = {
     createAccount: createAccount,
     getOneAccount: getOneAccount,
+    getAllAccount: getAllAccount,
 };

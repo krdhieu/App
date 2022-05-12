@@ -10,37 +10,51 @@
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
             crossorigin="anonymous"
         />
-        <link rel="stylesheet" href="/scss/styles.scss" />
+        <script defer src="/src/handleOnLoad.js"></script>
+        <link rel="stylesheet" href="/css/styles.css" />
         <title>LogIn</title>
     </head>
     <body>
-        <div class="container">
-            <form action="/login" method="post">
-                <div class="form-group col-6">
-                    <label for="email">Email</label>
-                    <input
-                        type="email"
-                        class="form-control"
-                        id="email"
-                        name="email"
-                        placeholder="Enter email"
-                    />
+        <div class="login-background">
+            <div class="login-container">
+                <div class="col-12 text-login">Mobifone</div>
+                <div class="login-content row">
+                    <form action="/" method="post" class="login-content row">
+                        <div class="form-group col-12 login-input">
+                            <label for="email">Email</label>
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="email"
+                                name="email"
+                                placeholder="Enter email"
+                                required
+                            />
+                        </div>
+                        <div class="form-group col-12 login-input">
+                            <div class="custom-input-password">
+                                <label for="password">Password</label>
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Password"
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn-login">
+                                Login
+                            </button>
+                        </div>
+                        <div style="color: red" class="ml-3 notification">
+                            <%= ( typeof wrong === 'undefined' ? "" : wrong) %>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group col-6">
-                    <label for="password">Password</label>
-                    <input
-                        type="password"
-                        class="form-control"
-                        id="password"
-                        name="password"
-                        placeholder="Password"
-                        required
-                    />
-                </div>
-                <button type="submit" class="btn btn-primary col-6 btn-login">
-                    Login
-                </button>
-            </form>
+            </div>
         </div>
         <script
             src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

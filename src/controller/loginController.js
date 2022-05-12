@@ -13,7 +13,7 @@ let handleLogin = async (req, res) => {
     if (user.length !== 1) {
         return res.redirect('/');
     }
-    let check = await bcrypt.compareSync(password, 123);
+    let check = await bcrypt.compareSync(password, user[0].matkhau);
     if (!check) {
         return res.redirect('/');
     }
