@@ -7,7 +7,7 @@ let handleLogin = (email) => {
                 'SELECT * FROM taikhoan where tentaikhoan =?',
                 [email]
             );
-            resolve(user);
+            resolve(user[0]);
         } catch (e) {
             reject(e);
         }
