@@ -6,7 +6,8 @@ import chucvuController from '../controller/chucvuController';
 import chucvuhdController from '../controller/chucvuhdController';
 import xeploaiController from '../controller/xeploaiController';
 import trangthaisangkienController from '../controller/trangthaisangkienController';
-
+import sangkienController from '../controller/sangkienController';
+import dotsangkienController from '../controller/dotsangkienController';
 import verifyAccessToken from '../controller/middleware/verifyAccessToken';
 
 import nhanvienController from '../controller/nhanvienController';
