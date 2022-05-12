@@ -9,8 +9,9 @@ import trangthaisangkienController from '../controller/trangthaisangkienControll
 import sangkienController from '../controller/sangkienController';
 import dotsangkienController from '../controller/dotsangkienController';
 import verifyAccessToken from '../controller/middleware/verifyAccessToken';
-
+import hoiDongKHController from '../controller/hoiDongKHController';
 import nhanvienController from '../controller/nhanvienController';
+import { route } from 'express/lib/application';
 const router = express.Router();
 
 const initRouter = (app) => {
@@ -68,6 +69,17 @@ const initRouter = (app) => {
     router.get('/quanlydotsangkien', dotsangkienController.viewDotsangkien);
     router.post('/adddotsangkien', dotsangkienController.addDotsangkien);
 
+    //trang chi tiet hoi dong khoa hoc
+    router.get('/get-detail-hdkh', hoiDongKHController.getDetailHDKH);
+    // trang them moi hoi dong khoa hoc
+    router.get('/get-create-hdkh', hoiDongKHController.getCreateHDKH);
+    //trang quan ly hoi dong khoa hoc
+    router.post('/create-hdkh', hoiDongKHController.createHDKH);
+    router.get(
+        '/get-hdkh',
+        verifyAccessToken.verifyAccessTokenAndAdminAuth,
+        hoiDongKHController.getAllHDKH
+    );
     // tao tai khoan
     router.post('/create-account', manageAccountController.createAccount);
     //mo trang tao tai khoan
