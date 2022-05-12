@@ -6,14 +6,15 @@ const verifyAccessTokenMiddleware = (req, res, next) => {
         return res.redirect('/');
     }
     const access_token = req.cookies.access_token.split(' ')[1];
-    jwt.verify(access_token, process.env.JWT_ACCESS_KEY, (err, payload) => {
-        if (err) {
-            return res.render('sessionExpired.ejs');
-        } else {
-            console.log(payload);
-            next();
-        }
-    });
+    try {
+        let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
+        req.emailLogin = payLoad.email;
+        req.nhanVienId = payLoad.nhanVienId;
+        req.roleId = payLoad.roleId;
+    } catch (e) {
+        return res.render('sessionExpired.ejs');
+    }
+    next();
 };
 
 const verifyAccessTokenAndAdminAuth = async (req, res, next) => {
@@ -22,14 +23,14 @@ const verifyAccessTokenAndAdminAuth = async (req, res, next) => {
     }
     const access_token = req.cookies.access_token.split(' ')[1];
     try {
-        let payload = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
-        let check = await quyenService.checkQuyen(payload.roleId);
+        let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
+        let check = await quyenService.checkQuyen(payLoad.roleId);
         if (check !== 'ADMIN') {
             return res.send('ADMIN only!!!');
         }
-        req.emailLogin = payload.email;
-        req.nhanVienId = payload.nhanVienId;
-        req.roleId = payload.roleId;
+        req.emailLogin = payLoad.email;
+        req.nhanVienId = payLoad.nhanVienId;
+        req.roleId = payLoad.roleId;
     } catch (error) {
         return res.render('sessionExpired.ejs');
     }

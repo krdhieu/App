@@ -41,9 +41,40 @@ let getAllAccount = () => {
         }
     });
 };
+// sửa quyền
+let editRole = (email, roleId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await connectDB.execute(
+                'UPDATE taikhoan set id_quyen=? where tentaikhoan=?',
+                [roleId, email]
+            );
+            resolve('ok');
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+//reset password doi mat khau
+let resetPassword = (email, password) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await connectDB.execute(
+                'UPDATE taikhoan set matkhau=? where tentaikhoan=?',
+                [password, email]
+            );
+            resolve('ok');
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 
 module.exports = {
     createAccount: createAccount,
     getOneAccount: getOneAccount,
     getAllAccount: getAllAccount,
+    editRole: editRole,
+    resetPassword: resetPassword,
 };

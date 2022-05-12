@@ -1,12 +1,13 @@
 import bcrypt from 'bcryptjs';
 import login from '../services/loginService';
 import jwt from 'jsonwebtoken';
+//trang login
 let getLogin = (req, res) => {
     return res.render('loginView.ejs', {
         wrong: '',
     });
 };
-///////
+// xu ly login
 let handleLogin = async (req, res) => {
     let { email, password } = req.body;
     if (!email || !password) {
@@ -45,16 +46,21 @@ let handleLogin = async (req, res) => {
         }
     );
     res.cookie('access_token', 'Bearer ' + accessToken);
-    return res.render('home.ejs');
+    return res.redirect('/home');
 };
-
+//xu ly logout
 const handleLogout = (req, res) => {
     res.clearCookie('access_token');
     res.redirect('/');
 };
+// get trang home
 
+const getHome = (req, res) => {
+    res.render('home.ejs');
+};
 module.exports = {
     getLogin: getLogin,
     handleLogin: handleLogin,
     handleLogout: handleLogout,
+    getHome: getHome,
 };

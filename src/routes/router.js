@@ -76,15 +76,39 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAndAdminAuth,
         manageAccountController.getCreateAccount
     );
+    // trang sua quyen tai khoan
     router.get('/get-edit-account', manageAccountController.getEditAccount);
-
-    //////
+    // trang quan ly tai khoan
     router.get('/manage-account', manageAccountController.manageAccount);
+    //dang xuat
     router.get('/logout', loginController.handleLogout);
-    //trang dang nhap
-
+    //sua quyen cua tai khoan
+    router.post('/edit-role', manageAccountController.editRole);
+    // trang doi mat khau
+    router.get(
+        '/get-change-password',
+        verifyAccessToken.verifyAccessTokenMiddleware,
+        manageAccountController.getChangePassword
+    );
+    // thuc hien doi mat khau
+    router.post(
+        '/change-password',
+        verifyAccessToken.verifyAccessTokenMiddleware,
+        manageAccountController.changePassword
+    );
+    //thuc hien reset mat khau
+    router.get('/reset-password', manageAccountController.resetPassword);
+    // trang chu
+    router.get(
+        '/home',
+        verifyAccessToken.verifyAccessTokenMiddleware,
+        loginController.getHome
+    );
+    //xu ly dang nhap
     router.post('/', loginController.handleLogin);
+    //trang dang nhap
     router.get('/', loginController.getLogin);
+
     return app.use('/', router);
 };
 
