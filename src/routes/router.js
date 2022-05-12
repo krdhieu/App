@@ -10,12 +10,6 @@ import trangthaisangkienController from '../controller/trangthaisangkienControll
 import verifyAccessToken from '../controller/middleware/verifyAccessToken';
 
 import nhanvienController from '../controller/nhanvienController';
-<<<<<<< HEAD
-import sangkienController from '../controller/sangkienController';
-import dotsangkienController from '../controller/dotsangkienController';
-=======
-
->>>>>>> f758c68659794b343c25d72b744f8567571a48f3
 const router = express.Router();
 
 const initRouter = (app) => {
@@ -62,7 +56,7 @@ const initRouter = (app) => {
     router.get('/quanlynhanvien/sua/:id', nhanvienController.editNhanvien);
     router.post('/uploadnhanvien', nhanvienController.uploadNhanvien);
     router.post('/addnhanvien', nhanvienController.addNhanvien);
-<<<<<<< HEAD
+
     // tạo nhân viên
     router.get('/quanlysangkien', sangkienController.viewSangkien);
     //router.get('/quanlysangkien/:id', nhanvienController.editNhanvien);
@@ -72,9 +66,7 @@ const initRouter = (app) => {
     // tạo đợt sáng kiến
     router.get('/quanlydotsangkien', dotsangkienController.viewDotsangkien);
     router.post('/adddotsangkien', dotsangkienController.addDotsangkien);
-=======
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> f758c68659794b343c25d72b744f8567571a48f3
+
     // tao tai khoan
     router.post('/create-account', manageAccountController.createAccount);
     //mo trang tao tai khoan
