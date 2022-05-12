@@ -1,6 +1,6 @@
 import express from 'express';
 import loginController from '../controller/loginController';
-import createAccountController from '../controller/createAccountController';
+import manageAccountController from '../controller/manageAccountController';
 import phongbanController from '../controller/phongbanController';
 import chucvuController from '../controller/chucvuController';
 import chucvuhdController from '../controller/chucvuhdController';
@@ -36,27 +36,44 @@ const initRouter = (app) => {
     router.post('/addxeploai', xeploaiController.addXeploai);
     // trạng thái sáng kiến
 
-    router.get('/quanlytrangthaisangkien', trangthaisangkienController.viewTrangthaisangkien);
-    router.get('/quanlytrangthaisangkien/sua/:id', trangthaisangkienController.editTrangthaisangkien);
-    router.post('/uploadtrangthaisangkien', trangthaisangkienController.uploadTrangthaisangkien);
-    router.post('/addtrangthaisangkien', trangthaisangkienController.addTrangthaisangkien);
+    router.get(
+        '/quanlytrangthaisangkien',
+        trangthaisangkienController.viewTrangthaisangkien
+    );
+    router.get(
+        '/quanlytrangthaisangkien/sua/:id',
+        trangthaisangkienController.editTrangthaisangkien
+    );
+    router.post(
+        '/uploadtrangthaisangkien',
+        trangthaisangkienController.uploadTrangthaisangkien
+    );
+    router.post(
+        '/addtrangthaisangkien',
+        trangthaisangkienController.addTrangthaisangkien
+    );
     // tạo nhân viên
     router.get('/quanlynhanvien', nhanvienController.viewNhanvien);
     router.get('/quanlynhanvien/sua/:id', nhanvienController.editNhanvien);
     router.post('/uploadnhanvien', nhanvienController.uploadNhanvien);
     router.post('/addnhanvien', nhanvienController.addNhanvien);
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     // tao tai khoan
-    router.post('/create-account', createAccountController.createAccount);
+    router.post('/create-account', manageAccountController.createAccount);
     //mo trang tao tai khoan
     router.get(
         '/get-create-account',
         verifyAccessToken.verifyAccessTokenAndAdminAuth,
-        createAccountController.getCreateAccount
+        manageAccountController.getCreateAccount
     );
+    router.get('/get-edit-account', manageAccountController.getEditAccount);
+
+    //////
+    router.get('/manage-account', manageAccountController.manageAccount);
     router.get('/logout', loginController.handleLogout);
     //trang dang nhap
-    router.post('/login', loginController.handleLogin);
+
+    router.post('/', loginController.handleLogin);
     router.get('/', loginController.getLogin);
     return app.use('/', router);
 };

@@ -2,7 +2,9 @@ import bcrypt from 'bcryptjs';
 import login from '../services/loginService';
 import jwt from 'jsonwebtoken';
 let getLogin = (req, res) => {
-    return res.render('loginView.ejs');
+    return res.render('loginView.ejs', {
+        wrong: '',
+    });
 };
 
 let handleLogin = async (req, res) => {
@@ -12,7 +14,9 @@ let handleLogin = async (req, res) => {
     }
     let user = await login.handleLogin(email);
     if (!user) {
-        return res.redirect('/');
+        return res.render('loginView.ejs', {
+            wrong: `'${email}' or password does not exist`,
+        });
     }
     let check = await bcrypt.compareSync(password, user.matkhau);
     if (!check) {
@@ -26,7 +30,7 @@ let handleLogin = async (req, res) => {
         },
         process.env.JWT_ACCESS_KEY,
         {
-            expiresIn: '10s',
+            expiresIn: '2d',
         }
     );
     const refreshToken = jwt.sign(

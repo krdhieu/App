@@ -40,7 +40,25 @@ let createAccount = async (req, res) => {
     return res.send('ok');
 };
 
+let manageAccount = async (req, res) => {
+    let allAccount = await taikhoanService.getAllAccount();
+    return res.render('manageAccount.ejs', { allAccount });
+};
+
+let getEditAccount = async (req, res) => {
+    let email = req.query.email;
+    if (!email) {
+        res.redirect('/manage-account');
+    }
+    let account = await taikhoanService.getOneAccount(email);
+    if (account.length !== 1) {
+        res.redirect('/manage-account');
+    }
+    return res.render('editAccount.ejs');
+};
 module.exports = {
     getCreateAccount: getCreateAccount,
     createAccount: createAccount,
+    manageAccount: manageAccount,
+    getEditAccount: getEditAccount,
 };
