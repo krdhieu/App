@@ -59,7 +59,7 @@ const initRouter = (app) => {
     router.post('/uploadnhanvien', nhanvienController.uploadNhanvien);
     router.post('/addnhanvien', nhanvienController.addNhanvien);
 
-    // tạo nhân viên
+    // tạo nhân viên/
     router.get('/quanlysangkien', sangkienController.viewSangkien);
     //router.get('/quanlysangkien/:id', nhanvienController.editNhanvien);
     //router.post('/uploadsangkien', sangkienController.uploadSangkien);
@@ -68,7 +68,12 @@ const initRouter = (app) => {
     // tạo đợt sáng kiến
     router.get('/quanlydotsangkien', dotsangkienController.viewDotsangkien);
     router.post('/adddotsangkien', dotsangkienController.addDotsangkien);
-
+    // ket thuc nhiem ky hoi dong khoa hoc
+    router.get('/change-status-hdkh', hoiDongKHController.changeStateHDKH);
+    //sua hoi dong khoa hoc
+    router.post('/edit-hdkh', hoiDongKHController.editHDKH);
+    //trang sua hoi dong khoa hoc
+    router.get('/get-edit-hdkh', hoiDongKHController.getEditHDKH);
     //trang chi tiet hoi dong khoa hoc
     router.get('/get-detail-hdkh', hoiDongKHController.getDetailHDKH);
     // trang them moi hoi dong khoa hoc

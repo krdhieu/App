@@ -31,7 +31,7 @@ let createHDKH = (ngayThanhLap, nhiemVu) => {
     return new Promise(async (resolve, reject) => {
         try {
             await connectDB.execute(
-                'INSERT INTO `hoidongkhoahoc`(`id`, `namthanhlap`, `nhiemvu`, `trangthai`) VALUES (null,?,?,?)',
+                'INSERT INTO `hoidongkhoahoc`(`id`, `ngaythanhlap`, `nhiemvu`, `trangthai`,`ngayketthuc`) VALUES (null,?,?,?,null)',
                 [ngayThanhLap, nhiemVu, 1]
             );
             resolve('success');
@@ -54,9 +54,40 @@ let getDetailHDKH = (id) => {
         }
     });
 };
+
+let changeStateHDKH = (ngayketthuc, id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await connectDB.execute(
+                'UPDATE `hoidongkhoahoc` SET `ngayketthuc`=?,`trangthai`=0 WHERE `id`=?',
+                [ngayketthuc, id]
+            );
+            resolve('success');
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+let editHDKH = (id, nhiemvu, ngaythanhlap) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await connectDB.execute(
+                'UPDATE `hoidongkhoahoc` SET `ngaythanhlap`=?,`nhiemvu`=? WHERE `id`=?',
+                [ngaythanhlap, nhiemvu, id]
+            );
+            resolve('success');
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 module.exports = {
     getAllHDKH: getAllHDKH,
     checkStateHDKH: checkStateHDKH,
     createHDKH: createHDKH,
     getDetailHDKH: getDetailHDKH,
+    editHDKH: editHDKH,
+    changeStateHDKH: changeStateHDKH,
 };

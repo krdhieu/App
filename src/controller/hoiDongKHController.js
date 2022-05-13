@@ -1,3 +1,4 @@
+import moment from 'moment';
 import hoiDongKhoaHocService from '../services/hoiDongKhoaHocService';
 // trang tao moi hdkh
 const getCreateHDKH = (req, res) => {
@@ -23,8 +24,7 @@ const createHDKH = async (req, res) => {
 //trang quan ly hdkh
 const getAllHDKH = async (req, res) => {
     let allHDKH = await hoiDongKhoaHocService.getAllHDKH();
-    console.log(allHDKH);
-    return res.render('manageHoiDongKH.ejs', { allHDKH });
+    return res.render('manageHoiDongKH.ejs', { allHDKH: allHDKH });
 };
 
 //trang thong tin chi tiet cua 1 hdkh
@@ -40,9 +40,46 @@ const getDetailHDKH = async (req, res) => {
 
     return res.render('detailHDKH.ejs', { detail: detail[0] });
 };
+
+//trang sua hoi dong khoa hoc
+let getEditHDKH = async (req, res) => {
+    let { id } = req.query;
+    if (!id) {
+        return res.send('Missing required parameter');
+    }
+    let hDKH = await hoiDongKhoaHocService.getDetailHDKH(id);
+    if (hDKH.length === 0) {
+        return res.send('HDKH does not exist');
+    }
+    return res.render('editHDKH.ejs', { hDKH: hDKH[0] });
+};
+let editHDKH = async (req, res) => {
+    let { id, ngayThanhLap, nhiemVu } = req.body;
+    if (!id || !ngayThanhLap) {
+        return res.send('missing required parameter');
+    }
+    await hoiDongKhoaHocService.editHDKH(id, nhiemVu, ngayThanhLap);
+
+    return res.redirect('/get-hdkh');
+};
+
+let changeStateHDKH = async (req, res) => {
+    let { id } = req.query;
+    if (!id) {
+        return res.send('missing id');
+    }
+
+    let currentDate = moment().utcOffset('+0700').format('YYYY-MM-DD');
+
+    await hoiDongKhoaHocService.changeStateHDKH(currentDate, id);
+    return res.send('done');
+};
 module.exports = {
     getCreateHDKH: getCreateHDKH,
     getAllHDKH: getAllHDKH,
     createHDKH: createHDKH,
     getDetailHDKH: getDetailHDKH,
+    getEditHDKH: getEditHDKH,
+    editHDKH: editHDKH,
+    changeStateHDKH: changeStateHDKH,
 };
