@@ -39,26 +39,94 @@ let createAccount = async (req, res) => {
     await taikhoanService.createAccount(data);
     return res.send('ok');
 };
-
+// hien thi ta ca tai khoan
 let manageAccount = async (req, res) => {
     let allAccount = await taikhoanService.getAllAccount();
     return res.render('manageAccount.ejs', { allAccount });
 };
-
+// hien thi trang sua tai khoan
 let getEditAccount = async (req, res) => {
     let email = req.query.email;
     if (!email) {
-        res.redirect('/manage-account');
+        return res.redirect('/manage-account');
     }
     let account = await taikhoanService.getOneAccount(email);
     if (account.length !== 1) {
-        res.redirect('/manage-account');
+        return res.redirect('/manage-account');
     }
-    return res.render('editAccount.ejs');
+    let allQuyen = await quyenService.getAllQuyen();
+    return res.render('editAccount.ejs', {
+        account: account,
+        allQuyen: allQuyen,
+    });
 };
+
+//thuc hien sua quyen cua tai khoan
+let editRole = async (req, res) => {
+    let { email, quyen } = req.body;
+    if (!email || !quyen) {
+        return res.redirect('/get-edit-account');
+    }
+    await taikhoanService.editRole(email, quyen);
+    return res.redirect('/manage-account');
+};
+// admin reset pass word
+let resetPassword = async (req, res) => {
+    let { email } = req.query;
+    if (!email) {
+        return res.redirect('/get-edit-account');
+    }
+    let account = await taikhoanService.getOneAccount(email);
+    if (account.length !== 1) {
+        return res.redirect('/get-edit-account');
+    }
+    let salt = bcrypt.genSaltSync(10);
+    let hash = bcrypt.hashSync('12345', salt);
+    await taikhoanService.resetPassword(email, hash);
+    return res.redirect('/manage-account');
+};
+
+// hien thi trang doi mat khau
+
+let getChangePassword = (req, res) => {
+    let { emailLogin, nhanVienId, roleId } = req;
+    return res.render('changePassword.ejs', {
+        emailLogin: emailLogin,
+    });
+};
+
+// nguoi dung doi mat khau
+let changePassword = async (req, res) => {
+    let { email, newPassword1, newPassword2, oldPassword } = req.body;
+    if (!email || !newPassword1 || !newPassword2 || !oldPassword) {
+        return res.send('Missing required parameter!!');
+    }
+
+    let account = await taikhoanService.getOneAccount(email);
+    if (account.length !== 1) {
+        return res.send('email khong ton tai');
+    }
+    console.log(account);
+    let check = await bcrypt.compareSync(oldPassword, account[0].matkhau);
+    if (!check) {
+        return res.send('mat khau cu khong chinh xac');
+    }
+    if (newPassword1 !== newPassword2) {
+        return res.send('Mat khau moi khong khop');
+    }
+    let salt = await bcrypt.genSaltSync(10);
+    let hash = await bcrypt.hashSync(newPassword1, salt);
+    await taikhoanService.resetPassword(email, hash);
+    return res.send('doi mat khau thanh cong');
+};
+
 module.exports = {
     getCreateAccount: getCreateAccount,
     createAccount: createAccount,
     manageAccount: manageAccount,
     getEditAccount: getEditAccount,
+    editRole: editRole,
+    resetPassword: resetPassword,
+    changePassword: changePassword,
+    getChangePassword: getChangePassword,
 };

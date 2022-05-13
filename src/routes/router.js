@@ -9,8 +9,9 @@ import trangthaisangkienController from '../controller/trangthaisangkienControll
 import sangkienController from '../controller/sangkienController';
 import dotsangkienController from '../controller/dotsangkienController';
 import verifyAccessToken from '../controller/middleware/verifyAccessToken';
-
+import hoiDongKHController from '../controller/hoiDongKHController';
 import nhanvienController from '../controller/nhanvienController';
+import { route } from 'express/lib/application';
 const router = express.Router();
 
 const initRouter = (app) => {
@@ -68,6 +69,17 @@ const initRouter = (app) => {
     router.get('/quanlydotsangkien', dotsangkienController.viewDotsangkien);
     router.post('/adddotsangkien', dotsangkienController.addDotsangkien);
 
+    //trang chi tiet hoi dong khoa hoc
+    router.get('/get-detail-hdkh', hoiDongKHController.getDetailHDKH);
+    // trang them moi hoi dong khoa hoc
+    router.get('/get-create-hdkh', hoiDongKHController.getCreateHDKH);
+    //trang quan ly hoi dong khoa hoc
+    router.post('/create-hdkh', hoiDongKHController.createHDKH);
+    router.get(
+        '/get-hdkh',
+        verifyAccessToken.verifyAccessTokenAndAdminAuth,
+        hoiDongKHController.getAllHDKH
+    );
     // tao tai khoan
     router.post('/create-account', manageAccountController.createAccount);
     //mo trang tao tai khoan
@@ -76,15 +88,39 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAndAdminAuth,
         manageAccountController.getCreateAccount
     );
+    // trang sua quyen tai khoan
     router.get('/get-edit-account', manageAccountController.getEditAccount);
-
-    //////
+    // trang quan ly tai khoan
     router.get('/manage-account', manageAccountController.manageAccount);
+    //dang xuat
     router.get('/logout', loginController.handleLogout);
-    //trang dang nhap
-
+    //sua quyen cua tai khoan
+    router.post('/edit-role', manageAccountController.editRole);
+    // trang doi mat khau
+    router.get(
+        '/get-change-password',
+        verifyAccessToken.verifyAccessTokenMiddleware,
+        manageAccountController.getChangePassword
+    );
+    // thuc hien doi mat khau
+    router.post(
+        '/change-password',
+        verifyAccessToken.verifyAccessTokenMiddleware,
+        manageAccountController.changePassword
+    );
+    //thuc hien reset mat khau
+    router.get('/reset-password', manageAccountController.resetPassword);
+    // trang chu
+    router.get(
+        '/home',
+        verifyAccessToken.verifyAccessTokenMiddleware,
+        loginController.getHome
+    );
+    //xu ly dang nhap
     router.post('/', loginController.handleLogin);
+    //trang dang nhap
     router.get('/', loginController.getLogin);
+
     return app.use('/', router);
 };
 
