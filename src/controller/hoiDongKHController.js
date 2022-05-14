@@ -1,5 +1,7 @@
 import moment from 'moment';
 import hoiDongKhoaHocService from '../services/hoiDongKhoaHocService';
+import thanhVienHDKHService from '../services/thanhVienHDKHService';
+import chuVuHDKH from '../services/chucVuHDKHService';
 // trang tao moi hdkh
 const getCreateHDKH = (req, res) => {
     return res.render('createHDKH.ejs');
@@ -33,12 +35,22 @@ const getDetailHDKH = async (req, res) => {
     if (!id) {
         return res.send('Missing required parameter');
     }
+
     let detail = await hoiDongKhoaHocService.getDetailHDKH(id);
     if (detail.length === 0) {
         return res.send('HDKH does not exist');
     }
-
-    return res.render('detailHDKH.ejs', { detail: detail[0] });
+    let allChucVu = await chuVuHDKH.getAllChucVuHDKH();
+    let allThanhVien =
+        await thanhVienHDKHService.getAllThanhVienHDKHJoinNhanVienJoinChucVu(
+            id
+        );
+    console.log(allThanhVien);
+    return res.render('detailHDKH.ejs', {
+        detail: detail[0],
+        allChucVu,
+        allThanhVien,
+    });
 };
 
 //trang sua hoi dong khoa hoc
@@ -53,6 +65,8 @@ let getEditHDKH = async (req, res) => {
     }
     return res.render('editHDKH.ejs', { hDKH: hDKH[0] });
 };
+
+//sua thong tin hoi dong khoa hoc
 let editHDKH = async (req, res) => {
     let { id, ngayThanhLap, nhiemVu } = req.body;
     if (!id || !ngayThanhLap) {
@@ -63,6 +77,7 @@ let editHDKH = async (req, res) => {
     return res.redirect('/get-hdkh');
 };
 
+// ket thuc nhhiem ky hdkh
 let changeStateHDKH = async (req, res) => {
     let { id } = req.query;
     if (!id) {
@@ -74,6 +89,7 @@ let changeStateHDKH = async (req, res) => {
     await hoiDongKhoaHocService.changeStateHDKH(currentDate, id);
     return res.send('done');
 };
+
 module.exports = {
     getCreateHDKH: getCreateHDKH,
     getAllHDKH: getAllHDKH,

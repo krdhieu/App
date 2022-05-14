@@ -11,7 +11,8 @@ import dotsangkienController from '../controller/dotsangkienController';
 import verifyAccessToken from '../controller/middleware/verifyAccessToken';
 import hoiDongKHController from '../controller/hoiDongKHController';
 import nhanvienController from '../controller/nhanvienController';
-import { route } from 'express/lib/application';
+import thanhVienHDKHController from '../controller/thanhVienHDKHController';
+
 const router = express.Router();
 
 const initRouter = (app) => {
@@ -68,6 +69,16 @@ const initRouter = (app) => {
     // tạo đợt sáng kiến
     router.get('/quanlydotsangkien', dotsangkienController.viewDotsangkien);
     router.post('/adddotsangkien', dotsangkienController.addDotsangkien);
+
+    //-----------------------------------------------------------------------------------------------------------//
+    //-----------------------------------------------------------------------------------------------------------//
+    //sua thong tin thanh vien hd
+    router.post('/edit-thanhvien-hd', thanhVienHDKHController.editThanhVienHD);
+    //them thong tin thanh vien hd
+    router.post(
+        '/create-thanhvien-hd',
+        thanhVienHDKHController.createThanhVienHD
+    );
     // ket thuc nhiem ky hoi dong khoa hoc
     router.get('/change-status-hdkh', hoiDongKHController.changeStateHDKH);
     //sua hoi dong khoa hoc
