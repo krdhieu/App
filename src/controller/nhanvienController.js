@@ -1,11 +1,15 @@
 import req from 'express/lib/request';
 import connectDB from '../configs/connectDB';
-var format = require('date-format');
 
 let viewNhanvien = async (req, res) => {
+    let search = '';
+    if (req.query.search != null) {
+        search = req.query.search;
+    }
+    console.log(search)
     const [phongban, fields_phongban] = await connectDB.execute('SELECT * FROM phongban ');
     const [chucvu, fields_chucvu] = await connectDB.execute('SELECT * FROM chucvu ');
-    const [rows, fields] = await connectDB.execute('SELECT * FROM `nhanvien` INNER JOIN phongban On nhanvien.id_phongban = phongban.id INNER JOIN chucvu ON nhanvien.id_chucvu=chucvu.id ');
+    const [rows, fields] = await connectDB.execute("SELECT nhanvien.id, id_phongban,id_chucvu,trinhdohocvan,tennhanvien,gioitinh,namsinh,sdt,ngayvaolam,trangthai,tenphongban,tenchucvu FROM `nhanvien` INNER JOIN phongban On nhanvien.id_phongban = phongban.id INNER JOIN chucvu ON nhanvien.id_chucvu=chucvu.id where tennhanvien LIKE ? ", ['%' + search + '%']);
     return res.render('shownhanvien.ejs', { dataNhanvien: rows, dataPhongban: phongban, dataChucvu: chucvu });
 }
 let editNhanvien = async (req, res) => {
@@ -29,13 +33,18 @@ let uploadNhanvien = async (req, res) => {
 let addNhanvien = async (req, res) => {
     let { id_phongban, id_chucvu, trinhdohocvan, tennhanvien, gioitinh, namsinh, ngayvaolam, sdt } = req.body;
     if (!id_phongban || !id_chucvu || !trinhdohocvan || !tennhanvien || !gioitinh || !namsinh || !ngayvaolam || !sdt) {
-        res.redirect('/quanlynhanvien');
+        return res.redirect('/quanlynhanvien');
     }
     await connectDB.execute('INSERT INTO nhanvien(id_phongban, id_chucvu, trinhdohocvan, tennhanvien, gioitinh, namsinh, ngayvaolam, sdt)  VALUES (?,?,?,?,?,?,?,? )',
         [id_phongban, id_chucvu, trinhdohocvan, tennhanvien, gioitinh, namsinh, ngayvaolam, sdt]);
     return res.redirect('/quanlynhanvien')
 }
+let nghiviecNhanvien = async (req, res) => {
+    let { id } = req.body;
+    await connectDB.execute('update nhanvien set trangthai = ? where id = ?', [0, id]);
+    return res.redirect('/quanlynhanvien');
+}
 
 module.exports = {
-    viewNhanvien, editNhanvien, uploadNhanvien, addNhanvien
+    viewNhanvien, editNhanvien, uploadNhanvien, addNhanvien, nghiviecNhanvien
 }

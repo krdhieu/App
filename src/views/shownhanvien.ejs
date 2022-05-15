@@ -13,6 +13,10 @@
 <body>
     <div>
         <h1>Danh sách nhân viên</h1>
+        <form action="/quanlynhanvien" method="get">
+            <input type="text" name="search">
+            <button type="submit">Submit</button>
+        </form>
         <table class="table">
             <thead>
                 <tr>
@@ -38,7 +42,7 @@
                             <%= dataNhanvien[i].tenphongban %>
                         </td>
                         <td>
-                            <%= dataNhanvien[i].tenNhanvien %>
+                            <%= dataNhanvien[i].tennhanvien %>
                         </td>
                         <td>
                             <%= dataNhanvien[i].trinhdohocvan %>
@@ -75,7 +79,7 @@
             </tbody>
         </table>
 
-        <h1>Thêm mới nhan vien</h1>
+        <h1>Thêm mới nhân viên</h1>
         <form action="/addnhanvien" method="post">
 
             <!-- Vertical -->
@@ -103,11 +107,11 @@
                 </select>
                 <br>
                 <!-- Trình độ  -->
-                <label>Trình độ đại học</label>
-                <input type="text" name="trinhdohocvan" class="form-control" value="">
+                <label>Trình độ học vấn</label>
+                <input type="text" name="trinhdohocvan" class="form-control" value="" required>
                 <!-- Tên nhân viên  -->
                 <label>Tên nhân viên</label>
-                <input type="text" name="tennhanvien" class="form-control" value="">
+                <input type="text" name="tennhanvien" class="form-control" value="" required>
                 <!-- Giới tính  -->
                 <label>Giới tính</label>
                 <select name="gioitinh" value>
@@ -116,13 +120,13 @@
                 </select>
                 <!-- Năm sinh  -->
                 <label>Năm sinh</label>
-                <input type="date" name="namsinh" class="form-control" value="">
+                <input type="date" name="namsinh" class="form-control" value="" required>
                 <!-- Ngày vào làm  -->
                 <label>Ngày vào làm</label>
-                <input type="date" name="ngayvaolam" class="form-control" value="">
+                <input type="date" name="ngayvaolam" class="form-control" value="" required>
                 <!-- Số điện thoại  -->
                 <label>Số điện thoại</label>
-                <input type="text" name="sdt" class="form-control" value="">
+                <input type="text" name="sdt" class="form-control" value="" required>
                 <!-- Submit -->
                 <button type=" submit" class="btn btn-primary">Submit</button>
             </div>

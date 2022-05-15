@@ -81,7 +81,7 @@ let resetPassword = async (req, res) => {
         return res.redirect('/get-edit-account');
     }
     let salt = bcrypt.genSaltSync(10);
-    let hash = bcrypt.hashSync('12345', salt);
+    let hash = bcrypt.hashSync(process.env.PASSWORD_RESET, salt);
     await taikhoanService.resetPassword(email, hash);
     return res.redirect('/manage-account');
 };
