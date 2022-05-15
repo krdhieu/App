@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import res from 'express/lib/response';
 import multer from 'multer';
 
-// chuyển tới trang tạo sáng kiến 
+// chuyển tới trang tạo sáng kiến
 let createSangkien = async (req, res) => {
     const [phongban, fields_phongban] = await connectDB.execute('SELECT * FROM phongban ');
     const [chucvu, fields_chucvu] = await connectDB.execute('SELECT * FROM chucvu ');
@@ -34,6 +34,7 @@ let addSangkien = async (req, res) => {
         }
     }
     let [dotsangkien] = await connectDB.execute('SELECT id FROM dotsangkien WHERE trangthai = ?', [1]);
+
     if (dotsangkien[0] != null) {
         let [id_sangkien_new] = await connectDB.execute('INSERT INTO `sangkien`(`tensangkien`, `id_dot`, `muctieu`, `noidung`, `loiich`, `doituong`) VALUES (?,?,?,?,?,?);',
             [tensangkien, dotsangkien[0].id, muctieu, noidung, loiich, doituong]);

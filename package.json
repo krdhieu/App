@@ -29,7 +29,11 @@
     "express-ejs-layouts": "^2.5.1",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.3",
+<<<<<<< HEAD
     "multer": "^1.4.4",
+=======
+    "moment-timezone": "^0.5.34",
+>>>>>>> 65a95a6f4b47ae208b9424f2bfd2366ea91ab257
     "mysql2": "^2.3.3",
     "sass": "^1.51.0"
   },

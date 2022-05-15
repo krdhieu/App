@@ -1,3 +1,5 @@
+@import url('../node_modules/font-awesome/css/font-awesome.min.css');
+
 .login-background {
     height: 100vh;
     background: linear-gradient(
@@ -57,4 +59,21 @@
 }
 .navbar-custom a {
     color: white;
+}
+
+table {
+    border: 1px solid black;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+table td,
+th {
+    border: 1px solid black;
+}
+.edit-thanhvienhd-form {
+    display: none;
+}
+.create-thanhvienhd-form {
+    display: none;
 }

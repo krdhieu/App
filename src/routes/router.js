@@ -16,6 +16,8 @@ import jwt from 'jsonwebtoken';
 import path from 'path';
 import multer from 'multer';
 var appRoot = require('app-root-path');
+import thanhVienHDKHController from '../controller/thanhVienHDKHController';
+
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -96,6 +98,21 @@ const initRouter = (app) => {
     router.get('/quanlydotsangkien', dotsangkienController.viewDotsangkien);
     router.post('/adddotsangkien', dotsangkienController.addDotsangkien);
 
+    //-----------------------------------------------------------------------------------------------------------//
+    //-----------------------------------------------------------------------------------------------------------//
+    //sua thong tin thanh vien hd
+    router.post('/edit-thanhvien-hd', thanhVienHDKHController.editThanhVienHD);
+    //them thong tin thanh vien hd
+    router.post(
+        '/create-thanhvien-hd',
+        thanhVienHDKHController.createThanhVienHD
+    );
+    // ket thuc nhiem ky hoi dong khoa hoc
+    router.get('/change-status-hdkh', hoiDongKHController.changeStateHDKH);
+    //sua hoi dong khoa hoc
+    router.post('/edit-hdkh', hoiDongKHController.editHDKH);
+    //trang sua hoi dong khoa hoc
+    router.get('/get-edit-hdkh', hoiDongKHController.getEditHDKH);
     //trang chi tiet hoi dong khoa hoc
     router.get('/get-detail-hdkh', hoiDongKHController.getDetailHDKH);
     // trang them moi hoi dong khoa hoc

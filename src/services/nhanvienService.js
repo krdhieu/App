@@ -13,7 +13,22 @@ let getAllNhanVien = () => {
         }
     });
 };
+//kiem tra nhan vien co ton tai khong
+let checkNhanVienTonTai = (idNhanVien) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [check] = await connectDB.execute(
+                'SELECT * FROM nhanvien WHERE id=?',
+                [idNhanVien]
+            );
+            resolve(check);
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
 
 module.exports = {
     getAllNhanVien: getAllNhanVien,
+    checkNhanVienTonTai: checkNhanVienTonTai,
 };
