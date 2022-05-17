@@ -12,6 +12,7 @@ import verifyAccessToken from '../controller/middleware/verifyAccessToken';
 import hoiDongKHController from '../controller/hoiDongKHController';
 import nhanvienController from '../controller/nhanvienController';
 import thanhVienHDKHController from '../controller/thanhVienHDKHController';
+import chamDiemController from '../controller/chamDiemController';
 
 const router = express.Router();
 
@@ -72,6 +73,18 @@ const initRouter = (app) => {
 
     //-----------------------------------------------------------------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------//
+    // cham diem sang kien
+    router.post(
+        '/create-chitiet-chamdiem',
+        chamDiemController.createChiTietChamDiem
+    );
+    // hien thi trang chi tiet sang kien de cham diem
+    router.get(
+        '/detail-sangkien',
+        verifyAccessToken.verifyAccessTokenAndAdminGiamKhao,
+        chamDiemController.getDetailSangKien
+    );
+    router.get('/get-cham-diem', chamDiemController.getChamDiemPage);
     //sua thong tin thanh vien hd
     router.post('/edit-thanhvien-hd', thanhVienHDKHController.editThanhVienHD);
     //them thong tin thanh vien hd

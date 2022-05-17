@@ -27,6 +27,7 @@ let checkStateHDKH = () => {
     });
 };
 
+// tao moi hoi dong khoa hoc
 let createHDKH = (ngayThanhLap, nhiemVu) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -41,6 +42,7 @@ let createHDKH = (ngayThanhLap, nhiemVu) => {
     });
 };
 
+// lay thong tin chi tiet hoi dong khoa hoc
 let getDetailHDKH = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -54,7 +56,7 @@ let getDetailHDKH = (id) => {
         }
     });
 };
-
+// thay doi trang thai cua hoi dong (dang trong nhiem ky / da ket thuc nhiem ky)
 let changeStateHDKH = (ngayketthuc, id) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -68,7 +70,7 @@ let changeStateHDKH = (ngayketthuc, id) => {
         }
     });
 };
-
+// sua thong ngay thanh lap va nhiem vu hdkh
 let editHDKH = (id, nhiemvu, ngaythanhlap) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -82,7 +84,23 @@ let editHDKH = (id, nhiemvu, ngaythanhlap) => {
         }
     });
 };
-
+// lay thong tin thanh vien hoi dong da dang nhap
+let getThanhVienHDDaDangNhap = (idNhanVien) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [thanhVienHDDaDangNhap] = await connectDB.execute(
+                `SELECT thanhvienhoidong.* FROM thanhvienhoidong 
+            JOIN nhanvien ON nhanvien.id= thanhvienhoidong.id_nhanvien 
+            JOIN hoidongkhoahoc ON hoidongkhoahoc.id = thanhvienhoidong.id_hoidong 
+            where hoidongkhoahoc.trangthai =1 AND nhanvien.id=?`,
+                [idNhanVien]
+            );
+            resolve(thanhVienHDDaDangNhap);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     getAllHDKH: getAllHDKH,
     checkStateHDKH: checkStateHDKH,
@@ -90,4 +108,5 @@ module.exports = {
     getDetailHDKH: getDetailHDKH,
     editHDKH: editHDKH,
     changeStateHDKH: changeStateHDKH,
+    getThanhVienHDDaDangNhap: getThanhVienHDDaDangNhap,
 };

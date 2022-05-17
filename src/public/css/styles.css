@@ -1,4 +1,9 @@
-@import url('../node_modules/font-awesome/css/font-awesome.min.css');
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+}
 
 .login-background {
     height: 100vh;
@@ -76,4 +81,40 @@ th {
 }
 .create-thanhvienhd-form {
     display: none;
+}
+
+.ntg-container {
+    border: 1px solid black;
+    margin-top: 10px;
+    padding: 0 15px 15px 10px;
+    height: 182px;
+}
+.sk-container {
+    border: 1px solid black;
+    margin-top: 10px;
+    padding: 0 15px 15px 10px;
+}
+/****************** trang cham diem *********************/
+.input-diem {
+    color: black;
+    cursor: pointer;
+}
+.input-diem.mucdich {
+    background-color: rgb(113, 255, 113);
+}
+
+.input-diem.noidung {
+    background-color: rgb(128, 136, 253);
+}
+
+.input-diem.ungdung {
+    background-color: rgb(250, 255, 146);
+}
+
+.input-diem.trinhbay {
+    background-color: rgb(250, 146, 181);
+}
+
+.main-container {
+    margin: 0;
 }

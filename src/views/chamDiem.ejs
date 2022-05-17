@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+            table {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            td {
+                border: 1px solid black;
+            }
+            th{
+                border: 1px solid black;
+            }
+        </style>
+        <title>Document</title>
+    </head>
+    <body>
+        <div>danh sach sang kien duoc cham</div>
+        <% if(sangKien.length===0){%>
+        <div>Khong co sang kien de cham</div>
+        <%}%>
+        <div>
+            <table>
+                <tr>
+                    <th>Ma Sang Kien</th>
+                    <th>Ten Sang Kien</th>
+                    <th>Ten Dot</th>
+                    <th>Muc Tieu</th>
+                </tr>
+                <% for(let i=0;i<sangKien.length;i++) {%>
+                <tr>
+                    <td><%=sangKien[i].id%></td>
+                    <td><%=sangKien[i].tensangkien%></td>
+                    <td><%=sangKien[i].ten%></td>
+                    <td><%=sangKien[i].muctieu%></td>
+                    <td><a href="/detail-sangkien?id=<%=sangKien[i].id%>">detail</a></td>
+                </tr>
+                <%}%>
+            </table>
+        </div>
+    </body>
+</html>

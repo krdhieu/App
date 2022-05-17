@@ -1,5 +1,6 @@
 import thanhVienHDKHService from '../services/thanhVienHDKHService';
 import nhanVienService from '../services/nhanvienService';
+import connectDB from '../configs/connectDB';
 
 let createThanhVienHD = async (req, res) => {
     let { idNhanVien, idChucVu, idHDKH } = req.body;
@@ -32,6 +33,7 @@ let editThanhVienHD = async (req, res) => {
     );
     return res.send(isSuccess);
 };
+
 module.exports = {
     createThanhVienHD: createThanhVienHD,
     editThanhVienHD: editThanhVienHD,
