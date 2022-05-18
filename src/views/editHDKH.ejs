@@ -15,7 +15,12 @@
     <body>
         <div class="container text-center">
             <form action="/edit-hdkh" method="post">
-                <input type="text" name="id" value="<%= hDKH.id%>" hidden />
+                <input
+                    type="text"
+                    name="id"
+                    value="<%= hDKH.mahoidong%>"
+                    hidden
+                />
                 <div class="form-group">
                     <label for="nhiemVu"> Nhiem vu</label>
                     <textarea
@@ -45,7 +50,7 @@
             </form>
             <div class="form-group">
                 <a
-                    href="/change-status-hdkh?id=<%= hDKH.id%>"
+                    href="/change-status-hdkh?id=<%= hDKH.mahoidong%>"
                     class="btn btn-danger"
                     >Kết thúc nhiệm kỳ</a
                 >

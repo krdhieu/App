@@ -32,7 +32,7 @@ let createHDKH = (ngayThanhLap, nhiemVu) => {
     return new Promise(async (resolve, reject) => {
         try {
             await connectDB.execute(
-                'INSERT INTO `hoidongkhoahoc`(`id`, `ngaythanhlap`, `nhiemvu`, `trangthai`,`ngayketthuc`) VALUES (null,?,?,?,null)',
+                'INSERT INTO `hoidongkhoahoc`(`mahoidong`, `ngaythanhlap`, `nhiemvu`, `trangthai`,`ngayketthuc`) VALUES (null,?,?,?,null)',
                 [ngayThanhLap, nhiemVu, 1]
             );
             resolve('success');
@@ -47,7 +47,7 @@ let getDetailHDKH = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             let [detail] = await connectDB.execute(
-                'SELECT * FROM `hoidongkhoahoc` WHERE id=?',
+                'SELECT * FROM `hoidongkhoahoc` WHERE mahoidong=?',
                 [id]
             );
             resolve(detail);
@@ -61,7 +61,7 @@ let changeStateHDKH = (ngayketthuc, id) => {
     return new Promise(async (resolve, reject) => {
         try {
             await connectDB.execute(
-                'UPDATE `hoidongkhoahoc` SET `ngayketthuc`=?,`trangthai`=0 WHERE `id`=?',
+                'UPDATE `hoidongkhoahoc` SET `ngayketthuc`=?,`trangthai`=0 WHERE `mahoidong`=?',
                 [ngayketthuc, id]
             );
             resolve('success');
@@ -75,7 +75,7 @@ let editHDKH = (id, nhiemvu, ngaythanhlap) => {
     return new Promise(async (resolve, reject) => {
         try {
             await connectDB.execute(
-                'UPDATE `hoidongkhoahoc` SET `ngaythanhlap`=?,`nhiemvu`=? WHERE `id`=?',
+                'UPDATE `hoidongkhoahoc` SET `ngaythanhlap`=?,`nhiemvu`=? WHERE `mahoidong`=?',
                 [ngaythanhlap, nhiemvu, id]
             );
             resolve('success');
@@ -90,9 +90,9 @@ let getThanhVienHDDaDangNhap = (idNhanVien) => {
         try {
             let [thanhVienHDDaDangNhap] = await connectDB.execute(
                 `SELECT thanhvienhoidong.* FROM thanhvienhoidong 
-            JOIN nhanvien ON nhanvien.id= thanhvienhoidong.id_nhanvien 
-            JOIN hoidongkhoahoc ON hoidongkhoahoc.id = thanhvienhoidong.id_hoidong 
-            where hoidongkhoahoc.trangthai =1 AND nhanvien.id=?`,
+            JOIN nhanvien ON nhanvien.manhanvien= thanhvienhoidong.manhanvien 
+            JOIN hoidongkhoahoc ON hoidongkhoahoc.mahoidong = thanhvienhoidong.mahoidong 
+            where hoidongkhoahoc.trangthai =1 AND nhanvien.manhanvien=?`,
                 [idNhanVien]
             );
             resolve(thanhVienHDDaDangNhap);

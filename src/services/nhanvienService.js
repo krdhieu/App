@@ -18,7 +18,7 @@ let checkNhanVienTonTai = (idNhanVien) => {
     return new Promise(async (resolve, reject) => {
         try {
             let [check] = await connectDB.execute(
-                'SELECT * FROM nhanvien WHERE id=?',
+                'SELECT * FROM nhanvien WHERE manhanvien=?',
                 [idNhanVien]
             );
             resolve(check);

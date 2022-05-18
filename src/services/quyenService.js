@@ -17,10 +17,10 @@ let checkQuyen = (idQuyen) => {
     return new Promise(async (resolve, reject) => {
         try {
             let [tenQuyen] = await connectDB.execute(
-                'SELECT * FROM quyen where id = ?',
+                'SELECT * FROM quyen where maquyen = ?',
                 [idQuyen]
             );
-            resolve(tenQuyen[0].loai);
+            resolve(tenQuyen[0].tenquyen);
         } catch (e) {
             reject(e);
         }

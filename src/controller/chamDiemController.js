@@ -5,6 +5,7 @@ import hoiDongKhoaHocService from '../services/hoiDongKhoaHocService';
 //hien trhi trang cham diem
 let getChamDiemPage = async (req, res) => {
     let sangKien = await sangKienService.getSangKienDaDuyet();
+
     return res.render('chamDiem.ejs', { sangKien });
 };
 // lay thong tin chi tiet sangkien can cham
@@ -23,6 +24,9 @@ let getDetailSangKien = async (req, res) => {
     if (thanhVienHDDaDangNhap.length !== 1) {
         return res.send('Khong phai thanh vien hoi dong trong dot nay');
     }
+    console.log('>>detail', detailSangKien);
+    console.log('thanhvien da dang nhap', thanhVienHDDaDangNhap);
+    console.log('nguoitham gia', nguoiThamGia);
     return res.render('detailSangKienChamDiem.ejs', {
         detailSangKien: detailSangKien[0],
         thanhVienHDDaDangNhap: thanhVienHDDaDangNhap[0],

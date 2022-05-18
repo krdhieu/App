@@ -18,7 +18,7 @@
             <div class="col-3 ntg-container  ">
                 <h4 class="text-center">Người tham gia sáng kiến</h4>
                 <% for(let i=0;i<nguoiThamGia.length;i++){%>
-                    <div>Nhan Vien ID: <%= nguoiThamGia[i].id_nhanvien%></div>
+                    <div>Ma nhan vien: <%= nguoiThamGia[i].manhanvien%></div>
                     <div>Ten Nhan Vien: <%= nguoiThamGia[i].tennhanvien%></div>
                     <div>Vai Tro: <%= (nguoiThamGia[i].vaitro===0?'Nguoi Tham Gia':'Chu Tri')%></div>   
                 <%}%>
@@ -34,8 +34,8 @@
             <div class="row text-center">
                 <h4>Chấm điểm</h4>
                 <form action="/create-chitiet-chamdiem" method="post" class="row">
-                    <input type="text" value="<%=detailSangKien.id%>"  class="form-control" name="sangKienId">
-                    <input type="text" value="<%=thanhVienHDDaDangNhap.id%>" class="form-control" name="thanhVienHDId">
+                    <input type="text" value="<%=detailSangKien.masangkien%>"  class="form-control" name="sangKienId">
+                    <input type="text" value="<%=thanhVienHDDaDangNhap.mathanhvien%>" class="form-control" name="thanhVienHDId">
                     <div class="col-3">
                         <label for="">Điểm mục đích</label>
                         <input type="number" step="0.1" name="diemMucDich" 

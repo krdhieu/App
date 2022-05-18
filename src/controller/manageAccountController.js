@@ -6,6 +6,8 @@ import bcrypt from 'bcryptjs';
 let getCreateAccount = async (req, res) => {
     let allNhanVien = await nhanvienService.getAllNhanVien();
     let allQuyen = await quyenService.getAllQuyen();
+    console.log('>>allnhanvien', allNhanVien);
+    console.log('>>allquyen', allQuyen);
     return res.render('createAccount.ejs', {
         allQuyen: allQuyen,
         allNhanVien: allNhanVien,

@@ -4,10 +4,10 @@ let getSangKienDaDuyet = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let [sangKien] = await connectDB.execute(
-                `SELECT sangkien.*, dotsangkien.ten , trangthaisangkien.trangthai 
+                `SELECT sangkien.*, dotsangkien.tendotsangkien , trangthaisangkien.tentrangthai 
                 FROM sangkien 
-                JOIN dotsangkien on sangkien.id_dot = dotsangkien.id 
-                JOIN trangthaisangkien on sangkien.id_trangthai = trangthaisangkien.id where sangkien.id_trangthai=2`
+                JOIN dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien 
+                JOIN trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai where sangkien.matrangthai=2`
             );
             resolve(sangKien);
         } catch (e) {
@@ -20,10 +20,10 @@ let getDetailSangKien = (idSangKien) => {
     return new Promise(async (resolve, reject) => {
         try {
             let [detailSangKien] = await connectDB.execute(
-                `SELECT sangkien.*, dotsangkien.ten , trangthaisangkien.trangthai 
+                `SELECT sangkien.*, dotsangkien.tendotsangkien , trangthaisangkien.tentrangthai 
                 FROM sangkien 
-                JOIN dotsangkien on sangkien.id_dot = dotsangkien.id 
-                JOIN trangthaisangkien on sangkien.id_trangthai = trangthaisangkien.id where sangkien.id=?`,
+                JOIN dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien
+                JOIN trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai where sangkien.masangkien=?`,
                 [idSangKien]
             );
             resolve(detailSangKien);

@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import login from '../services/loginService';
 import jwt from 'jsonwebtoken';
-//trang login
+// hien thi trang login
 let getLogin = (req, res) => {
     return res.render('loginView.ejs', {
         wrong: '',
@@ -26,8 +26,8 @@ let handleLogin = async (req, res) => {
     const accessToken = jwt.sign(
         {
             email: user.tentaikhoan,
-            nhanVienId: user.id_nhanvien,
-            roleId: user.id_quyen,
+            nhanVienId: user.manhanvien,
+            roleId: user.maquyen,
         },
         process.env.JWT_ACCESS_KEY,
         {
@@ -37,8 +37,8 @@ let handleLogin = async (req, res) => {
     const refreshToken = jwt.sign(
         {
             email: user.tentaikhoan,
-            nhanVienId: user.id_nhanvien,
-            roleId: user.id_quyen,
+            nhanVienId: user.manhanvien,
+            roleId: user.maquyen,
         },
         process.env.JWT_REFRESH_KEY,
         {
@@ -51,12 +51,12 @@ let handleLogin = async (req, res) => {
 //xu ly logout
 const handleLogout = (req, res) => {
     res.clearCookie('access_token');
-    res.redirect('/');
+    return res.redirect('/');
 };
-// get trang home
+// hien thi trang home
 
 const getHome = (req, res) => {
-    res.render('home.ejs');
+    return res.render('home.ejs');
 };
 module.exports = {
     getLogin: getLogin,

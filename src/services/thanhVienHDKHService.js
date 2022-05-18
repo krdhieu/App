@@ -4,7 +4,7 @@ let getAllThanhVienHDKH = (idHDKH) => {
     return new Promise(async (resolve, reject) => {
         try {
             let [allThanhVien] = await connectDB.execute(
-                `SELECT * FROM thanhvienhoidong WHERE id_hoidong = ?`,
+                `SELECT * FROM thanhvienhoidong WHERE mahoidong = ?`,
                 [idHDKH]
             );
             resolve(allThanhVien);
@@ -18,11 +18,11 @@ let getAllThanhVienHDKHJoinNhanVienJoinChucVu = (idHDKH) => {
     return new Promise(async (resolve, reject) => {
         try {
             let [allThanhVien] = await connectDB.execute(
-                `SELECT tennhanvien, thanhvienhoidong.id as thanhVienHoiDongId,
-                nhanvien.id as nhanVienId,chucvuhd.id as chucVuId,tenchucvu
-                 FROM thanhvienhoidong INNER JOIN nhanvien ON thanhvienhoidong.id_nhanvien = nhanvien.id 
-                JOIN chucvuhd  ON thanhvienhoidong.id_chucvu = chucvuhd.id
-                WHERE thanhvienhoidong.id_hoidong=? `,
+                `SELECT tennhanvien, thanhvienhoidong.mathanhvien,
+                nhanvien.manhanvien ,chucvuhd.machucvuhd , tenchucvuhd
+                 FROM thanhvienhoidong INNER JOIN nhanvien ON thanhvienhoidong.manhanvien = nhanvien.manhanvien
+                JOIN chucvuhd  ON thanhvienhoidong.machucvuhd = chucvuhd.machucvuhd
+                WHERE thanhvienhoidong.mahoidong=? `,
                 [idHDKH]
             );
             resolve(allThanhVien);
@@ -36,7 +36,7 @@ let createThanhVien = (idHDKH, idNhanVien, idChucVuHD) => {
     return new Promise(async (resolve, reject) => {
         try {
             await connectDB.execute(
-                `INSERT INTO thanhvienhoidong (id,id_hoidong,id_nhanvien,id_chucvu) values(null,?,?,?)`,
+                `INSERT INTO thanhvienhoidong (mathanhvien,mahoidong,manhanvien,machucvuhd) values(null,?,?,?)`,
                 [idHDKH, idNhanVien, idChucVuHD]
             );
             resolve('success');
@@ -50,7 +50,7 @@ let editThanhVienHD = (idThanhVienHD, idChucVu, idHDKH) => {
     return new Promise(async (resolve, reject) => {
         try {
             await connectDB.execute(
-                'UPDATE thanhvienhoidong set id_chucvu=?, id_nhanvien=? WHERE id =?',
+                'UPDATE thanhvienhoidong set machucvuhd=?, manhanvien=? WHERE mathanhvien =?',
                 [idChucVu, idThanhVienHD, idHDKH]
             );
             resolve('ok');

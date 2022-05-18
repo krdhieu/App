@@ -33,11 +33,11 @@
                 </tr>
                 <% for(let i=0;i<sangKien.length;i++) {%>
                 <tr>
-                    <td><%=sangKien[i].id%></td>
+                    <td><%=sangKien[i].masangkien%></td>
                     <td><%=sangKien[i].tensangkien%></td>
-                    <td><%=sangKien[i].ten%></td>
+                    <td><%=sangKien[i].tendotsangkien%></td>
                     <td><%=sangKien[i].muctieu%></td>
-                    <td><a href="/detail-sangkien?id=<%=sangKien[i].id%>">detail</a></td>
+                    <td><a href="/detail-sangkien?id=<%=sangKien[i].masangkien%>">detail</a></td>
                 </tr>
                 <%}%>
             </table>

@@ -11,8 +11,8 @@ let createChiTietChamDiem = (
     return new Promise(async (resolve, reject) => {
         try {
             await connectDB.execute(
-                `INSERT INTO chitietchamdiem (id, id_thanhvien, id_sangkien, diem_muc_dich, diem_noi_dung,diem_ung_dung, diem_trinh_bay) 
-            VALUES (null,?,?,?,?,?,?)`,
+                `INSERT INTO chitietchamdiem (mathanhvien, masangkien, diem_muc_dich, diem_noi_dung,diem_ung_dung, diem_trinh_bay) 
+            VALUES (?,?,?,?,?,?)`,
                 [
                     idThanhVien,
                     idSangKien,
@@ -33,7 +33,7 @@ let checkDaChamDiem = (idThanhVien, idSangKien) => {
     return new Promise(async (resolve, reject) => {
         try {
             let [checkDaChamDiem] = await connectDB.execute(
-                `SELECT * FROM chitietchamdiem WHERE id_thanhvien=? and id_sangkien=?`,
+                `SELECT * FROM chitietchamdiem WHERE mathanhvien=? and masangkien=?`,
                 [idThanhVien, idSangKien]
             );
             resolve(checkDaChamDiem);

@@ -29,14 +29,14 @@
                     <% for(let i=0;i<allHDKH.length;i++){%>
                   <tr>
                     <th scope="row"><%=i+1%></th>
-                    <td><%=allHDKH[i].id%></td>
+                    <td><%=allHDKH[i].mahoidong%></td>
                     <td><%= moment(allHDKH[i].ngaythanhlap).format('DD/MM/YYYY'); %></td>
                     <td><%=(allHDKH[i].trangthai===1?'Trong nhiệm kỳ':'Đã hết nhiệm kỳ')%></td>
                     <td>
                         <% if(allHDKH[i].trangthai === 1){%>
-                        <a href="/get-edit-hdkh?id=<%=allHDKH[i].id%>" class="btn btn-primary btn-lg active "  >Edit</a>
+                        <a href="/get-edit-hdkh?id=<%=allHDKH[i].mahoidong%>" class="btn btn-primary btn-lg active "  >Edit</a>
                         <% } %>
-                        <a href="/get-detail-hdkh?id=<%=allHDKH[i].id%>" class="btn btn-primary btn-lg active ">Detail</a>
+                        <a href="/get-detail-hdkh?id=<%=allHDKH[i].mahoidong%>" class="btn btn-primary btn-lg active ">Detail</a>
                     </td>
                   </tr>
                   <%}%>

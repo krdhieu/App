@@ -5,9 +5,9 @@ let getNguoiThamGia = (idSangKien) => {
     return new Promise(async (resolve, reject) => {
         try {
             let [nguoiThamGia] = await connectDB.execute(
-                `SELECT nguoithamgia.*,nhanvien.tennhanvien,nhanvien.id as nhanVienID 
-                FROM nguoithamgia JOIN nhanvien ON nguoithamgia.id_nhanvien=nhanvien.id 
-                WHERE nguoithamgia.id_sangkien=?`,
+                `SELECT nguoithamgia.*,nhanvien.tennhanvien,nhanvien.manhanvien as nhanVienID 
+                FROM nguoithamgia JOIN nhanvien ON nguoithamgia.manhanvien=nhanvien.manhanvien 
+                WHERE nguoithamgia.masangkien=?`,
                 [idSangKien]
             );
             resolve(nguoiThamGia);
