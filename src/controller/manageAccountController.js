@@ -2,12 +2,12 @@ import nhanvienService from '../services/nhanvienService';
 import quyenService from '../services/quyenService';
 import taikhoanService from '../services/taikhoanService';
 import bcrypt from 'bcryptjs';
+import connectDB from '../configs/connectDB';
 // hien thi trang them tai khoan
 let getCreateAccount = async (req, res) => {
     let allNhanVien = await nhanvienService.getAllNhanVien();
     let allQuyen = await quyenService.getAllQuyen();
-    console.log('>>allnhanvien', allNhanVien);
-    console.log('>>allquyen', allQuyen);
+
     return res.render('createAccount.ejs', {
         allQuyen: allQuyen,
         allNhanVien: allNhanVien,
@@ -33,6 +33,16 @@ let createAccount = async (req, res) => {
     if (check.length === 1) {
         return res.send('Account already exists');
     }
+    let checkNV = await nhanvienService.checkNhanVienTonTai(idNhanVien);
+    if (checkNV.length !== 1) {
+        return res.send('nhan vien khong ton tai');
+    }
+    let checkNVCoTK = await taikhoanService.checkNhanVienDaCoTaiKhoan(
+        idNhanVien
+    );
+    if (checkNVCoTK.length >= 1) {
+        return res.send('nhan vien da co tai khoan');
+    }
     //ma hoa mat khau
     let salt = bcrypt.genSaltSync(10);
     let hash = bcrypt.hashSync(password, salt);
@@ -41,10 +51,48 @@ let createAccount = async (req, res) => {
     await taikhoanService.createAccount(data);
     return res.send('ok');
 };
-// hien thi ta ca tai khoan
+// hien thi ta ca tai khoan - phan trang
 let manageAccount = async (req, res) => {
+    let page = parseInt(req.query.page) || 1;
+    let perpage = 2;
+
     let allAccount = await taikhoanService.getAllAccount();
-    return res.render('manageAccount.ejs', { allAccount });
+    // phan trang
+    let numOfResults = allAccount.length;
+    let numOfPages = Math.ceil(numOfResults / perpage);
+
+    if (page > numOfPages) {
+        return res.redirect(
+            '/manage-account?page=' + encodeURIComponent(numOfPages)
+        );
+    } else if (page < 1) {
+        return res.redirect('/manage-account?page=' + encodeURIComponent('1'));
+    }
+    let begin = (page - 1) * perpage;
+    // let end = page * perpage;
+    // let [accountPerpage] = await connectDB.execute(
+    //     `SELECT * FROM taikhoan LIMIT ${perpage} OFFSET ${begin}`
+    // );
+    let accountPerpage = await taikhoanService.paginationAccount(
+        perpage,
+        begin
+    );
+    // console.log('>>>>>perpage', accountPerpage);
+    let iterator = page - 5 < 1 ? 1 : page - 5;
+    console.log('iterator>>>>>>>>>>>>>', iterator);
+    let endingLink =
+        iterator + 9 <= numOfPages ? iterator + 9 : page + (numOfPages - page);
+    // if (endingLink < page + 4) {
+    //     iterator -= page + 4 - numOfPages;
+    // }
+    return res.render('manageAccount.ejs', {
+        allAccount: accountPerpage,
+        page,
+        iterator,
+        endingLink,
+        numOfPages,
+        perpage,
+    });
 };
 // hien thi trang sua tai khoan
 let getEditAccount = async (req, res) => {
@@ -108,7 +156,7 @@ let changePassword = async (req, res) => {
     if (account.length !== 1) {
         return res.send('email khong ton tai');
     }
-    console.log(account);
+    // console.log(account);
     let check = await bcrypt.compareSync(oldPassword, account[0].matkhau);
     if (!check) {
         return res.send('mat khau cu khong chinh xac');

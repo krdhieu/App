@@ -25,7 +25,7 @@ let editThanhVienHD = async (req, res) => {
     if (check.length !== 1) {
         return res.send('id nhan vien khong ton tai');
     }
-    console.log(idHDKH, idNhanVien, idChucVu);
+    // s
     let isSuccess = await thanhVienHDKHService.editThanhVienHD(
         idNhanVien,
         idChucVu,

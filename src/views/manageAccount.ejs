@@ -10,7 +10,7 @@
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
             crossorigin="anonymous"
         />
-
+       
         <title>Manage Account</title>
     </head>
     <body>
@@ -28,7 +28,7 @@
                 <tbody>
                     <% for(let i=0;i<allAccount.length;i++){%>
                   <tr>
-                    <th scope="row"><%=i+1%></th>
+                    <th scope="row"><%=i + 1 + page*perpage - perpage%></th>
                     <td><%=allAccount[i].tentaikhoan%></td>
                     <td><%=allAccount[i].tennhanvien%></td>
                     <td><%=allAccount[i].tenquyen%></td>
@@ -40,9 +40,61 @@
                   <%}%>
                 </tbody>
               </table>
-    
+
+              <div>
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <% if(page >1) {%> 
+                            <li class="page-item">
+                                <a  class="page-link" href="/manage-account?page=<%=page-1%>">Before</a> 
+                            </li>
+                        <%}%>
+                        <% for(let i= iterator ; i<= endingLink ;i++) {%>
+                            <% if(i===page){%>
+                                <li class="page-item active">
+                                    <a class="page-link" href="/manage-account?page=<%=i%>">
+                                        <%=i%> 
+                                        <span class="sr-only">(current)</span>
+                                    </a>
+                                </li>
+                                <% continue; %>
+                            <%}%>
+                            <li class="page-item ">
+                                <a class="page-link"  href="/manage-account?page=<%=i%>"><%=i%></a>
+                            </li>
+                        <%}%>
+                        <% if(page < numOfPages) {%> 
+                            <li class="page-item">
+                                <a  class="page-link" href="/manage-account?page=<%=page+1%>">After</a> 
+                            </li>
+                        <%}%>
+                    </ul>
+                </nav>
+              </div>
+
+
+             
+                
+                  
+
+                 
+              
+
+
+
+
+
+
+
+
+
+
+
+
+
               <a href="/get-create-account" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> Add User</a>
         </div>
+        
         <script
             src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

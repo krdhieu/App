@@ -70,11 +70,40 @@ let resetPassword = (email, password) => {
         }
     });
 };
-
+/// kiem tra nhan vien da co tai khoan hay chua
+let checkNhanVienDaCoTaiKhoan = (idNhanVien) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [check] = await connectDB.execute(
+                `SELECT * FROM nhanvien JOIN taikhoan ON nhanvien.manhanvien=taikhoan.manhanvien WHERE taikhoan.manhanvien = ?`,
+                [idNhanVien]
+            );
+            resolve(check);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+// phan trang tai khoan
+let paginationAccount = (perpage, begin) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [accountPerpage] = await connectDB.execute(
+                `SELECT * FROM taikhoan INNER JOIN nhanvien on taikhoan.manhanvien=nhanvien.manhanvien INNER JOIN quyen on quyen.maquyen=taikhoan.maquyen LIMIT ? OFFSET ?`,
+                [perpage, begin]
+            );
+            resolve(accountPerpage);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     createAccount: createAccount,
     getOneAccount: getOneAccount,
     getAllAccount: getAllAccount,
     editRole: editRole,
     resetPassword: resetPassword,
+    checkNhanVienDaCoTaiKhoan: checkNhanVienDaCoTaiKhoan,
+    paginationAccount: paginationAccount,
 };
