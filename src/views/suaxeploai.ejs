@@ -17,9 +17,13 @@
             <!-- Vertical -->
             <div class="form-group">
                 <label>id</label>
-                <input type="text" name="id" class="form-control" value="<%= dataXeploai.id %>" readonly>
-                <label>Tên Xếp Loại</label>
-                <input type="text" name="xeploai" class="form-control" value="<%= dataXeploai.xeploai %>">
+                <input type="text" name="maxeploai" class="form-control" value="<%= dataXeploai.maxeploai %>" readonly>
+                <label>Tên xếp loại</label>
+                <input type="text" name="tenxeploai" class="form-control" value="<%= dataXeploai.tenxeploai %>"
+                    required>
+                <label for="">Mô tả xếp loại</label>
+                <textarea name="motaxeploai" class="form-control" id="" cols="30"
+                    rows="10"><%= dataXeploai.motaxeploai %></textarea>
                 <button type=" submit" class="btn btn-primary">Submit</button>
             </div>
 

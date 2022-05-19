@@ -18,6 +18,7 @@
                 <tr>
                     <th scope="col">STT</th>
                     <th scope="col">Trạng thái</th>
+                    <th scope="col">Mô tả trạng thái</th>
                     <th scope="col">Tác vụ</th>
                 </tr>
             </thead>
@@ -28,9 +29,12 @@
                             <%= i +1 %>
                         </th>
                         <td>
-                            <%= dataTrangthaisangkien[i].trangthai %>
+                            <%= dataTrangthaisangkien[i].tentrangthai %>
                         </td>
-                        <td><a href="/quanlytrangthaisangkien/sua/<%= dataTrangthaisangkien[i].id %>"
+                        <td>
+                            <%= dataTrangthaisangkien[i].motatrangthai %>
+                        </td>
+                        <td><a href="/quanlytrangthaisangkien/sua/<%= dataTrangthaisangkien[i].matrangthai %>"
                                 target="_self">Sửa</a></td>
                     </tr>
                     <% } %>
@@ -42,7 +46,9 @@
             <!-- Vertical -->
             <div class="form-group">
                 <label>Tên trạng thái sáng kiến</label>
-                <input type="text" name="trangthai" class="form-control" value="">
+                <input type="text" name="tentrangthai" maxlength="100" class="form-control" value="">
+                <label for="">Mô tả trạng thái</label>
+                <textarea name="motatrangthai" class="form-control" id="" cols="30" rows="10"></textarea>
                 <button type=" submit" class="btn btn-primary">Submit</button>
             </div>
 

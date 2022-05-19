@@ -18,6 +18,7 @@
                 <tr>
                     <th scope="col">STT</th>
                     <th scope="col">Xếp loại</th>
+                    <th scope="col">Mô tả xếp loại</th>
                     <th scope="col">Tác vụ</th>
                 </tr>
             </thead>
@@ -28,9 +29,12 @@
                             <%= i +1 %>
                         </th>
                         <td>
-                            <%= dataXeploai[i].xeploai %>
+                            <%= dataXeploai[i].tenxeploai %>
                         </td>
-                        <td><a href="/quanlyxeploai/sua/<%= dataXeploai[i].id %>" target="_self">Sửa</a></td>
+                        <td>
+                            <%= dataXeploai[i].motaxeploai %>
+                        </td>
+                        <td><a href="/quanlyxeploai/sua/<%= dataXeploai[i].maxeploai %>" target="_self">Sửa</a></td>
                     </tr>
                     <% } %>
             </tbody>
@@ -41,7 +45,9 @@
             <!-- Vertical -->
             <div class="form-group">
                 <label>Tên xếp loại</label>
-                <input type="text" name="xeploai" class="form-control" value="">
+                <input type="text" name="tenxeploai" maxlength="100" class="form-control" value="">
+                <label for="">Mô tả xếp loại</label>
+                <textarea name="motaxeploai" class="form-control" id="" cols="30" rows="10"></textarea>
                 <button type=" submit" class="btn btn-primary">Submit</button>
             </div>
 

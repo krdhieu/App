@@ -43,22 +43,22 @@ let upload = multer({ storage: storage, fileFilter: Filter });
 const initRouter = (app) => {
     //phong ban
     router.get('/quanlyphongban', phongbanController.viewPhongBan);
-    router.get('/quanlyphongban/sua/:id', phongbanController.editPhongBan);
+    router.get('/quanlyphongban/sua/:maphongban', phongbanController.editPhongBan);
     router.post('/uploadphongban', phongbanController.uploadPhongban);
     router.post('/addphongban', phongbanController.addPhongban);
     // chuc vu
     router.get('/quanlychucvu', chucvuController.viewChucvu);
-    router.get('/quanlychucvu/sua/:id', chucvuController.editChucvu);
+    router.get('/quanlychucvu/sua/:machucvu', chucvuController.editChucvu);
     router.post('/uploadchucvu', chucvuController.uploadChucvu);
     router.post('/addchucvu', chucvuController.addChucvu);
     // chức vụ hội đồng
     router.get('/quanlychucvuhd', chucvuhdController.viewChucvuhd);
-    router.get('/quanlychucvuhd/sua/:id', chucvuhdController.editChucvuhd);
+    router.get('/quanlychucvuhd/sua/:machucvuhd', chucvuhdController.editChucvuhd);
     router.post('/uploadchucvuhd', chucvuhdController.uploadChucvuhd);
     router.post('/addchucvuhd', chucvuhdController.addChucvuhd);
     // xếp loại
     router.get('/quanlyxeploai', xeploaiController.viewXeploai);
-    router.get('/quanlyxeploai/sua/:id', xeploaiController.editXeploai);
+    router.get('/quanlyxeploai/sua/:maxeploai', xeploaiController.editXeploai);
     router.post('/uploadxeploai', xeploaiController.uploadXeploai);
     router.post('/addxeploai', xeploaiController.addXeploai);
     // trạng thái sáng kiến
@@ -68,7 +68,7 @@ const initRouter = (app) => {
         trangthaisangkienController.viewTrangthaisangkien
     );
     router.get(
-        '/quanlytrangthaisangkien/sua/:id',
+        '/quanlytrangthaisangkien/sua/:matrangthai',
         trangthaisangkienController.editTrangthaisangkien
     );
     router.post(
@@ -81,15 +81,19 @@ const initRouter = (app) => {
     );
     // tạo nhân viên
     router.get('/quanlynhanvien/:search', nhanvienController.viewNhanvien);
-    router.get('/quanlynhanvien/sua/:id', nhanvienController.editNhanvien);
+    router.get('/quanlynhanvien/sua/:manhanvien', nhanvienController.editNhanvien);
     router.post('/uploadnhanvien', nhanvienController.uploadNhanvien);
     router.post('/addnhanvien', nhanvienController.addNhanvien);
     router.get('/quanlynhanvien', nhanvienController.viewNhanvien);
-    router.post('/setnghiviec', nhanvienController.nghiviecNhanvien)
+    router.post('/setnghiviec', nhanvienController.nghiviecNhanvien);
+    router.get('/thongtincanhan', nhanvienController.thongtinNhanvien);
+    router.post('/suanhanvien-user', nhanvienController.suaNhanvienuser);
+    router.post('/uploadnhanvien-user', nhanvienController.uploadNhanvienuser);
     // tạo sang kien
     router.get('/quanlysangkien', sangkienController.viewSangkien);
-    //router.get('/quanlysangkien/:id', nhanvienController.editNhanvien);
-    //router.post('/uploadsangkien', sangkienController.uploadSangkien);
+    router.get('/quanlysangkien/duyet/:masangkien', sangkienController.duyetSangkien);
+    router.get('/quanlysangkien/huy/:masangkien', sangkienController.huySangkien);
+    router.post('/quanlysangkien/huysangkien', sangkienController.huy1Sangkien);
     router.post('/addsangkien', sangkienController.addSangkien);
     router.get('/create-sangkien', sangkienController.createSangkien);
     router.get('/chitietsangkien', sangkienController.detailSangkien);
@@ -97,7 +101,9 @@ const initRouter = (app) => {
     // tạo đợt sáng kiến
     router.get('/quanlydotsangkien', dotsangkienController.viewDotsangkien);
     router.post('/adddotsangkien', dotsangkienController.addDotsangkien);
-
+    router.get('/editdotsangkien', dotsangkienController.suaDotsangkien);
+    router.post('/uploaddotsangkien', dotsangkienController.uploadDotsangkien);
+    router.get('/ketthucdot', dotsangkienController.ketthucDotsangkien);
     //-----------------------------------------------------------------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------//
     //sua thong tin thanh vien hd

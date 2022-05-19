@@ -17,9 +17,14 @@
             <!-- Vertical -->
             <div class="form-group">
                 <label>id</label>
-                <input type="text" name="id" class="form-control" value="<%= dataChucvuhd.id %>" readonly>
+                <input type="text" name="machucvuhd" class="form-control" value="<%= dataChucvuhd.machucvuhd %>"
+                    readonly>
                 <label>Tên Phòng Ban</label>
-                <input type="text" name="tenchucvu" class="form-control" value="<%= dataChucvuhd.tenchucvu %>">
+                <input type="text" name="tenchucvuhd" maxlength="100" class="form-control"
+                    value="<%= dataChucvuhd.tenchucvuhd %>" required>
+                <label>Mô tả chức vụ hội đồng</label>
+                <textarea name="motachucvuhd" class="form-control" id="" cols="30"
+                    rows="10"><%= dataChucvuhd.motachucvuhd %></textarea>
                 <button type=" submit" class="btn btn-primary">Submit</button>
             </div>
 

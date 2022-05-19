@@ -18,10 +18,12 @@
                 <tr>
                     <th scope="col">STT</th>
                     <th scope="col">Chức vụ</th>
+                    <th scope="col">Mô tả chức vụ</th>
                     <th scope="col">Tác vụ</th>
                 </tr>
             </thead>
             <tbody>
+                <!-- chuc vu -->
                 <% for( let i=0 ; i < dataChucvu.length; i++){ %>
                     <tr>
                         <th scope="row">
@@ -30,7 +32,10 @@
                         <td>
                             <%= dataChucvu[i].tenchucvu %>
                         </td>
-                        <td><a href="/quanlychucvu/sua/<%= dataChucvu[i].id %>" target="_self">Sửa</a></td>
+                        <td>
+                            <%= dataChucvu[i].motachucvu %>
+                        </td>
+                        <td><a href="/quanlychucvu/sua/<%= dataChucvu[i].machucvu %>" target="_self">Sửa</a></td>
                     </tr>
                     <% } %>
             </tbody>
@@ -41,7 +46,9 @@
             <!-- Vertical -->
             <div class="form-group">
                 <label>Tên chức vụ</label>
-                <input type="text" name="tenchucvu" class="form-control" value="">
+                <input type="text" name="tenchucvu" maxlength="100" class="form-control" value="">
+                <label>Mô tả chức vụ</label>
+                <textarea name="motachucvu" class="form-control" id="" cols="30" rows="10"></textarea>>
                 <button type=" submit" class="btn btn-primary">Submit</button>
             </div>
 
