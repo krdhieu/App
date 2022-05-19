@@ -16,7 +16,7 @@ const verifyAccessTokenMiddleware = (req, res, next) => {
     }
     next();
 };
-
+// kiem tra quyen admin
 const verifyAccessTokenAndAdminAuth = async (req, res, next) => {
     if (!req.cookies.access_token) {
         return res.redirect('/');
@@ -36,8 +36,28 @@ const verifyAccessTokenAndAdminAuth = async (req, res, next) => {
     }
     next();
 };
-
+//kiem tra la quyen admin hoac giam khao
+const verifyAccessTokenAndAdminGiamKhao = async (req, res, next) => {
+    if (!req.cookies.access_token) {
+        return res.redirect('/');
+    }
+    const access_token = req.cookies.access_token.split(' ')[1];
+    try {
+        let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
+        let check = await quyenService.checkQuyen(payLoad.roleId);
+        if (check !== 'ADMIN' && check !== 'GIAMKHAO') {
+            return res.send(`You don't have permission to access`);
+        }
+        req.emailLogin = payLoad.email;
+        req.nhanVienId = payLoad.nhanVienId;
+        req.roleId = payLoad.roleId;
+    } catch (error) {
+        return res.render('sessionExpired.ejs');
+    }
+    next();
+};
 module.exports = {
     verifyAccessTokenMiddleware: verifyAccessTokenMiddleware,
     verifyAccessTokenAndAdminAuth: verifyAccessTokenAndAdminAuth,
+    verifyAccessTokenAndAdminGiamKhao: verifyAccessTokenAndAdminGiamKhao,
 };

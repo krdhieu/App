@@ -17,6 +17,7 @@ import path from 'path';
 import multer from 'multer';
 var appRoot = require('app-root-path');
 import thanhVienHDKHController from '../controller/thanhVienHDKHController';
+import chamDiemController from '../controller/chamDiemController';
 
 const router = express.Router();
 
@@ -106,6 +107,18 @@ const initRouter = (app) => {
     router.get('/ketthucdot', dotsangkienController.ketthucDotsangkien);
     //-----------------------------------------------------------------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------//
+    // cham diem sang kien
+    router.post(
+        '/create-chitiet-chamdiem',
+        chamDiemController.createChiTietChamDiem
+    );
+    // hien thi trang chi tiet sang kien de cham diem
+    router.get(
+        '/detail-sangkien',
+        verifyAccessToken.verifyAccessTokenAndAdminGiamKhao,
+        chamDiemController.getDetailSangKien
+    );
+    router.get('/get-cham-diem', chamDiemController.getChamDiemPage);
     //sua thong tin thanh vien hd
     router.post('/edit-thanhvien-hd', thanhVienHDKHController.editThanhVienHD);
     //them thong tin thanh vien hd

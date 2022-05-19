@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="/css/styles.css"/>
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="container-fluid row main-container">
+            <div class="col-3 ntg-container  ">
+                <h4 class="text-center">Người tham gia sáng kiến</h4>
+                <% for(let i=0;i<nguoiThamGia.length;i++){%>
+                    <div>Ma nhan vien: <%= nguoiThamGia[i].manhanvien%></div>
+                    <div>Ten Nhan Vien: <%= nguoiThamGia[i].tennhanvien%></div>
+                    <div>Vai Tro: <%= (nguoiThamGia[i].vaitro===0?'Nguoi Tham Gia':'Chu Tri')%></div>   
+                <%}%>
+            </div>
+            <div class="col-8 sk-container offset-1">
+                <h4 class="text-center">Chi tiết sáng kiến</h4>
+                <div>Tên sáng kiến: <%=detailSangKien.tensangkien%></div>
+                <div>Mục tiêu sáng kiến: <%=detailSangKien.muctieu%></div>
+                <div>Nội dung sáng kiến: <%=detailSangKien.noidung%></div>
+                <div>Đánh giá lợi ích thu được: <%=detailSangKien.loiich%></div>
+                <div>File chi tiết đính kèm:</div>
+            </div>
+            <div class="row text-center">
+                <h4>Chấm điểm</h4>
+                <form action="/create-chitiet-chamdiem" method="post" class="row">
+                    <input type="text" value="<%=detailSangKien.masangkien%>"  class="form-control" name="sangKienId">
+                    <input type="text" value="<%=thanhVienHDDaDangNhap.mathanhvien%>" class="form-control" name="thanhVienHDId">
+                    <div class="col-3">
+                        <label for="">Điểm mục đích</label>
+                        <input type="number" step="0.1" name="diemMucDich" 
+                            class="form-control input-diem mucdich" required min="0" max="10">
+                    </div>
+                    <div class="col-3">
+                        <label for="">Điểm nội dung</label>
+                        <input type="number" step="0.1" name="diemNoiDung" 
+                            class="form-control input-diem noidung" required min="0" max="10">
+                    </div>
+                    <div class="col-3">
+                        <label for="">Điểm ứng dụng</label>
+                        <input type="number" step="0.1" name="diemUngDung" 
+                            class="form-control input-diem ungdung" required min="0" max="10">
+                    </div>
+                   <div class="col-3">
+                        <label for="">Điểm trình bày</label>
+                        <input type="number" step="0.1" name="diemTrinhBay" 
+                            class="form-control input-diem trinhbay" required min="0" max="10">
+                   </div>
+                   <div class="col-12 row mt-3">
+                       <div class="col-8"></div>
+                        <button type="submit" class="btn btn-success col-4 me-0">Save</button>
+                   </div>
+                </form>
+            </div>
+        </div>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+            integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>

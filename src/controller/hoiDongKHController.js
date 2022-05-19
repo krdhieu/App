@@ -45,7 +45,9 @@ const getDetailHDKH = async (req, res) => {
         await thanhVienHDKHService.getAllThanhVienHDKHJoinNhanVienJoinChucVu(
             id
         );
-    console.log(allThanhVien);
+    // console.log('all thanh vien', allThanhVien);
+    // console.log('detail', detail);
+    // console.log('all chuc vu', allChucVu);
     return res.render('detailHDKH.ejs', {
         detail: detail[0],
         allChucVu,

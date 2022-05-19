@@ -43,17 +43,18 @@
                         <label for="inputState">Quyen</label>
                         <select id="inputState" class="form-control" name="quyen">
                             <% for(let i=0;i<allQuyen.length;i++){%>
-                            <option value="<%=allQuyen[i].id%>"><%=allQuyen[i].loai%></option>
+                            <option value="<%=allQuyen[i].maquyen%>"><%=allQuyen[i].tenquyen%></option>
                             <%}%>
                         </select>
                     </div>
                     <div class="form-group col-3">
                         <label for="inputState">Nhan Vien</label>
-                        <select id="inputState" class="form-control" name="idNhanVien">
+                        <!-- <select id="inputState" class="form-control" name="idNhanVien">
                             <% for(let i=0;i<allNhanVien.length;i++){%>
-                                <option value="<%=allNhanVien[i].id%>"><%=allNhanVien[i].id%>-<%=allNhanVien[i].tennhanvien%></option>
+                                <option value="<%=allNhanVien[i].manhanvien%>"><%=allNhanVien[i].manhanvien%>-<%=allNhanVien[i].tennhanvien%></option>
                             <%}%>
-                        </select>
+                        </select> -->
+                        <input type="text" name="idNhanVien"  class="form-control">
                     </div>
                 </div>
 

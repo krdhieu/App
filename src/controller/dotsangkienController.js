@@ -5,7 +5,7 @@ import connectDB from '../configs/connectDB';
 let viewDotsangkien = async (req, res) => {
     const [rows] = await connectDB.execute('SELECT * FROM `dotsangkien`');
     return res.render('quanlydotsangkien.ejs', { dataSangkien: rows });
-}
+};
 
 let addDotsangkien = async (req, res) => {
     let { tendotsangkien, ngaybatdau, ngayketthuc, ngaydungdangky, hannop } = req.body;
@@ -34,3 +34,4 @@ let ketthucDotsangkien = async (req, res) => {
 module.exports = {
     viewDotsangkien, addDotsangkien, suaDotsangkien, uploadDotsangkien, ketthucDotsangkien
 }
+

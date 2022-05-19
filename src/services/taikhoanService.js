@@ -5,7 +5,7 @@ let createAccount = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             await connectDB.execute(
-                'INSERT INTO `taikhoan`(`tentaikhoan`, `matkhau`, `id_nhanvien`, `id_quyen`) VALUES (?,?,?,?)',
+                'INSERT INTO `taikhoan`(`tentaikhoan`, `matkhau`, `manhanvien`, `maquyen`) VALUES (?,?,?,?)',
                 [data.email, data.hash, data.idNhanVien, data.quyen]
             );
             resolve('ok');
@@ -33,7 +33,7 @@ let getAllAccount = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let [allAccount] = await connectDB.execute(
-                'SELECT * FROM `taikhoan` INNER JOIN nhanvien on taikhoan.id_nhanvien=nhanvien.id INNER JOIN quyen on quyen.id=taikhoan.id_quyen'
+                'SELECT * FROM `taikhoan` INNER JOIN nhanvien on taikhoan.manhanvien=nhanvien.manhanvien INNER JOIN quyen on quyen.maquyen=taikhoan.maquyen'
             );
             resolve(allAccount);
         } catch (e) {
@@ -46,7 +46,7 @@ let editRole = (email, roleId) => {
     return new Promise(async (resolve, reject) => {
         try {
             await connectDB.execute(
-                'UPDATE taikhoan set id_quyen=? where tentaikhoan=?',
+                'UPDATE taikhoan set maquyen=? where tentaikhoan=?',
                 [roleId, email]
             );
             resolve('ok');
@@ -70,11 +70,40 @@ let resetPassword = (email, password) => {
         }
     });
 };
-
+/// kiem tra nhan vien da co tai khoan hay chua
+let checkNhanVienDaCoTaiKhoan = (idNhanVien) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [check] = await connectDB.execute(
+                `SELECT * FROM nhanvien JOIN taikhoan ON nhanvien.manhanvien=taikhoan.manhanvien WHERE taikhoan.manhanvien = ?`,
+                [idNhanVien]
+            );
+            resolve(check);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+// phan trang tai khoan
+let paginationAccount = (perpage, begin) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [accountPerpage] = await connectDB.execute(
+                `SELECT * FROM taikhoan INNER JOIN nhanvien on taikhoan.manhanvien=nhanvien.manhanvien INNER JOIN quyen on quyen.maquyen=taikhoan.maquyen LIMIT ? OFFSET ?`,
+                [perpage, begin]
+            );
+            resolve(accountPerpage);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     createAccount: createAccount,
     getOneAccount: getOneAccount,
     getAllAccount: getAllAccount,
     editRole: editRole,
     resetPassword: resetPassword,
+    checkNhanVienDaCoTaiKhoan: checkNhanVienDaCoTaiKhoan,
+    paginationAccount: paginationAccount,
 };

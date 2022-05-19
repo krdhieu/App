@@ -14,7 +14,7 @@
     </head>
     <body>
         <div class="container">
-            <div>ID: <%=detail.id%></div>
+            <div>ID: <%=detail.mahoidong%></div>
             <div>
                 Ngay thanh lap: <%=
                 moment(detail.ngaythanhlap).format('MM/DD/YYYY'); %>
@@ -39,12 +39,12 @@
                 </tr>
                 <% for(let i=0;i<allThanhVien.length;i++){ %>
                 <tr >
-                    <td><%=allThanhVien[i].thanhVienHoiDongId%></td>
-                    <td><%=allThanhVien[i].nhanVienId%></td>
+                    <td><%=allThanhVien[i].mathanhvien%></td>
+                    <td><%=allThanhVien[i].manhanvien%></td>
                     <td><%=allThanhVien[i].tennhanvien%></td>
-                    <td><%=allThanhVien[i].tenchucvu%></td>
+                    <td><%=allThanhVien[i].tenchucvuhd%></td>
                     <%if(detail.trangthai===1){%>
-                    <td><button onclick="showEditThanhVienHDForm('<%=allThanhVien[i].nhanVienId%>','<%=allThanhVien[i].thanhVienHoiDongId%>')">edit</button></td>
+                    <td><button onclick="showEditThanhVienHDForm('<%=allThanhVien[i].manhanvien%>','<%=allThanhVien[i].mathanhvien%>')">edit</button></td>
                     <%}%>
                 </tr>
                 <%}%>
@@ -80,7 +80,7 @@
                     <label for="chucVuHD">Chức vụ</label>
                     <select name="idChucVu">
                         <% for(let i=0;i<allChucVu.length;i++){ %>
-                            <option value="<%=allChucVu[i].id%>"><%=allChucVu[i].tenchucvu%></option>
+                            <option value="<%=allChucVu[i].machucvuhd%>"><%=allChucVu[i].tenchucvuhd%></option>
                         <%}%>
                     </select>
                 </div>
@@ -94,7 +94,7 @@
         <div class="create-thanhvienhd-form">
             <div>Thêm thành viên</div>
             <form action="/create-thanhvien-hd" method="post">
-                <input type="text" hidden value="<%=detail.id%>" name="idHDKH" />
+                <input type="text" hidden value="<%=detail.mahoidong%>" name="idHDKH" />
                 <div>
                     <label for="id">ID Nhân Viên</label>
                     <input
@@ -108,7 +108,7 @@
                     <label for="chucVuHD">Chức vụ</label>
                     <select name="idChucVu">
                         <% for(let i=0;i<allChucVu.length;i++){ %>
-                            <option value="<%=allChucVu[i].id%>"><%=allChucVu[i].tenchucvu%></option>
+                            <option value="<%=allChucVu[i].machucvuhd%>"><%=allChucVu[i].tenchucvuhd%></option>
                         <%}%>
                     </select>
                 </div>

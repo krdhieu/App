@@ -27,11 +27,12 @@ let checkStateHDKH = () => {
     });
 };
 
+// tao moi hoi dong khoa hoc
 let createHDKH = (ngayThanhLap, nhiemVu) => {
     return new Promise(async (resolve, reject) => {
         try {
             await connectDB.execute(
-                'INSERT INTO `hoidongkhoahoc`(`id`, `ngaythanhlap`, `nhiemvu`, `trangthai`,`ngayketthuc`) VALUES (null,?,?,?,null)',
+                'INSERT INTO `hoidongkhoahoc`(`mahoidong`, `ngaythanhlap`, `nhiemvu`, `trangthai`,`ngayketthuc`) VALUES (null,?,?,?,null)',
                 [ngayThanhLap, nhiemVu, 1]
             );
             resolve('success');
@@ -41,11 +42,12 @@ let createHDKH = (ngayThanhLap, nhiemVu) => {
     });
 };
 
+// lay thong tin chi tiet hoi dong khoa hoc
 let getDetailHDKH = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             let [detail] = await connectDB.execute(
-                'SELECT * FROM `hoidongkhoahoc` WHERE id=?',
+                'SELECT * FROM `hoidongkhoahoc` WHERE mahoidong=?',
                 [id]
             );
             resolve(detail);
@@ -54,12 +56,12 @@ let getDetailHDKH = (id) => {
         }
     });
 };
-
+// thay doi trang thai cua hoi dong (dang trong nhiem ky / da ket thuc nhiem ky)
 let changeStateHDKH = (ngayketthuc, id) => {
     return new Promise(async (resolve, reject) => {
         try {
             await connectDB.execute(
-                'UPDATE `hoidongkhoahoc` SET `ngayketthuc`=?,`trangthai`=0 WHERE `id`=?',
+                'UPDATE `hoidongkhoahoc` SET `ngayketthuc`=?,`trangthai`=0 WHERE `mahoidong`=?',
                 [ngayketthuc, id]
             );
             resolve('success');
@@ -68,12 +70,12 @@ let changeStateHDKH = (ngayketthuc, id) => {
         }
     });
 };
-
+// sua thong ngay thanh lap va nhiem vu hdkh
 let editHDKH = (id, nhiemvu, ngaythanhlap) => {
     return new Promise(async (resolve, reject) => {
         try {
             await connectDB.execute(
-                'UPDATE `hoidongkhoahoc` SET `ngaythanhlap`=?,`nhiemvu`=? WHERE `id`=?',
+                'UPDATE `hoidongkhoahoc` SET `ngaythanhlap`=?,`nhiemvu`=? WHERE `mahoidong`=?',
                 [ngaythanhlap, nhiemvu, id]
             );
             resolve('success');
@@ -82,7 +84,23 @@ let editHDKH = (id, nhiemvu, ngaythanhlap) => {
         }
     });
 };
-
+// lay thong tin thanh vien hoi dong da dang nhap
+let getThanhVienHDDaDangNhap = (idNhanVien) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [thanhVienHDDaDangNhap] = await connectDB.execute(
+                `SELECT thanhvienhoidong.* FROM thanhvienhoidong 
+            JOIN nhanvien ON nhanvien.manhanvien= thanhvienhoidong.manhanvien 
+            JOIN hoidongkhoahoc ON hoidongkhoahoc.mahoidong = thanhvienhoidong.mahoidong 
+            where hoidongkhoahoc.trangthai =1 AND nhanvien.manhanvien=?`,
+                [idNhanVien]
+            );
+            resolve(thanhVienHDDaDangNhap);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     getAllHDKH: getAllHDKH,
     checkStateHDKH: checkStateHDKH,
@@ -90,4 +108,5 @@ module.exports = {
     getDetailHDKH: getDetailHDKH,
     editHDKH: editHDKH,
     changeStateHDKH: changeStateHDKH,
+    getThanhVienHDDaDangNhap: getThanhVienHDDaDangNhap,
 };
