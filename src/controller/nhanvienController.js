@@ -61,12 +61,7 @@ let nghiviecNhanvien = async (req, res) => {
 }
 
 let thongtinNhanvien = async (req, res) => {
-    // if (!req.cookies.access_token) {
-    //     return res.redirect('/');
-    // }
-    // const access_token = req.cookies.access_token.split(' ')[1];
-    // let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
-    const [nhanvien] = await connectDB.execute('SELECT * FROM nhanvien where manhanvien = ?', [2]);
+    const [nhanvien] = await connectDB.execute('SELECT * FROM nhanvien where manhanvien = ?', [req.nhanVienId]);
     res.render('thongtincanhan.ejs', { dataNhanvien: nhanvien[0] });
 }
 let uploadNhanvienuser = async (req, res) => {
@@ -74,15 +69,20 @@ let uploadNhanvienuser = async (req, res) => {
     if (!manhanvien || !tennhanvien || !gioitinh || !ngaysinh || !ngayvaolam || !sdt) {
         res.redirect('/quanlynhanvien');
     }
+    for (let i = 0; i < sdt.length; i++) {
+        if (sdt[i] >= '0' && sdt[i] <= '9') {
+        }
+        else {
+            return res.status(200).send('<p>sai dinh dang dien thoai <a href="/quanlynhanvien">Trở về</a></p>');
+        }
+    }
     tennhanvien = chuanhoachuoi.chuanhoaten(tennhanvien)
     await connectDB.execute('update nhanvien set  tennhanvien = ?,gioitinh = ?,ngaysinh = ?,ngayvaolam = ?,sdt = ? where manhanvien = ?',
         [tennhanvien, gioitinh, ngaysinh, ngayvaolam, sdt, manhanvien]);
     return res.redirect('/thongtincanhan')
 }
 let suaNhanvienuser = async (req, res) => {
-    // const access_token = req.cookies.access_token.split(' ')[1];
-    // let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
-    const [nhanvien] = await connectDB.execute('SELECT * FROM nhanvien where manhanvien = ?', [2]);
+    const [nhanvien] = await connectDB.execute('SELECT * FROM nhanvien where manhanvien = ?', [req.nhanVienId]);
     res.render('suanhanvien-user.ejs', { dataNhanvien: nhanvien[0] });
 }
 

@@ -83,9 +83,7 @@ let UploadProfileFile = async (req, res) => {
     });
 }
 let detailSangkien = async (req, res) => {
-    const access_token = req.cookies.access_token.split(' ')[1];
-    let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
-    const [nguoithamgia] = await connectDB.execute('SELECT * FROM nguoithamgia where manhanvien = ?', [payLoad.nhanVienId]);
+    const [nguoithamgia] = await connectDB.execute('SELECT * FROM nguoithamgia where manhanvien = ?', [req.nhanVienId]);
     if (nguoithamgia[0]) {
         const [sangkien] = await connectDB.execute('SELECT * FROM sangkien where masangkien = ?', [nguoithamgia[0].masangkien]);
         let masangkien = sangkien[0].masangkien;

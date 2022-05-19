@@ -18,18 +18,20 @@ import multer from 'multer';
 var appRoot = require('app-root-path');
 import thanhVienHDKHController from '../controller/thanhVienHDKHController';
 import chamDiemController from '../controller/chamDiemController';
+import connectDB from '../configs/connectDB';
 
 const router = express.Router();
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, appRoot + '/src/public/file');
+        cb(null, appRoot + '/src/files');
     },
 
-    filename: function (req, file, cb) {
+    filename: async function (req, file, cb) {
         const access_token = req.cookies.access_token.split(' ')[1];
         let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
-        cb(null, file.fieldname + '-' + payLoad.nhanVienId + path.extname(file.originalname));
+        let [sangkien] = await connectDB.execute('SELECT * FROM `sangkien` INNER JOIN nguoithamgia ON sangkien.masangkien = nguoithamgia.masangkien WHERE manhanvien = ? and matrangthai = 1', [payLoad.nhanVienId]);
+        cb(null, 'sangkien-' + sangkien[0].masangkien + path.extname(file.originalname));
     }
 })
 const Filter = function (req, file, cb) {
@@ -87,9 +89,9 @@ const initRouter = (app) => {
     router.post('/addnhanvien', nhanvienController.addNhanvien);
     router.get('/quanlynhanvien', nhanvienController.viewNhanvien);
     router.post('/setnghiviec', nhanvienController.nghiviecNhanvien);
-    router.get('/thongtincanhan', nhanvienController.thongtinNhanvien);
-    router.post('/suanhanvien-user', nhanvienController.suaNhanvienuser);
-    router.post('/uploadnhanvien-user', nhanvienController.uploadNhanvienuser);
+    router.get('/thongtincanhan', verifyAccessToken.verifyAccessTokenMiddleware, nhanvienController.thongtinNhanvien);
+    router.post('/suanhanvien-user', verifyAccessToken.verifyAccessTokenMiddleware, nhanvienController.suaNhanvienuser);
+    router.post('/uploadnhanvien-user', verifyAccessToken.verifyAccessTokenMiddleware, nhanvienController.uploadNhanvienuser);
     // tạo sang kien
     router.get('/quanlysangkien', sangkienController.viewSangkien);
     router.get('/quanlysangkien/duyet/:masangkien', sangkienController.duyetSangkien);
@@ -97,7 +99,7 @@ const initRouter = (app) => {
     router.post('/quanlysangkien/huysangkien', sangkienController.huy1Sangkien);
     router.post('/addsangkien', sangkienController.addSangkien);
     router.get('/create-sangkien', sangkienController.createSangkien);
-    router.get('/chitietsangkien', sangkienController.detailSangkien);
+    router.get('/chitietsangkien', verifyAccessToken.verifyAccessTokenMiddleware, sangkienController.detailSangkien);
     router.post('/upload-file', upload.single('profile_file'), sangkienController.UploadProfileFile);
     // tạo đợt sáng kiến
     router.get('/quanlydotsangkien', dotsangkienController.viewDotsangkien);
