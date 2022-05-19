@@ -18,25 +18,23 @@
                 <tr>
                     <th scope="col">id</th>
                     <th scope="col">Tên</th>
-                    <th scope="col">Đợt</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Ngày bắt đầu</th>
                     <th scope="col">Ngày kết thúc</th>
-                    <th scope="col">Ngày hạn nộp</th>
+                    <th scope="col">Ngày hết hạn đăng ký</th>
+                    <th scope="col">Hạn nộp</th>
                 </tr>
             </thead>
             <tbody>
-                <% var checkdot=true; %>
+                <!-- dot sang kien -->
+                <% let checkdot=true; %>
                     <% for( let i=0 ; i < dataSangkien.length; i++){ %>
                         <tr>
                             <th scope="row">
-                                <%= dataSangkien[i].id %>
+                                <%= dataSangkien[i].madotsangkien %>
                             </th>
                             <td>
-                                <%= dataSangkien[i].ten %>
-                            </td>
-                            <td>
-                                <%= dataSangkien[i].dot %>
+                                <%= dataSangkien[i].tendotsangkien %>
                             </td>
                             <td>
                                 <% if (dataSangkien[i].trangthai) { checkdot=false; %>
@@ -53,33 +51,41 @@
                                 <%= moment(dataSangkien[i].ngayketthuc).format( 'DD/MM/YYYY' ) %>
                             </td>
                             <td>
+                                <%= moment(dataSangkien[i].ngaydungdangky).format( 'DD/MM/YYYY' ) %>
+                            </td>
+                            <td>
                                 <%= moment(dataSangkien[i].hannop).format( 'DD/MM/YYYY' ) %>
                             </td>
                         </tr>
                         <% } %>
             </tbody>
         </table>
-        <h1>Thêm mới Đợt sáng kiến</h1>
         <% if (checkdot){%>
+            <h1>Thêm mới Đợt sáng kiến</h1>
             <form action="/adddotsangkien" method="post">
                 <div class="form-group">
                     <label>Tên Đợt</label>
-                    <input type="text" name="ten" class="form-control" value="">
-                    <label>Đợt</label>
-                    <input type="text" name="dot" class="form-control" value="">
+                    <input type="text" name="tendotsangkien" maxlength="255" class="form-control" value="">
                     <label>Ngày bắt đầu</label>
-                    <input type="date" name="ngaybatdau" class="form-control" value="">
+                    <input type="date" name="ngaybatdau" min="<% =moment().utcOffset('+0700').format('YYYY-MM-DD'); %>"
+                        max="2025-01-01" class="form-control" value="">
                     <label>Ngày kết thúc</label>
-                    <input type="date" name="ngayketthuc" class="form-control" value="">
-                    <label>Hạn nộp</label>
-                    <input type="date" name="hannop" class="form-control" value="">
+                    <input type="date" name="ngayketthuc" min="<% =moment().utcOffset('+0700').format('YYYY-MM-DD'); %>"
+                        max="2025-01-01" class="form-control" value="">
+                    <label>Ngày kết thúc đăng ký sáng kiến</label>
+                    <input type="date" name="ngaydungdangky"
+                        min="<% =moment().utcOffset('+0700').format('YYYY-MM-DD'); %>" max="2025-01-01"
+                        class="form-control" value="">
+                    <label>Hạn nộp bản báo cáo</label>
+                    <input type="date" name="hannop" class="form-control"
+                        min="<% =moment().utcOffset('+0700').format('YYYY-MM-DD'); %>" max="2025-01-01" value="">
                     <!-- submit -->
                     <button type=" submit" class="btn btn-primary">Submit</button>
                 </div>
 
             </form>
             <% }else{ %>
-                <p>Chưa thể mở đợt mới</p>
+                <a href="/editdotsangkien">Chỉnh sửa đợt sáng kiến</a>
                 <%} %>
                     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
                         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

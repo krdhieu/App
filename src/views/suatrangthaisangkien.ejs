@@ -16,10 +16,15 @@
 
             <!-- Vertical -->
             <div class="form-group">
-                <label>id</label>
-                <input type="text" name="id" class="form-control" value="<%= dataTrangthaisangkien.id %>" readonly>
+                <label>Mã trạng thái sáng kiến</label>
+                <input type="text" name="matrangthai" class="form-control"
+                    value="<%= dataTrangthaisangkien.matrangthai %>" readonly>
                 <label>Tên trạng thái sáng kiến</label>
-                <input type="text" name="trangthai" class="form-control" value="<%= dataTrangthaisangkien.trangthai %>">
+                <input type="text" name="tentrangthai" class="form-control"
+                    value="<%= dataTrangthaisangkien.tentrangthai %>" required>
+                <label>Mô tả trạng thái sáng kiến</label>
+                <textarea name="motatrangthai" class="form-control" id="" cols="30"
+                    rows="10"><%= dataTrangthaisangkien.motatrangthai %></textarea>
                 <button type=" submit" class="btn btn-primary">Submit</button>
             </div>
 

@@ -17,7 +17,8 @@
             <thead>
                 <tr>
                     <th scope="col">STT</th>
-                    <th scope="col">Chức vụ</th>
+                    <th scope="col">Chức vụ hội đồng </th>
+                    <th scope="col">Mô tả chức vụ hội đồng</th>
                     <th scope="col">Tác vụ</th>
                 </tr>
             </thead>
@@ -28,9 +29,12 @@
                             <%= i +1 %>
                         </th>
                         <td>
-                            <%= dataChucvuhd[i].tenchucvu %>
+                            <%= dataChucvuhd[i].tenchucvuhd %>
                         </td>
-                        <td><a href="/quanlychucvuhd/sua/<%= dataChucvuhd[i].id %>" target="_self">Sửa</a></td>
+                        <td>
+                            <%= dataChucvuhd[i].motachucvuhd %>
+                        </td>
+                        <td><a href="/quanlychucvuhd/sua/<%= dataChucvuhd[i].machucvuhd %>" target="_self">Sửa</a></td>
                     </tr>
                     <% } %>
             </tbody>
@@ -38,10 +42,12 @@
 
         <h1>Thêm mới chức vụ</h1>
         <form action="/addchucvuhd" method="post">
-            <!-- Vertical -->
+            <!-- them chuc vu hoi dong -->
             <div class="form-group">
                 <label>Tên chức vụ hội đồng</label>
-                <input type="text" name="tenchucvu" class="form-control" value="">
+                <input type="text" name="tenchucvu" maxlength="100" class="form-control" value="">
+                <label for="">Mô tả chức vụ hội đồng</label>
+                <textarea name="motachucvuhd" id="" cols="30" rows="10"></textarea>
                 <button type=" submit" class="btn btn-primary">Submit</button>
             </div>
 

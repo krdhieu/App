@@ -1,34 +1,33 @@
 import req from 'express/lib/request';
 import connectDB from '../configs/connectDB';
-var format = require('date-format');
 
 let viewTrangthaisangkien = async (req, res) => {
-    const [rows, fields] = await connectDB.execute('SELECT * FROM `trangthaisangkien`');
+    const [rows] = await connectDB.execute('SELECT * FROM `trangthaisangkien`');
     return res.render('showtrangthaisangkien.ejs', { dataTrangthaisangkien: rows });
 }
 let editTrangthaisangkien = async (req, res) => {
-    let id = req.params.id;
-    let [user] = await connectDB.execute('select * from trangthaisangkien where id = ?', [id]);
+    let matrangthai = req.params.matrangthai;
+    let [user] = await connectDB.execute('select * from trangthaisangkien where matrangthai = ?', [matrangthai]);
     return res.render('suatrangthaisangkien.ejs', { dataTrangthaisangkien: user[0] });
 }
 
 let uploadTrangthaisangkien = async (req, res) => {
-    let { id, trangthai } = req.body;
-    if (!trangthai || !id) {
+    let { matrangthai, tentrangthai, motatrangthai } = req.body;
+    if (!tentrangthai || !matrangthai) {
         res.redirect('/quanlytrangthaisangkien');
     }
-    await connectDB.execute('update trangthaisangkien set trangthai = ? where id = ?',
-        [trangthai, id]);
+    await connectDB.execute('update trangthaisangkien set tentrangthai = ? , motatrangthai = ? where matrangthai = ?',
+        [tentrangthai, motatrangthai, matrangthai]);
     return res.redirect('/quanlytrangthaisangkien')
 }
 
 let addTrangthaisangkien = async (req, res) => {
-    let { trangthai } = req.body;
-    if (!trangthai) {
+    let { tentrangthai, motatrangthai } = req.body;
+    if (!tentrangthai) {
         res.redirect('/quanlytrangthaisangkien');
     }
-    await connectDB.execute('INSERT INTO trangthaisangkien(trangthai)  VALUES (? )',
-        [trangthai]);
+    await connectDB.execute('INSERT INTO trangthaisangkien(tentrangthai,motatrangthai)  VALUES (? , ?)',
+        [tentrangthai, motatrangthai]);
     return res.redirect('/quanlytrangthaisangkien')
 }
 

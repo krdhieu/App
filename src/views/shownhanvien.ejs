@@ -13,6 +13,10 @@
 <body>
     <div>
         <h1>Danh sách nhân viên</h1>
+        <form action="/quanlynhanvien" method="get">
+            <input type="text" name="search">
+            <button type="submit">Submit</button>
+        </form>
         <table class="table">
             <thead>
                 <tr>
@@ -32,13 +36,13 @@
                 <% for( let i=0 ; i < dataNhanvien.length; i++){ %>
                     <tr>
                         <th scope="row">
-                            <%= dataNhanvien[i].id %>
+                            <%= dataNhanvien[i].manhanvien %>
                         </th>
                         <td>
                             <%= dataNhanvien[i].tenphongban %>
                         </td>
                         <td>
-                            <%= dataNhanvien[i].tenNhanvien %>
+                            <%= dataNhanvien[i].tenchucvu %>
                         </td>
                         <td>
                             <%= dataNhanvien[i].trinhdohocvan %>
@@ -54,7 +58,7 @@
                                     <% } %>
                         </td>
                         <td>
-                            <%= moment(dataNhanvien[i].namsinh).format( 'DD-MM-YYYY' ) %>
+                            <%= moment(dataNhanvien[i].ngaysinh).format( 'DD-MM-YYYY' ) %>
                         </td>
                         <td>
                             <%= dataNhanvien[i].sdt %>
@@ -69,62 +73,62 @@
                                     Nghỉ việc
                                     <% } %>
                         </td>
-                        <td><a href="/quanlynhanvien/sua/<%= dataNhanvien[i].id %>" target="_self">Sửa</a></td>
+                        <td><a href="/quanlynhanvien/sua/<%= dataNhanvien[i].manhanvien %>" target="_self">Sửa</a></td>
                     </tr>
                     <% } %>
             </tbody>
         </table>
 
-        <h1>Thêm mới nhan vien</h1>
+        <h1>Thêm mới nhân viên</h1>
         <form action="/addnhanvien" method="post">
 
             <!-- Vertical -->
             <div class="form-group">
                 <!-- Phòng ban -->
                 <label>Phòng ban</label>
-                <br>
-                <select name="id_phongban">
+                <select name="maphongban" class="form-control" required>
                     <% for (let i=0; i<dataPhongban.length;i++){ %>
-                        <option value="<%=dataPhongban[i].id%>">
+                        <option value="<%=dataPhongban[i].maphongban%>">
                             <%=dataPhongban[i].tenphongban%>
                         </option>
                         <% } %>
                 </select>
-                <br>
                 <!-- chức vụ -->
                 <label>Chức vụ</label>
-                <br>
-                <select name="id_chucvu">
+                <select name="machucvu" class="form-control" required>
                     <% for (let i=0; i<dataChucvu.length;i++){ %>
-                        <option value="<%=dataChucvu[i].id%>">
+                        <option value="<%=dataChucvu[i].machucvu%>">
                             <%=dataChucvu[i].tenchucvu%>
                         </option>
                         <% } %>
                 </select>
                 <br>
                 <!-- Trình độ  -->
-                <label>Trình độ đại học</label>
-                <input type="text" name="trinhdohocvan" class="form-control" value="">
+                <label>Trình độ học vấn</label>
+                <input type="text" name="trinhdohocvan" class="form-control" value="" required>
                 <!-- Tên nhân viên  -->
                 <label>Tên nhân viên</label>
-                <input type="text" name="tennhanvien" class="form-control" value="">
+                <input type="text" name="tennhanvien" class="form-control" value="" required>
                 <!-- Giới tính  -->
                 <label>Giới tính</label>
-                <select name="gioitinh" value>
+                <select name="gioitinh" class="form-control" required>
                     <option value="1">Nam</option>
                     <option value="0">Nữ</option>
                 </select>
                 <!-- Năm sinh  -->
                 <label>Năm sinh</label>
-                <input type="date" name="namsinh" class="form-control" value="">
+                <input type="date" name="ngaysinh" class="form-control" min="1950-01-01" max="2006-01-01" value=""
+                    required>
                 <!-- Ngày vào làm  -->
                 <label>Ngày vào làm</label>
-                <input type="date" name="ngayvaolam" class="form-control" value="">
-                <!-- Số điện thoại  -->
-                <label>Số điện thoại</label>
-                <input type="text" name="sdt" class="form-control" value="">
-                <!-- Submit -->
-                <button type=" submit" class="btn btn-primary">Submit</button>
+                <% let currentDate=moment().utcOffset('+0700').format('YYYY-MM-DD'); %>
+                    <input type="date" name="ngayvaolam" class="form-control" min="2000-01-01" max="<%=currentDate %>"
+                        value="" required>
+                    <!-- Số điện thoại  -->
+                    <label>Số điện thoại</label>
+                    <input type="text" name="sdt" class="form-control" value="" maxlength="10" minlength="10" required>
+                    <!-- Submit -->
+                    <button type=" submit" class="btn btn-primary">Submit</button>
             </div>
 
         </form>
