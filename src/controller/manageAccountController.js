@@ -54,7 +54,7 @@ let createAccount = async (req, res) => {
 // hien thi ta ca tai khoan - phan trang
 let manageAccount = async (req, res) => {
     let page = parseInt(req.query.page) || 1;
-    let perpage = 2;
+    let perpage = 1;
 
     let allAccount = await taikhoanService.getAllAccount();
     // phan trang
@@ -78,13 +78,14 @@ let manageAccount = async (req, res) => {
         begin
     );
     // console.log('>>>>>perpage', accountPerpage);
+    /// hien thi lien ket den 5 trang truoc trang hien tai
     let iterator = page - 5 < 1 ? 1 : page - 5;
     console.log('iterator>>>>>>>>>>>>>', iterator);
-    let endingLink =
-        iterator + 9 <= numOfPages ? iterator + 9 : page + (numOfPages - page);
-    // if (endingLink < page + 4) {
-    //     iterator -= page + 4 - numOfPages;
-    // }
+
+    let endingLink = iterator + 9 <= numOfPages ? iterator + 9 : numOfPages;
+    if (endingLink < page + 4) {
+        iterator -= page + 4 - numOfPages;
+    }
     return res.render('manageAccount.ejs', {
         allAccount: accountPerpage,
         page,
