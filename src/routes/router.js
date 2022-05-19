@@ -30,7 +30,7 @@ const storage = multer.diskStorage({
     filename: async function (req, file, cb) {
         const access_token = req.cookies.access_token.split(' ')[1];
         let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
-        let [sangkien] = await connectDB.execute('SELECT * FROM `sangkien` INNER JOIN nguoithamgia ON sangkien.masangkien = nguoithamgia.masangkien WHERE manhanvien = ? and matrangthai = 1', [payLoad.nhanVienId]);
+        let [sangkien] = await connectDB.execute('SELECT * FROM `sangkien` INNER JOIN nguoithamgia ON sangkien.masangkien = nguoithamgia.masangkien WHERE manhanvien = ? and matrangthai = 2', [payLoad.nhanVienId]);
         cb(null, 'sangkien-' + sangkien[0].masangkien + path.extname(file.originalname));
     }
 })
@@ -94,10 +94,11 @@ const initRouter = (app) => {
     router.post('/uploadnhanvien-user', verifyAccessToken.verifyAccessTokenMiddleware, nhanvienController.uploadNhanvienuser);
     // tạo sang kien
     router.get('/quanlysangkien', sangkienController.viewSangkien);
+    router.get('/quanlyduyetsangkien', verifyAccessToken.verifyAccessTokenMiddleware, sangkienController.quanlyduyetSangkien);
     router.get('/quanlysangkien/duyet/:masangkien', sangkienController.duyetSangkien);
     router.get('/quanlysangkien/huy/:masangkien', sangkienController.huySangkien);
     router.post('/quanlysangkien/huysangkien', sangkienController.huy1Sangkien);
-    router.post('/addsangkien', sangkienController.addSangkien);
+    router.post('/addsangkien', verifyAccessToken.verifyAccessTokenMiddleware, sangkienController.addSangkien);
     router.get('/create-sangkien', sangkienController.createSangkien);
     router.get('/chitietsangkien', verifyAccessToken.verifyAccessTokenMiddleware, sangkienController.detailSangkien);
     router.post('/upload-file', upload.single('profile_file'), sangkienController.UploadProfileFile);

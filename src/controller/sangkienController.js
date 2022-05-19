@@ -15,22 +15,14 @@ let createSangkien = async (req, res) => {
 
 // tải dữ liệu sáng kiến mới từ trang tạo
 let addSangkien = async (req, res) => {
-    let { tensangkien, muctieu, noidung, loiich, doituong, tyledonggop_1, manhanvien_2, tyledonggop_2 } = req.body;
-    if (!tensangkien || !muctieu || !noidung || !loiich || !doituong) {
-        return res.status(200).send('<p>Bạn nhập thiếu thông tin <a href="/create-sangkien">Trở về</a></p>');
-    }
+    let { tensangkien, muctieu, noidung, loiich, doituong, manhanvien_2 } = req.body;
     tensangkien = chuanhoachuoi.chuanhoa(tensangkien);
     muctieu = chuanhoachuoi.chuanhoa(muctieu);
     loiich = chuanhoachuoi.chuanhoa(loiich);
     doituong = chuanhoachuoi.chuanhoa(doituong);
-    let manhanvien_1;
-    if (req.cookies.access_token) {
-        const access_token = req.cookies.access_token.split(' ')[1];
-        let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
-        manhanvien_1 = payLoad.nhanVienId;
-    }
+    let manhanvien_1 = req.nhanVienId;
     if (manhanvien_2) {
-        let [nhanvien_2] = await connectDB.execute('select count(*) as "soluong" from nhanvien where manhanvien = ?', [manhanvien_2]);
+        let [nhanvien_2] = await connectDB.execute('select count(*) as "soluong" from nhanvien where manhanvien = ? and trangthai =?', [manhanvien_2, 1]);
         if (nhanvien_2[0].soluong == 0) {
             return res.status(200).send('<p>Không tồn tại nhân viên <a href="/create-sangkien">Trở về</a></p>');
         }
@@ -44,11 +36,11 @@ let addSangkien = async (req, res) => {
     if (dotsangkien[0] != null) {
         let [id_sangkien_new] = await connectDB.execute('INSERT INTO `sangkien`(`tensangkien`, `madotsangkien`, `muctieu`, `noidung`, `loiich`, `doituong`) VALUES (?,?,?,?,?,?);',
             [tensangkien, dotsangkien[0].madotsangkien, muctieu, noidung, loiich, doituong]);
-        await connectDB.execute('INSERT INTO `nguoithamgia`(`manhanvien`, `masangkien`, `vaitro`, `tyledonggop`) VALUES (?,?,?,?)',
-            [manhanvien_1, id_sangkien_new.insertId, 0, tyledonggop_1]);
+        await connectDB.execute('INSERT INTO `nguoithamgia`(`manhanvien`, `masangkien`, `vaitro`) VALUES (?,?,?)',
+            [manhanvien_1, id_sangkien_new.insertId, 0]);
         if (manhanvien_2) {
-            await connectDB.execute('INSERT INTO `nguoithamgia`(`manhanvien`, `masangkien`, `vaitro`, `tyledonggop`) VALUES (?,?,?,?)',
-                [manhanvien_2, id_sangkien_new.insertId, 1, tyledonggop_2]);
+            await connectDB.execute('INSERT INTO `nguoithamgia`(`manhanvien`, `masangkien`, `vaitro`) VALUES (?,?,?)',
+                [manhanvien_2, id_sangkien_new.insertId, 1]);
         }
         return res.send('đăng ký thành công')
     }
@@ -59,10 +51,21 @@ let viewSangkien = async (req, res) => {
     const [rows] = await connectDB.execute('SELECT * FROM `sangkien` inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai');
     return res.render('showsangkien.ejs', { dataSangkien: rows });
 }
+// quan ly duyet
+let quanlyduyetSangkien = async (req, res) => {
+    const [phong] = await connectDB.execute('select maphongban from nhanvien where manhanvien = ?', [req.nhanVienId]);
+    console.log(phong);
+    const [rows] = await connectDB.execute(`
+    SELECT sangkien.masangkien, tensangkien,muctieu, noidung, loiich , doituong , tentrangthai , sangkien.matrangthai FROM sangkien 
+    inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai 
+    inner join nguoithamgia on sangkien.masangkien = nguoithamgia.masangkien 
+    inner join nhanvien on nhanvien.manhanvien = nguoithamgia.manhanvien 
+    where vaitro=? and sangkien.matrangthai = ? and maphongban=?`, [0, 1, phong[0].maphongban]);
+    return res.render('quanlyduyetsangkien.ejs', { dataSangkien: rows });
+}
 
 const upload = multer().single('profile_file');
 let UploadProfileFile = async (req, res) => {
-    let filename;
     upload(req, res, async function (err) {
         if (req.fileValidationError) {
             return res.send(req.fileValidationError);
@@ -76,7 +79,7 @@ let UploadProfileFile = async (req, res) => {
         else if (err) {
             return res.send(err);
         }
-        filename = req.file.filename;
+        let filename = req.file.filename;
 
         await connectDB.execute(`update sangkien set dinhkem = ?`, [filename]);
         // Display uploaded image for user validation
@@ -89,7 +92,7 @@ let UploadProfileFile = async (req, res) => {
 let detailSangkien = async (req, res) => {
     const [nguoithamgia] = await connectDB.execute('SELECT * FROM nguoithamgia where manhanvien = ?', [req.nhanVienId]);
     if (nguoithamgia[0]) {
-        const [sangkien] = await connectDB.execute('SELECT * FROM sangkien where masangkien = ?', [nguoithamgia[0].masangkien]);
+        const [sangkien] = await connectDB.execute('SELECT * FROM sangkien where masangkien = ? and matrangthai=?', [nguoithamgia[0].masangkien, 2]);
         let masangkien = sangkien[0].masangkien;
         const [thanhvien] = await connectDB.execute('SELECT * FROM nguoithamgia inner join nhanvien on nguoithamgia.manhanvien = nhanvien.manhanvien where masangkien = ?', [masangkien]);
         if (thanhvien[0].vaitro == 0) {
@@ -123,5 +126,6 @@ let huy1Sangkien = async (req, res) => {
     return res.redirect('/quanlysangkien');
 }
 module.exports = {
-    addSangkien, createSangkien, viewSangkien, UploadProfileFile, detailSangkien, duyetSangkien, huySangkien, huy1Sangkien
+    addSangkien, createSangkien, viewSangkien, UploadProfileFile, detailSangkien, duyetSangkien,
+    huySangkien, huy1Sangkien, quanlyduyetSangkien
 }
