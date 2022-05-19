@@ -11,13 +11,13 @@ import dotsangkienController from '../controller/dotsangkienController';
 import verifyAccessToken from '../controller/middleware/verifyAccessToken';
 import hoiDongKHController from '../controller/hoiDongKHController';
 import nhanvienController from '../controller/nhanvienController';
-import { route } from 'express/lib/application';
 import jwt from 'jsonwebtoken';
 import path from 'path';
 import multer from 'multer';
 var appRoot = require('app-root-path');
 import thanhVienHDKHController from '../controller/thanhVienHDKHController';
 import chamDiemController from '../controller/chamDiemController';
+import downloadAttachFileController from '../controller/downloadAttachFileController';
 
 const router = express.Router();
 
@@ -29,9 +29,15 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
         const access_token = req.cookies.access_token.split(' ')[1];
         let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
-        cb(null, file.fieldname + '-' + payLoad.nhanVienId + path.extname(file.originalname));
-    }
-})
+        cb(
+            null,
+            file.fieldname +
+                '-' +
+                payLoad.nhanVienId +
+                path.extname(file.originalname)
+        );
+    },
+});
 const Filter = function (req, file, cb) {
     // Accept file only
     if (!file.originalname.match(/\.(PDF|pdf)$/)) {
@@ -44,7 +50,10 @@ let upload = multer({ storage: storage, fileFilter: Filter });
 const initRouter = (app) => {
     //phong ban
     router.get('/quanlyphongban', phongbanController.viewPhongBan);
-    router.get('/quanlyphongban/sua/:maphongban', phongbanController.editPhongBan);
+    router.get(
+        '/quanlyphongban/sua/:maphongban',
+        phongbanController.editPhongBan
+    );
     router.post('/uploadphongban', phongbanController.uploadPhongban);
     router.post('/addphongban', phongbanController.addPhongban);
     // chuc vu
@@ -54,7 +63,10 @@ const initRouter = (app) => {
     router.post('/addchucvu', chucvuController.addChucvu);
     // chức vụ hội đồng
     router.get('/quanlychucvuhd', chucvuhdController.viewChucvuhd);
-    router.get('/quanlychucvuhd/sua/:machucvuhd', chucvuhdController.editChucvuhd);
+    router.get(
+        '/quanlychucvuhd/sua/:machucvuhd',
+        chucvuhdController.editChucvuhd
+    );
     router.post('/uploadchucvuhd', chucvuhdController.uploadChucvuhd);
     router.post('/addchucvuhd', chucvuhdController.addChucvuhd);
     // xếp loại
@@ -82,7 +94,10 @@ const initRouter = (app) => {
     );
     // tạo nhân viên
     router.get('/quanlynhanvien/:search', nhanvienController.viewNhanvien);
-    router.get('/quanlynhanvien/sua/:manhanvien', nhanvienController.editNhanvien);
+    router.get(
+        '/quanlynhanvien/sua/:manhanvien',
+        nhanvienController.editNhanvien
+    );
     router.post('/uploadnhanvien', nhanvienController.uploadNhanvien);
     router.post('/addnhanvien', nhanvienController.addNhanvien);
     router.get('/quanlynhanvien', nhanvienController.viewNhanvien);
@@ -92,13 +107,23 @@ const initRouter = (app) => {
     router.post('/uploadnhanvien-user', nhanvienController.uploadNhanvienuser);
     // tạo sang kien
     router.get('/quanlysangkien', sangkienController.viewSangkien);
-    router.get('/quanlysangkien/duyet/:masangkien', sangkienController.duyetSangkien);
-    router.get('/quanlysangkien/huy/:masangkien', sangkienController.huySangkien);
+    router.get(
+        '/quanlysangkien/duyet/:masangkien',
+        sangkienController.duyetSangkien
+    );
+    router.get(
+        '/quanlysangkien/huy/:masangkien',
+        sangkienController.huySangkien
+    );
     router.post('/quanlysangkien/huysangkien', sangkienController.huy1Sangkien);
     router.post('/addsangkien', sangkienController.addSangkien);
     router.get('/create-sangkien', sangkienController.createSangkien);
     router.get('/chitietsangkien', sangkienController.detailSangkien);
-    router.post('/upload-file', upload.single('profile_file'), sangkienController.UploadProfileFile);
+    router.post(
+        '/upload-file',
+        upload.single('profile_file'),
+        sangkienController.UploadProfileFile
+    );
     // tạo đợt sáng kiến
     router.get('/quanlydotsangkien', dotsangkienController.viewDotsangkien);
     router.post('/adddotsangkien', dotsangkienController.addDotsangkien);
@@ -183,7 +208,10 @@ const initRouter = (app) => {
     router.post('/', loginController.handleLogin);
     //trang dang nhap
     router.get('/', loginController.getLogin);
-
+    router.get(
+        '/download/file/:filename',
+        downloadAttachFileController.download
+    );
     return app.use('/', router);
 };
 
