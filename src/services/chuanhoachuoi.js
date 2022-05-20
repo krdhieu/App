@@ -3,7 +3,7 @@
 // console.log(string)
 //function chuanhoa(str) {
 let chuanhoa = (str) => {
-    str = str.trim().toLowerCase();
+    str = str.trim();
     while (str.indexOf("  ") != -1) {
         str = str.replace("  ", " ");
     }
@@ -25,7 +25,7 @@ let chuanhoaten = (str) => {
     return str;
 }
 let chuanhoavanban = (str) => {
-    str = str.trim().toLowerCase();
+    str = str.trim();
     while (str.indexOf("  ") != -1) {
         str = str.replace("  ", " ");
     }

@@ -11,12 +11,83 @@
 </head>
 
 <body>
-    <div>
-        <h1>Danh sách nhân viên</h1>
+    <h1>Danh sách nhân viên</h1>
+    <div id="search">
         <form action="/quanlynhanvien" method="get">
             <input type="text" name="search">
             <button type="submit">Submit</button>
         </form>
+    </div>
+    <button onclick="myfunc()" id="themnhanvien">Thêm nhân viên</button>
+    <div id="themmoinhanvien" style="display: none;">
+        <form action="/addnhanvien" method="post">
+
+            <!-- Vertical -->
+            <div class="form-group">
+                <!-- Phòng ban -->
+                <label>Phòng ban</label>
+                <select name="maphongban" class="form-control" required>
+                    <% for (let i=0; i<dataPhongban.length;i++){ %>
+                        <option value="<%=dataPhongban[i].maphongban%>">
+                            <%=dataPhongban[i].tenphongban%>
+                        </option>
+                        <% } %>
+                </select>
+                <!-- chức vụ -->
+                <label>Chức vụ</label>
+                <select name="machucvu" class="form-control" required>
+                    <% for (let i=0; i<dataChucvu.length;i++){ %>
+                        <option value="<%=dataChucvu[i].machucvu%>">
+                            <%=dataChucvu[i].tenchucvu%>
+                        </option>
+                        <% } %>
+                </select>
+                <br>
+                <!-- Trình độ  -->
+                <label>Trình độ học vấn</label>
+                <input type="text" name="trinhdohocvan" class="form-control" value="" required>
+                <!-- Tên nhân viên  -->
+                <label>Tên nhân viên</label>
+                <input type="text" name="tennhanvien" class="form-control" value="" required>
+                <!-- Giới tính  -->
+                <label>Giới tính</label>
+                <select name="gioitinh" class="form-control" required>
+                    <option value="1">Nam</option>
+                    <option value="0">Nữ</option>
+                </select>
+                <!-- Năm sinh  -->
+                <label>Ngày sinh</label>
+                <input type="date" name="ngaysinh" class="form-control" min="1950-01-01" max="2006-01-01" value=""
+                    required>
+                <!-- Ngày vào làm  -->
+                <label>Ngày vào làm</label>
+                <% let currentDate=moment().utcOffset('+0700').format('YYYY-MM-DD'); %>
+                    <input type="date" name="ngayvaolam" class="form-control" min="2000-01-01" max="<%= currentDate %>"
+                        value="" required>
+                    <!-- Số điện thoại  -->
+                    <label>Số điện thoại</label>
+                    <input type="text" name="sdt" class="form-control" value="" maxlength="10" minlength="10" required>
+                    <!-- Submit -->
+                    <button type=" submit" class="btn btn-primary">Submit</button>
+            </div>
+
+        </form>
+    </div>
+    <script language="javascript">
+
+        function myfunc() {
+            if (document.getElementById("themmoinhanvien").style.display == 'none') {
+                document.getElementById("themmoinhanvien").style.display = 'block';
+                document.getElementById("themnhanvien").innerHTML = "Ẩn"
+            }
+            else {
+                document.getElementById("themmoinhanvien").style.display = 'none';
+                document.getElementById("themnhanvien").innerHTML = "Thêm nhân viên"
+            }
+        }
+
+    </script>
+    <div>
         <table class="table">
             <thead>
                 <tr>
@@ -79,59 +150,6 @@
             </tbody>
         </table>
 
-        <h1>Thêm mới nhân viên</h1>
-        <form action="/addnhanvien" method="post">
-
-            <!-- Vertical -->
-            <div class="form-group">
-                <!-- Phòng ban -->
-                <label>Phòng ban</label>
-                <select name="maphongban" class="form-control" required>
-                    <% for (let i=0; i<dataPhongban.length;i++){ %>
-                        <option value="<%=dataPhongban[i].maphongban%>">
-                            <%=dataPhongban[i].tenphongban%>
-                        </option>
-                        <% } %>
-                </select>
-                <!-- chức vụ -->
-                <label>Chức vụ</label>
-                <select name="machucvu" class="form-control" required>
-                    <% for (let i=0; i<dataChucvu.length;i++){ %>
-                        <option value="<%=dataChucvu[i].machucvu%>">
-                            <%=dataChucvu[i].tenchucvu%>
-                        </option>
-                        <% } %>
-                </select>
-                <br>
-                <!-- Trình độ  -->
-                <label>Trình độ học vấn</label>
-                <input type="text" name="trinhdohocvan" class="form-control" value="" required>
-                <!-- Tên nhân viên  -->
-                <label>Tên nhân viên</label>
-                <input type="text" name="tennhanvien" class="form-control" value="" required>
-                <!-- Giới tính  -->
-                <label>Giới tính</label>
-                <select name="gioitinh" class="form-control" required>
-                    <option value="1">Nam</option>
-                    <option value="0">Nữ</option>
-                </select>
-                <!-- Năm sinh  -->
-                <label>Ngày sinh</label>
-                <input type="date" name="ngaysinh" class="form-control" min="1950-01-01" max="2006-01-01" value=""
-                    required>
-                <!-- Ngày vào làm  -->
-                <label>Ngày vào làm</label>
-                <% let currentDate=moment().utcOffset('+0700').format('YYYY-MM-DD'); %>
-                    <input type="date" name="ngayvaolam" class="form-control" min="2000-01-01" max="<%= currentDate %>"
-                        value="" required>
-                    <!-- Số điện thoại  -->
-                    <label>Số điện thoại</label>
-                    <input type="text" name="sdt" class="form-control" value="" maxlength="10" minlength="10" required>
-                    <!-- Submit -->
-                    <button type=" submit" class="btn btn-primary">Submit</button>
-            </div>
-
-        </form>
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

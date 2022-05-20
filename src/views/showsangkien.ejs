@@ -13,6 +13,27 @@
 <body>
     <div>
         <h1>Danh sách sáng kiến</h1>
+        <form action="/quanlysangkien" method="get">
+            <label for="">Đợt sáng kiến: </label>
+            <select name="dotsangkien" id="">
+                <option value=""></option>
+                <% for (let i=0; i<dataDotsangkien.length;i++){ %>
+                    <option value="<%=dataDotsangkien[i].madotsangkien%>">
+                        <%=dataDotsangkien[i].tendotsangkien%>
+                    </option>
+                    <% } %>
+            </select>
+            <label for="">Trạng thái sáng kiến: </label>
+            <select name="trangthai" id="">
+                <option value=""></option>
+                <% for (let i=0; i<dataTrangthai.length;i++){ %>
+                    <option value="<%=dataTrangthai[i].matrangthai%>">
+                        <%=dataTrangthai[i].tentrangthai%>
+                    </option>
+                    <% } %>
+            </select>
+            <button type="submit" class="submit"> search</button>
+        </form>
         <table class="table">
             <thead>
                 <tr>
@@ -22,7 +43,7 @@
                     <!-- <th scope="col">Nội dung</th> -->
                     <th scope="col">Lợi ích</th>
                     <th scope="col">Đối tượng</th>
-                    <!-- <th scope="col">Đợt</th> -->
+                    <th scope="col">Đợt</th>
                     <th scope="col">Trạng thái</th>
                     <!-- <th scope="col">Đính kèm</th> -->
                     <th scope="col">Tác vụ</th>
@@ -47,10 +68,13 @@
                             <%= dataSangkien[i].doituong %>
                         </td>
                         <td>
+                            <%= dataSangkien[i].tendotsangkien %>
+                        </td>
+                        <td>
                             <%= dataSangkien[i].tentrangthai %>
                         </td>
                         <td><a href="/quanlysangkien/detail/<%= dataSangkien[i].masangkien %>" target="_self">Chi
-                                tiết<0.00 /a>
+                                tiết</a>
                         </td>
                     </tr>
                     <% } %>

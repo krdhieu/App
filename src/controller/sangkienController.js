@@ -48,8 +48,27 @@ let addSangkien = async (req, res) => {
 }
 // view sáng kiến
 let viewSangkien = async (req, res) => {
-    const [rows] = await connectDB.execute('SELECT * FROM `sangkien` inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai');
-    return res.render('showsangkien.ejs', { dataSangkien: rows });
+    const [dotsangkien1] = await connectDB.execute(`select * from dotsangkien where trangthai=?`, [1]);
+    let madotsangkien = dotsangkien1[0].madotsangkien;
+    let matrangthai = 2;
+    const [datadotsangkien] = await connectDB.execute(`select * from dotsangkien`);
+    const [datatrangthai] = await connectDB.execute(`select * from trangthaisangkien`)
+    let { dotsangkien, trangthai } = req.query
+    if (dotsangkien) {
+        if (dotsangkien != '') {
+            madotsangkien = dotsangkien;
+        }
+    }
+    if (trangthai) {
+        if (trangthai != '') {
+            matrangthai = trangthai;
+        }
+    }
+    const [rows] = await connectDB.execute(`SELECT * FROM sangkien 
+        inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai
+        inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien 
+        where sangkien.madotsangkien = ? and sangkien.matrangthai=?`, [madotsangkien, matrangthai]);
+    return res.render('showsangkien.ejs', { dataSangkien: rows, dataDotsangkien: datadotsangkien, dataTrangthai: datatrangthai });
 }
 // quan ly duyet
 let quanlyduyetSangkien = async (req, res) => {
@@ -93,15 +112,19 @@ let detailSangkien = async (req, res) => {
     const [nguoithamgia] = await connectDB.execute('SELECT * FROM nguoithamgia where manhanvien = ?', [req.nhanVienId]);
     if (nguoithamgia[0]) {
         const [sangkien] = await connectDB.execute('SELECT * FROM sangkien where masangkien = ? and matrangthai=?', [nguoithamgia[0].masangkien, 2]);
-        let masangkien = sangkien[0].masangkien;
-        const [thanhvien] = await connectDB.execute('SELECT * FROM nguoithamgia inner join nhanvien on nguoithamgia.manhanvien = nhanvien.manhanvien where masangkien = ?', [masangkien]);
-        if (thanhvien[0].vaitro == 0) {
-            return res.render('chitietsangkien.ejs', { dataSangkien: sangkien[0], dataChutri: thanhvien[0], dataTroly: thanhvien[1] });
+        if (sangkien[0]) {
+            let masangkien = sangkien[0].masangkien;
+            const [thanhvien] = await connectDB.execute('SELECT * FROM nguoithamgia inner join nhanvien on nguoithamgia.manhanvien = nhanvien.manhanvien where masangkien = ?', [masangkien]);
+            if (thanhvien[0].vaitro == 0) {
+                return res.render('chitietsangkien.ejs', { dataSangkien: sangkien[0], dataChutri: thanhvien[0], dataTroly: thanhvien[1] });
+            }
+            else {
+                return res.render('chitietsangkien.ejs', { dataSangkien: sangkien[0], dataChutri: thanhvien[1], dataTroly: thanhvien[0] });
+            }
         }
         else {
-            return res.render('chitietsangkien.ejs', { dataSangkien: sangkien[0], dataChutri: thanhvien[1], dataTroly: thanhvien[0] });
+            return res.send("hien tai cua chung ta")
         }
-
     }
     else {
         return res.send('chua co sang kien')

@@ -11,8 +11,40 @@
 </head>
 
 <body>
+    <h1>Danh sách phòng ban</h1>
+    <button onclick="myfunc()" id="themphongban">Thêm phòng ban</button>
+    <div id="themmoiphongban" style="display: none;">
+        <form action="/addphongban" method="post">
+            <!-- Vertical -->
+            <div class="form-group">
+                <label>Tên Phòng Ban</label>
+                <input type="text" name="tenphongban" class="form-control" value="" required />
+                <label>Năm thành lập</label>
+                <input type="date" name="ngaythanhlap" max="<%= moment().utcOffset('+0700').format('YYYY-MM-DD'); %>"
+                    max="2000-01-01" class="form-control" value="" required />
+                <label>Mô tả phòng ban</label>
+                <textarea name="motaphongban" class="form-control" id="" cols="20" rows="5"></textarea>
+                <button type=" submit" class="btn btn-primary">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+    <script language="javascript">
+
+        function myfunc() {
+            if (document.getElementById("themmoiphongban").style.display == 'none') {
+                document.getElementById("themmoiphongban").style.display = 'block';
+                document.getElementById("themphongban").innerHTML = "Ẩn"
+            }
+            else {
+                document.getElementById("themmoiphongban").style.display = 'none';
+                document.getElementById("themphongban").innerHTML = "Thêm phòng ban"
+            }
+        }
+
+    </script>
     <div>
-        <h1>Danh sách phòng ban</h1>
         <table class="table">
             <thead>
                 <tr>
@@ -46,23 +78,6 @@
                     <% } %>
             </tbody>
         </table>
-
-        <h1>Thêm mới phòng ban</h1>
-        <form action="/addphongban" method="post">
-            <!-- Vertical -->
-            <div class="form-group">
-                <label>Tên Phòng Ban</label>
-                <input type="text" name="tenphongban" class="form-control" value="" required />
-                <label>Năm thành lập</label>
-                <input type="date" name="ngaythanhlap" max="<%= moment().utcOffset('+0700').format('YYYY-MM-DD'); %>"
-                    max="2000-01-01" class="form-control" value="" required />
-                <label>Mô tả phòng ban</label>
-                <textarea name="motaphongban" class="form-control" id="" cols="20" rows="5"></textarea>
-                <button type=" submit" class="btn btn-primary">
-                    Submit
-                </button>
-            </div>
-        </form>
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

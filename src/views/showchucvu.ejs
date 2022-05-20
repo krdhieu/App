@@ -11,8 +11,36 @@
 </head>
 
 <body>
+    <h1>Danh sách chức vụ</h1>
+    <button onclick="myfunc()" id="themchucvu">Thêm Chức vụ</button>
+    <div id="themmoichucvu" style="display: none;">
+        <form action="/addchucvu" method="post">
+            <!-- Vertical -->
+            <div class="form-group">
+                <label>Tên chức vụ</label>
+                <input type="text" name="tenchucvu" maxlength="100" class="form-control" value="">
+                <label>Mô tả chức vụ</label>
+                <textarea name="motachucvu" class="form-control" id="" cols="30" rows="10"></textarea>
+                <button type=" submit" class="btn btn-primary">Submit</button>
+            </div>
+
+        </form>
+    </div>
+    <script language="javascript">
+
+        function myfunc() {
+            if (document.getElementById("themmoichucvu").style.display == 'none') {
+                document.getElementById("themmoichucvu").style.display = 'block';
+                document.getElementById("themchucvu").innerHTML = "Ẩn"
+            }
+            else {
+                document.getElementById("themmoichucvu").style.display = 'none';
+                document.getElementById("themchucvu").innerHTML = "Thêm phòng ban"
+            }
+        }
+
+    </script>
     <div>
-        <h1>Danh sách chức vụ</h1>
         <table class="table">
             <thead>
                 <tr>
@@ -41,18 +69,7 @@
             </tbody>
         </table>
 
-        <h1>Thêm mới chức vụ</h1>
-        <form action="/addchucvu" method="post">
-            <!-- Vertical -->
-            <div class="form-group">
-                <label>Tên chức vụ</label>
-                <input type="text" name="tenchucvu" maxlength="100" class="form-control" value="">
-                <label>Mô tả chức vụ</label>
-                <textarea name="motachucvu" class="form-control" id="" cols="30" rows="10"></textarea>>
-                <button type=" submit" class="btn btn-primary">Submit</button>
-            </div>
 
-        </form>
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
