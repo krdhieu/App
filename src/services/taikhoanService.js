@@ -98,6 +98,22 @@ let paginationAccount = (perpage, begin) => {
         }
     });
 };
+
+//tim tai khoan theo ten
+
+let searchAccountByName = (name) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [account] = await connectDB.execute(
+                `SELECT * FROM taikhoan INNER JOIN nhanvien on taikhoan.manhanvien=nhanvien.manhanvien INNER JOIN quyen on quyen.maquyen=taikhoan.maquyen WHERE tentaikhoan like '%${name}%'`
+            );
+            resolve(account);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 module.exports = {
     createAccount: createAccount,
     getOneAccount: getOneAccount,
@@ -106,4 +122,5 @@ module.exports = {
     resetPassword: resetPassword,
     checkNhanVienDaCoTaiKhoan: checkNhanVienDaCoTaiKhoan,
     paginationAccount: paginationAccount,
+    searchAccountByName: searchAccountByName,
 };

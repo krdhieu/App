@@ -42,8 +42,53 @@ let checkDaChamDiem = (idThanhVien, idSangKien) => {
         }
     });
 };
+// lay diem sang kien da cham cua thanh vien hd
+let getChiTietDiemOfThanhVien = (masangkien, mathanhvien) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [diemSangKien] = await connectDB.execute(
+                'SELECT * FROM chitietchamdiem WHERE mathanhvien=? and masangkien=?',
+                [mathanhvien, masangkien]
+            );
+            resolve(diemSangKien);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 
+//sua diem
+
+let editChiTietDiem = (
+    mathanhvien,
+    masangkien,
+    diemmucdich,
+    diemnoidung,
+    diemungdung,
+    diemtrinhbay
+) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await connectDB.execute(
+                `UPDATE chitietchamdiem set diem_muc_dich = ?, diem_noi_dung=?, diem_ung_dung=?, diem_trinh_bay=? WHERE mathanhvien=? and masangkien=?`,
+                [
+                    diemmucdich,
+                    diemnoidung,
+                    diemungdung,
+                    diemtrinhbay,
+                    mathanhvien,
+                    masangkien,
+                ]
+            );
+            resolve('ok');
+        } catch (error) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     createChiTietChamDiem: createChiTietChamDiem,
     checkDaChamDiem: checkDaChamDiem,
+    getChiTietDiemOfThanhVien: getChiTietDiemOfThanhVien,
+    editChiTietDiem: editChiTietDiem,
 };

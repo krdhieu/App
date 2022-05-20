@@ -12,3 +12,11 @@ let showEditThanhVienHDForm = (idNhanVien, idThanhVienHD) => {
 let showCreateThanhVienHDForm = () => {
     createThanhVienHD.style.display = 'block';
 };
+
+let submitBtn = document.querySelector('.btn-add-hd');
+function myFunction() {
+    confirm('Press a button!');
+}
+submitBtn.addEventListener('click', () => {
+    myFunction();
+});

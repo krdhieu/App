@@ -10,6 +10,8 @@
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
             crossorigin="anonymous"
         />
+        <script defer src="/src/refreshNotifySuaDiem.js"></script>
+
         <link rel="stylesheet" href="/css/styles.css"/>
         <title>Document</title>
     </head>
@@ -29,8 +31,9 @@
                 <div>Mục tiêu sáng kiến: <%=detailSangKien.muctieu%></div>
                 <div>Nội dung sáng kiến: <%=detailSangKien.noidung%></div>
                 <div>Đánh giá lợi ích thu được: <%=detailSangKien.loiich%></div>
-                <div>File chi tiết đính kèm:</div>
+                <div>File chi tiết đính kèm:    <a href="/download/file?filename=<%=detailSangKien.dinhkem%>" target="_blank">Xem file đính kèm</a></div>
             </div>
+            <%if(typeof showDiemDaCham ==='undefined' ){%>
             <div class="row text-center">
                 <h4>Chấm điểm</h4>
                 <form action="/create-chitiet-chamdiem" method="post" class="row">
@@ -62,7 +65,79 @@
                    </div>
                 </form>
             </div>
+            <%}%>
         </div>
+        <%if(typeof showDiemDaCham !=='undefined' ){%>
+        <div class="row text-center">
+            <h4>Sửa điểm</h4>
+            <form action="/edit-chitiet-chamdiem" method="post" class="row">
+                <input type="text" value="<%=showDiemDaCham[0].masangkien%>"  class="form-control " name="sangKienId">
+                <input type="text" value="<%=showDiemDaCham[0].mathanhvien%>" class="form-control " name="thanhVienHDId">
+                <div class="col-3">
+                    <label for="">Điểm mục đích</label>
+                    <input type="number" step="0.1" name="diemMucDich" 
+                        class="form-control input-diem mucdich" required min="0" max="10" 
+                        value="<%=showDiemDaCham[0].diem_muc_dich%>"
+                        >
+                </div>
+                <div class="col-3">
+                    <label for="">Điểm nội dung</label>
+                    <input type="number" step="0.1" name="diemNoiDung" 
+                        class="form-control input-diem noidung" required min="0" max="10"
+                        value="<%=showDiemDaCham[0].diem_noi_dung%>">
+                </div>
+                <div class="col-3">
+                    <label for="">Điểm ứng dụng</label>
+                    <input type="number" step="0.1" name="diemUngDung" 
+                        class="form-control input-diem ungdung" required min="0" max="10"
+                        value="<%=showDiemDaCham[0].diem_ung_dung%>">
+                </div>
+               <div class="col-3">
+                    <label for="">Điểm trình bày</label>
+                    <input type="number" step="0.1" name="diemTrinhBay" 
+                        class="form-control input-diem trinhbay" required min="0" max="10"
+                        value="<%=showDiemDaCham[0].diem_trinh_bay%>">
+               </div>
+               <div class="col-12 row mt-3">
+                   <div class="col-8"></div>
+                    <button type="submit" class="btn btn-success col-4 me-0">Save</button>
+               </div>
+            </form>
+        </div>
+        <%}%>
+        <div class="notification-success" ><%= (typeof message !=='undefined' ? message:'')%></div>
+    </div>
+
+
+
+
+
+    <% if(nhanXet.length!==1){%>
+    <div class="container-fluid">
+        <div>Thêm nhận xét</div>
+        <form action="/create-nhanxet" method="post">
+            sangkien
+            <input type="text" value="<%=showDiemDaCham[0].masangkien%>" name="maSangKien" class="form-control" readonly>
+            <input type="text" value="<%=showDiemDaCham[0].mathanhvien%>" name="maThanhVien" class="form-control" readonly>
+            <input type="text" name="nhanXet" class="form-control">
+            <button type="submit" class="btn btn-success">Save</button>
+        </form>
+    </div>
+    <%} else {%>
+    <div class="container-fluid">
+        <div>Sửa nhận xét</div>
+        <form action="/edit-nhanxet" method="post">
+            sangkien
+            <input type="text" value="<%=showDiemDaCham[0].masangkien%>" name="maSangKien" class="form-control" readonly>
+            <input type="text" value="<%=showDiemDaCham[0].mathanhvien%>" name="maThanhVien" class="form-control" readonly>
+            <input type="text" name="nhanXet" class="form-control" value="<%=nhanXet[0].noidung%>">
+            <button type="submit" class="btn btn-success">Save</button>
+        </form>
+    </div>
+    <%}%>
+
+
+
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

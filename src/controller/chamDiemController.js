@@ -2,6 +2,7 @@ import chamDiemService from '../services/chamDiemService';
 import sangKienService from '../services/sangKienService';
 import nguoiThamGiaService from '../services/nguoiThamGiaService';
 import hoiDongKhoaHocService from '../services/hoiDongKhoaHocService';
+import nhanXetService from '../services/nhanXetService';
 //hien trhi trang cham diem
 let getChamDiemPage = async (req, res) => {
     let sangKien = await sangKienService.getSangKienDaDuyet();
@@ -10,6 +11,7 @@ let getChamDiemPage = async (req, res) => {
 };
 // lay thong tin chi tiet sangkien can cham
 let getDetailSangKien = async (req, res) => {
+    //id sang kien
     let { id } = req.query;
     if (!id) {
         return res.send('Missing required parameter');
@@ -24,6 +26,22 @@ let getDetailSangKien = async (req, res) => {
     if (thanhVienHDDaDangNhap.length !== 1) {
         return res.send('Khong phai thanh vien hoi dong trong dot nay');
     }
+    let diemDaCham = await chamDiemService.getChiTietDiemOfThanhVien(
+        detailSangKien[0].masangkien,
+        thanhVienHDDaDangNhap[0].mathanhvien
+    );
+
+    let showDiemDaCham;
+    if (diemDaCham.length === 1) {
+        showDiemDaCham = [...diemDaCham];
+    }
+    let { message } = req.query;
+    let nhanXet;
+    nhanXet = await nhanXetService.getNhanXet(
+        thanhVienHDDaDangNhap[0].mathanhvien,
+        id
+    );
+    console.log(nhanXet);
     // console.log('>>detail', detailSangKien);
     // console.log('thanhvien da dang nhap', thanhVienHDDaDangNhap);
     // console.log('nguoitham gia', nguoiThamGia);
@@ -31,6 +49,9 @@ let getDetailSangKien = async (req, res) => {
         detailSangKien: detailSangKien[0],
         thanhVienHDDaDangNhap: thanhVienHDDaDangNhap[0],
         nguoiThamGia,
+        showDiemDaCham: showDiemDaCham,
+        message,
+        nhanXet,
     });
 };
 // cham diem
@@ -80,9 +101,48 @@ let createChiTietChamDiem = async (req, res) => {
     );
     return res.send(check);
 };
+// sua chi tiet diem
+let editChiTietChamDiem = async (req, res) => {
+    let {
+        thanhVienHDId,
+        sangKienId,
+        diemMucDich,
+        diemNoiDung,
+        diemUngDung,
+        diemTrinhBay,
+    } = req.body;
+    if (
+        !thanhVienHDId ||
+        !sangKienId ||
+        !diemMucDich ||
+        !diemNoiDung ||
+        !diemUngDung ||
+        !diemTrinhBay
+    ) {
+        return res.send('sua diem khong thanh cong');
+    }
+
+    let check = await chamDiemService.editChiTietDiem(
+        thanhVienHDId,
+        sangKienId,
+        diemMucDich,
+        diemNoiDung,
+        diemUngDung,
+        diemTrinhBay
+    );
+    let message = 'Sua diem khong thanh cong';
+    if (check === 'ok') {
+        message = 'Sua Thanh Cong';
+    }
+
+    return res.redirect(
+        `/detail-sangkien?id=${sangKienId}&&message=${message}`
+    );
+};
 
 module.exports = {
     getChamDiemPage: getChamDiemPage,
     getDetailSangKien: getDetailSangKien,
     createChiTietChamDiem: createChiTietChamDiem,
+    editChiTietChamDiem: editChiTietChamDiem,
 };
