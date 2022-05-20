@@ -62,7 +62,8 @@ let viewSangkien = async (req, res) => {
 
 const upload = multer().single('profile_file');
 let UploadProfileFile = async (req, res) => {
-    upload(req, res, function (err) {
+    let filename;
+    upload(req, res, async function (err) {
         if (req.fileValidationError) {
             return res.send(req.fileValidationError);
         }
@@ -75,17 +76,18 @@ let UploadProfileFile = async (req, res) => {
         else if (err) {
             return res.send(err);
         }
+        filename = req.file.filename;
 
+        await connectDB.execute(`update sangkien set dinhkem = ?`, [filename]);
         // Display uploaded image for user validation
-        let filename = req.file.filename;
-        console.log('>>>>>>>>>>>>> name file ', filename);
         return res.send(`gui thanh cong`);
+        // console.log('>>>>>>>>>>>>> name file ', filename);
+
     });
+
 }
 let detailSangkien = async (req, res) => {
-    const access_token = req.cookies.access_token.split(' ')[1];
-    let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
-    const [nguoithamgia] = await connectDB.execute('SELECT * FROM nguoithamgia where manhanvien = ?', [payLoad.nhanVienId]);
+    const [nguoithamgia] = await connectDB.execute('SELECT * FROM nguoithamgia where manhanvien = ?', [req.nhanVienId]);
     if (nguoithamgia[0]) {
         const [sangkien] = await connectDB.execute('SELECT * FROM sangkien where masangkien = ?', [nguoithamgia[0].masangkien]);
         let masangkien = sangkien[0].masangkien;

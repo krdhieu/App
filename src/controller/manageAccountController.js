@@ -3,6 +3,8 @@ import quyenService from '../services/quyenService';
 import taikhoanService from '../services/taikhoanService';
 import bcrypt from 'bcryptjs';
 import connectDB from '../configs/connectDB';
+import { all } from 'express/lib/application';
+import res from 'express/lib/response';
 // hien thi trang them tai khoan
 let getCreateAccount = async (req, res) => {
     let allNhanVien = await nhanvienService.getAllNhanVien();
@@ -51,12 +53,14 @@ let createAccount = async (req, res) => {
     await taikhoanService.createAccount(data);
     return res.send('ok');
 };
+
 // hien thi ta ca tai khoan - phan trang
 let manageAccount = async (req, res) => {
     let page = parseInt(req.query.page) || 1;
-    let perpage = 1;
+    let perpage = 5;
 
     let allAccount = await taikhoanService.getAllAccount();
+
     // phan trang
     let numOfResults = allAccount.length;
     let numOfPages = Math.ceil(numOfResults / perpage);
@@ -80,12 +84,12 @@ let manageAccount = async (req, res) => {
     // console.log('>>>>>perpage', accountPerpage);
     /// hien thi lien ket den 5 trang truoc trang hien tai
     let iterator = page - 5 < 1 ? 1 : page - 5;
-    console.log('iterator>>>>>>>>>>>>>', iterator);
+    // console.log('iterator>>>>>>>>>>>>>', iterator);
 
     let endingLink = iterator + 9 <= numOfPages ? iterator + 9 : numOfPages;
-    if (endingLink < page + 4) {
-        iterator -= page + 4 - numOfPages;
-    }
+    // if (endingLink < page + 4) {
+    //     iterator -= page + 4 - numOfPages;
+    // }
     return res.render('manageAccount.ejs', {
         allAccount: accountPerpage,
         page,
@@ -93,6 +97,20 @@ let manageAccount = async (req, res) => {
         endingLink,
         numOfPages,
         perpage,
+    });
+};
+
+// tim tai khoan theo then tai khoan
+let searchAccountByName = async (req, res) => {
+    let { accountName } = req.body;
+    if (!accountName) {
+        return res.redirect('/manage-account');
+    }
+    let allAccount = await taikhoanService.searchAccountByName(accountName);
+    let soKetQua = allAccount.length;
+    return res.render('searchAccountByName.ejs', {
+        allAccount: allAccount,
+        soKetQua,
     });
 };
 // hien thi trang sua tai khoan
@@ -180,4 +198,5 @@ module.exports = {
     resetPassword: resetPassword,
     changePassword: changePassword,
     getChangePassword: getChangePassword,
+    searchAccountByName: searchAccountByName,
 };

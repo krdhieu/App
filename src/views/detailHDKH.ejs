@@ -9,7 +9,10 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         />
         <link rel="stylesheet" href="/css/styles.css" />
-        <script src="/src/showHideEditTVHDForm.js" defer></script>
+        <script src="/src/showHideEditTVHDForm.js" defer>
+
+            
+        </script>
         <title>Document</title>
     </head>
     <body>
@@ -93,7 +96,7 @@
     <% }%>
         <div class="create-thanhvienhd-form">
             <div>Thêm thành viên</div>
-            <form action="/create-thanhvien-hd" method="post">
+            <form action="/create-thanhvien-hd" method="post" class="add-hdkh">
                 <input type="text" hidden value="<%=detail.mahoidong%>" name="idHDKH" />
                 <div>
                     <label for="id">ID Nhân Viên</label>
@@ -113,7 +116,7 @@
                     </select>
                 </div>
     
-                <button type="submit">Add</button>
+                <button type="submit" class="btn-add-hd">Add</button>
             </form>
         </div>
     </body>

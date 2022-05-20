@@ -66,16 +66,6 @@
     color: white;
 }
 
-table {
-    border: 1px solid black;
-    text-align: center;
-    border-collapse: collapse;
-}
-
-table td,
-th {
-    border: 1px solid black;
-}
 .edit-thanhvienhd-form {
     display: none;
 }
@@ -117,4 +107,17 @@ th {
 
 .main-container {
     margin: 0;
+}
+.notification-success {
+    color: green;
+}
+
+.notification-fail {
+    color: red;
+}
+
+/* trang quan ly tai khoan */
+table th,
+td {
+    vertical-align: middle;
 }

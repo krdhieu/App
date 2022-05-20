@@ -116,13 +116,13 @@
                     <option value="0">Nữ</option>
                 </select>
                 <!-- Năm sinh  -->
-                <label>Năm sinh</label>
+                <label>Ngày sinh</label>
                 <input type="date" name="ngaysinh" class="form-control" min="1950-01-01" max="2006-01-01" value=""
                     required>
                 <!-- Ngày vào làm  -->
                 <label>Ngày vào làm</label>
                 <% let currentDate=moment().utcOffset('+0700').format('YYYY-MM-DD'); %>
-                    <input type="date" name="ngayvaolam" class="form-control" min="2000-01-01" max="<%=currentDate %>"
+                    <input type="date" name="ngayvaolam" class="form-control" min="2000-01-01" max="<%= currentDate %>"
                         value="" required>
                     <!-- Số điện thoại  -->
                     <label>Số điện thoại</label>
