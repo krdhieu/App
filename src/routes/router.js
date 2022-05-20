@@ -128,7 +128,13 @@ const initRouter = (app) => {
         nhanvienController.uploadNhanvienuser
     );
     // tạo sang kien
-    router.get('/quanlysangkien', sangkienController.viewSangkien); //chinh
+
+    router.get('/quanlysangkien', sangkienController.viewSangkien);
+    router.get(
+        '/quanlyduyetsangkien',
+        verifyAccessToken.verifyAccessTokenMiddleware,
+        sangkienController.quanlyduyetSangkien
+    );
     router.get(
         '/quanlysangkien/duyet/:masangkien',
         sangkienController.duyetSangkien
@@ -138,19 +144,21 @@ const initRouter = (app) => {
         sangkienController.huySangkien
     );
     router.post('/quanlysangkien/huysangkien', sangkienController.huy1Sangkien);
-    router.post('/addsangkien', sangkienController.addSangkien);
-    router.get('/create-sangkien', sangkienController.createSangkien); //chinh
-
     router.post(
-        '/upload-file',
-        upload.single('profile_file'),
-        sangkienController.UploadProfileFile
+        '/addsangkien',
+        verifyAccessToken.verifyAccessTokenMiddleware,
+        sangkienController.addSangkien
     );
-
+    router.get('/create-sangkien', sangkienController.createSangkien);
     router.get(
         '/chitietsangkien',
         verifyAccessToken.verifyAccessTokenMiddleware,
         sangkienController.detailSangkien
+    );
+    router.post(
+        '/upload-file',
+        upload.single('profile_file'),
+        sangkienController.UploadProfileFile
     );
 
     // tạo đợt sáng kiến
