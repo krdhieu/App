@@ -18,11 +18,8 @@ import multer from 'multer';
 var appRoot = require('app-root-path');
 import thanhVienHDKHController from '../controller/thanhVienHDKHController';
 import chamDiemController from '../controller/chamDiemController';
-
 import downloadAttachFileController from '../controller/downloadAttachFileController';
-
 import connectDB from '../configs/connectDB';
-import { route } from 'express/lib/router';
 
 const router = express.Router();
 
