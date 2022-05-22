@@ -4,7 +4,8 @@ import thanhVienHDKHService from '../services/thanhVienHDKHService';
 import chuVuHDKH from '../services/chucVuHDKHService';
 // trang tao moi hdkh
 const getCreateHDKH = (req, res) => {
-    return res.render('createHDKH.ejs');
+    let { alert } = req.query;
+    return res.render('createHDKH.ejs', { alert });
 };
 
 // thuc hien tao moi hdkh
@@ -15,12 +16,12 @@ const createHDKH = async (req, res) => {
     }
     let HDKH = await hoiDongKhoaHocService.checkStateHDKH();
     if (HDKH.length >= 1) {
-        return res.send(
-            'Khong the them hoi dong moi khi co hoi dong chua ket thuc nhiem ky'
+        return res.redirect(
+            '/get-create-hdkh?alert=' + encodeURIComponent('1')
         );
     }
     await hoiDongKhoaHocService.createHDKH(ngayThanhLap, nhiemVu.trim());
-    return res.send('done');
+    return res.redirect('/get-create-hdkh?alert=' + encodeURIComponent('0'));
 };
 
 //trang quan ly hdkh

@@ -3,8 +3,7 @@ import quyenService from '../services/quyenService';
 import taikhoanService from '../services/taikhoanService';
 import bcrypt from 'bcryptjs';
 import connectDB from '../configs/connectDB';
-import { all } from 'express/lib/application';
-import res from 'express/lib/response';
+
 // hien thi trang them tai khoan
 let getCreateAccount = async (req, res) => {
     let allNhanVien = await nhanvienService.getAllNhanVien();
@@ -159,8 +158,10 @@ let resetPassword = async (req, res) => {
 
 let getChangePassword = (req, res) => {
     let { emailLogin, nhanVienId, roleId } = req;
+    let { alert } = req.query;
     return res.render('changePassword.ejs', {
         emailLogin: emailLogin,
+        alert,
     });
 };
 
@@ -173,20 +174,26 @@ let changePassword = async (req, res) => {
 
     let account = await taikhoanService.getOneAccount(email);
     if (account.length !== 1) {
-        return res.send('email khong ton tai');
+        return res.redirect('/get-change-password');
     }
     // console.log(account);
     let check = await bcrypt.compareSync(oldPassword, account[0].matkhau);
     if (!check) {
-        return res.send('mat khau cu khong chinh xac');
+        return res.redirect(
+            '/get-change-password?alert=' + encodeURIComponent('1')
+        );
     }
     if (newPassword1 !== newPassword2) {
-        return res.send('Mat khau moi khong khop');
+        return res.redirect(
+            '/get-change-password?alert=' + encodeURIComponent('2')
+        );
     }
     let salt = await bcrypt.genSaltSync(10);
     let hash = await bcrypt.hashSync(newPassword1, salt);
     await taikhoanService.resetPassword(email, hash);
-    return res.send('doi mat khau thanh cong');
+    return res.redirect(
+        '/get-change-password?alert=' + encodeURIComponent('0')
+    );
 };
 
 module.exports = {

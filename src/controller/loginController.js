@@ -3,25 +3,25 @@ import login from '../services/loginService';
 import jwt from 'jsonwebtoken';
 // hien thi trang login
 let getLogin = (req, res) => {
+    let { alert } = req.query;
     return res.render('loginView.ejs', {
-        wrong: '',
+        alert: alert,
     });
 };
 // xu ly login
 let handleLogin = async (req, res) => {
     let { email, password } = req.body;
+
     if (!email || !password) {
         return res.redirect('/');
     }
     let user = await login.handleLogin(email);
     if (!user) {
-        return res.render('loginView.ejs', {
-            wrong: `'${email}' or password does not exist`,
-        });
+        return res.redirect('/?alert=' + encodeURIComponent('wrong'));
     }
     let check = await bcrypt.compareSync(password, user.matkhau);
     if (!check) {
-        return res.redirect('/');
+        return res.redirect('/?alert=' + encodeURIComponent('wrong'));
     }
     const accessToken = jwt.sign(
         {
