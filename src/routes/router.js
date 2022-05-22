@@ -39,8 +39,8 @@ const storage = multer.diskStorage({
         cb(
             null,
             'sangkien-' +
-                sangkien[0].masangkien +
-                path.extname(file.originalname)
+            sangkien[0].masangkien +
+            path.extname(file.originalname)
         );
     },
 });
@@ -57,10 +57,7 @@ let upload = multer({ storage: storage, fileFilter: Filter });
 const initRouter = (app) => {
     //phong ban
     router.get('/quanlyphongban', phongbanController.viewPhongBan); ////chinh
-    router.get(
-        '/quanlyphongban/sua/:maphongban',
-        phongbanController.editPhongBan
-    );
+    router.get('/quanlyphongban/sua/:maphongban', phongbanController.editPhongBan);
     router.post('/uploadphongban', phongbanController.uploadPhongban);
     router.post('/addphongban', phongbanController.addPhongban);
     // chuc vu

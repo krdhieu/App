@@ -12,7 +12,6 @@
         <link rel="stylesheet" href="/scss/styles.scss" />
         <title>Quản lý phòng ban</title>
     </head>
-
     <body>
         <h1>Danh sách phòng ban</h1>
         <button onclick="myfunc()" id="themphongban">Thêm phòng ban</button>
@@ -85,10 +84,12 @@
                     <tr>
                         <th scope="row"><%= i +1 %></th>
                         <td><%= dataPhongban[i].tenphongban %></td>
+
                         <td>
                             <%= moment(dataPhongban[i].ngaythanhlap).format(
                             'DD/MM/YYYY' ) %>
                         </td>
+
                         <td><%= dataPhongban[i].motaphongban %></td>
 
                         <td>
