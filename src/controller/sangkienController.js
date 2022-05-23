@@ -148,7 +148,15 @@ let huy1Sangkien = async (req, res) => {
     await connectDB.execute('insert into xetduyet(manhanvien,masangkien,ngayxetduyet,lydotuchoi) values (?,?,?,?) ', [1, masangkien, currentDate, lydotuchoi])
     return res.redirect('/quanlysangkien');
 }
+let history = async (req, res) => {
+    const [sangkien] = await connectDB.execute(`select * from sangkien 
+        inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai
+        inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien
+        inner join nguoithamgia on sangkien.masangkien = nguoithamgia.masangkien
+        WHERE manhanvien = ?`, [req.nhanVienId]);
+    return res.render('historySangkien', { dataSangkien: sangkien })
+}
 module.exports = {
     addSangkien, createSangkien, viewSangkien, UploadProfileFile, detailSangkien, duyetSangkien,
-    huySangkien, huy1Sangkien, quanlyduyetSangkien
+    huySangkien, huy1Sangkien, quanlyduyetSangkien, history
 }

@@ -5,14 +5,43 @@ import chuanhoachuoi from '../services/chuanhoachuoi';
 
 let viewNhanvien = async (req, res) => {
     let search = '';
+    let { searchPhongban, searchChucvu } = req.query;
     if (req.query.search != null) {
         search = req.query.search;
     }
-    console.log(search)
     const [phongban, fields_phongban] = await connectDB.execute('SELECT * FROM phongban ');
     const [chucvu, fields_chucvu] = await connectDB.execute('SELECT * FROM chucvu ');
-    const [rows, fields] = await connectDB.execute("SELECT * FROM `nhanvien` INNER JOIN phongban On nhanvien.maphongban = phongban.maphongban INNER JOIN chucvu ON nhanvien.machucvu = chucvu.machucvu where tennhanvien LIKE ? ", ['%' + search + '%']);
-    return res.render('shownhanvien.ejs', { dataNhanvien: rows, dataPhongban: phongban, dataChucvu: chucvu });
+    if (!searchPhongban && !searchChucvu) {
+        const [rows, fields] = await connectDB.execute(`SELECT * FROM nhanvien 
+        INNER JOIN phongban On nhanvien.maphongban = phongban.maphongban 
+        INNER JOIN chucvu ON nhanvien.machucvu = chucvu.machucvu where tennhanvien LIKE ? `,
+            ['%' + search + '%']);
+        return res.render('shownhanvien.ejs', { dataNhanvien: rows, dataPhongban: phongban, dataChucvu: chucvu });
+    }
+    if (searchPhongban && searchChucvu) {
+        const [rows, fields] = await connectDB.execute(`SELECT * FROM nhanvien 
+        INNER JOIN phongban On nhanvien.maphongban = phongban.maphongban 
+        INNER JOIN chucvu ON nhanvien.machucvu = chucvu.machucvu where nhanvien.maphongban = ? and  nhanvien.machucvu = ? and  tennhanvien LIKE ? `,
+            [searchPhongban, searchChucvu, '%' + search + '%']);
+        return res.render('shownhanvien.ejs', { dataNhanvien: rows, dataPhongban: phongban, dataChucvu: chucvu });
+    }
+    else {
+        if (searchPhongban) {
+            const [rows, fields] = await connectDB.execute(`SELECT * FROM nhanvien 
+            INNER JOIN phongban On nhanvien.maphongban = phongban.maphongban 
+            INNER JOIN chucvu ON nhanvien.machucvu = chucvu.machucvu where nhanvien.maphongban = ? and tennhanvien LIKE ? `,
+                [searchPhongban, '%' + search + '%']);
+            return res.render('shownhanvien.ejs', { dataNhanvien: rows, dataPhongban: phongban, dataChucvu: chucvu });
+        }
+        if (searchChucvu) {
+            const [rows, fields] = await connectDB.execute(`SELECT * FROM nhanvien 
+            INNER JOIN phongban On nhanvien.maphongban = phongban.maphongban 
+            INNER JOIN chucvu ON nhanvien.machucvu = chucvu.machucvu where nhanvien.machucvu = ? and tennhanvien LIKE ? `,
+                [searchChucvu, '%' + search + '%']);
+            return res.render('shownhanvien.ejs', { dataNhanvien: rows, dataPhongban: phongban, dataChucvu: chucvu });
+        }
+    }
+
 }
 let editNhanvien = async (req, res) => {
     let manhanvien = req.params.manhanvien;

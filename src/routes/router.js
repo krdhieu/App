@@ -77,7 +77,7 @@ const initRouter = (app) => {
     router.get('/quanlyxeploai', xeploaiController.viewXeploai); //chinh
     router.get('/quanlyxeploai/sua/:maxeploai', xeploaiController.editXeploai);
     router.post('/uploadxeploai', xeploaiController.uploadXeploai);
-    router.post('/addxeploai', xeploaiController.addXeploai);
+    //router.post('/addxeploai', xeploaiController.addXeploai);
     // trạng thái sáng kiến
 
     router.get(
@@ -97,7 +97,7 @@ const initRouter = (app) => {
         trangthaisangkienController.addTrangthaisangkien
     );
     // tạo nhân viên
-    router.get('/quanlynhanvien/:search', nhanvienController.viewNhanvien); //chinh
+    router.get('/quanlynhanvien', nhanvienController.viewNhanvien); //chinh
     router.get(
         '/quanlynhanvien/sua/:manhanvien',
         nhanvienController.editNhanvien
@@ -154,6 +154,7 @@ const initRouter = (app) => {
         upload.single('profile_file'),
         sangkienController.UploadProfileFile
     );
+    router.get('/home/history', verifyAccessToken.verifyAccessTokenMiddleware, sangkienController.history);
 
     // tạo đợt sáng kiến
     router.get('/quanlydotsangkien', dotsangkienController.viewDotsangkien); //chinh

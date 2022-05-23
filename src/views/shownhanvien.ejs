@@ -14,6 +14,24 @@
     <h1>Danh sách nhân viên</h1>
     <div id="search">
         <form action="/quanlynhanvien" method="get">
+            <label>Phòng ban</label>
+            <select name="searchPhongban">
+                <option value=""></option>
+                <% for (let i=0; i<dataPhongban.length;i++){ %>
+                    <option value="<%=dataPhongban[i].maphongban%>">
+                        <%=dataPhongban[i].tenphongban%>
+                    </option>
+                    <% } %>
+            </select><label>Chức vụ</label>
+            <select name="searchChucvu">
+                <option value=""></option>
+                <% for (let i=0; i<dataChucvu.length;i++){ %>
+                    <option value="<%=dataChucvu[i].machucvu%>">
+                        <%=dataChucvu[i].tenchucvu%>
+                    </option>
+                    <% } %>
+            </select>
+            </select><label>Tên nhân viên</label>
             <input type="text" name="search">
             <button type="submit">Submit</button>
         </form>
