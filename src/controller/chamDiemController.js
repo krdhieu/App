@@ -41,10 +41,6 @@ let getDetailSangKien = async (req, res) => {
         thanhVienHDDaDangNhap[0].mathanhvien,
         id
     );
-    console.log(nhanXet);
-    // console.log('>>detail', detailSangKien);
-    // console.log('thanhvien da dang nhap', thanhVienHDDaDangNhap);
-    // console.log('nguoitham gia', nguoiThamGia);
     return res.render('detailSangKienChamDiem.ejs', {
         detailSangKien: detailSangKien[0],
         thanhVienHDDaDangNhap: thanhVienHDDaDangNhap[0],
