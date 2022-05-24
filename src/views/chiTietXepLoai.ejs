@@ -16,7 +16,9 @@
             defer
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         ></script>
-        <title>Manage Account</title>
+        <!-- <script defer src="/src/showHideSideBar.js"></script> -->
+        <link rel="stylesheet" href="/css/styles.css" />
+        <title>Document</title>
     </head>
     <body style="background-color: #808080">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -153,45 +155,86 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid mb-0">
-            <h1 class="mb-0 text-white">Danh sách Hội đồng</h1>
+        
+        <!-- table -->
+        <% if(typeof(thongTinSangKien.sangKien)==='undefined'){%>
+        <div class="container-fluid">
+            <div class="text-white">không có thông tin của sáng kiến này</div>
         </div>
-        <div class="container-fluid row mb-0">
-            <div class="col-11">
-                
+        <%} else { %>
+            
+            <div class="container-fluid mb-0">
+                <h1 class="mb-0 text-white">Thông tin đánh giá chi tiết Sáng kiến</h1>
             </div>
-            <div class="col-sm-1 mt-3">
-                <a href="/get-create-hdkh" class="btn btn-primary mb-3 mr-sm-3" >Add new</a>
-            </div>
-        </div>
-        <div class="container-fluid mt-1 ">
+        <div class="container-fluid mt-3 ">
             <table class="table table-dark text-center">
                 <thead class="thead-dark">
                   <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Mã Hội đồng</th>
-                    <th scope="col">Năm thành lập</th>
-                    <th scope="col">Trạng thái</th>
-                    <th scope="col" width="200px">Actions</th>
+                    <th scope="col">Mã Sáng Kiến</th>
+                    <th scope="col">Tên Sáng Kiến</th>
+                    <th scope="col">Điểm Trung Bình <br> Mục Đích</th>
+                    <th scope="col">Điểm Trung Bình <br> Nội Dung</th>
+                    <th scope="col">Điểm Trung Bình <br> Ứng Dụng</th>
+                    <th scope="col">Điểm Trung Bình <br> Trình Bày</th>
+                    <th scope="col">Xếp Loại</th>
                   </tr>
                 </thead>
                 <tbody>
-                    <% for(let i=0;i<allHDKH.length;i++){%>
                   <tr>
-                    <th scope="row"><%=i+1%></th>
-                    <td><%=allHDKH[i].mahoidong%></td>
-                    <td><%= moment(allHDKH[i].ngaythanhlap).format('DD/MM/YYYY'); %></td>
-                    <td><%=(allHDKH[i].trangthai===1?'Đang trong nhiệm kỳ':'Đã kết thúc nhiệm kỳ')%></td>
-                    <td>
-                        <% if(allHDKH[i].trangthai === 1){%>
-                        <a href="/get-edit-hdkh?id=<%=allHDKH[i].mahoidong%>" class="btn btn-primary "  data-bs-toggle="tooltip" title="Sửa thông tin hội đồng"><i class="fa-solid fa-pen"></i></a>
-                        <% } %>
-                        <a href="/get-detail-hdkh?id=<%=allHDKH[i].mahoidong%>" class="btn btn-primary "  data-bs-toggle="tooltip" title="Chi tiết hội đồng"><i class="fa-solid fa-file-lines"></i></a>
-                    </td>
+                    <td><%=thongTinSangKien.sangKien.masangkien%></td>
+                    <td><%=thongTinSangKien.sangKien.tensangkien%></td>
+                    <td><%=(thongTinSangKien.diem.tbmucdich===null? '' :  (thongTinSangKien.diem.tbmucdich.toFixed(2)))%></td>
+                    <td><%=(thongTinSangKien.diem.tbnoidung===null? '' :  (thongTinSangKien.diem.tbnoidung.toFixed(2)))%></td>
+                    <td><%=(thongTinSangKien.diem.tbungdung===null? '' :  (thongTinSangKien.diem.tbungdung.toFixed(2)))%></td>
+                    <td><%=(thongTinSangKien.diem.tbtrinhbay===null? '':  (thongTinSangKien.diem.tbtrinhbay.toFixed(2)))%></td>
+                    <td><%=(thongTinSangKien.sangKien.tenxeploai===null? '':  (thongTinSangKien.sangKien.tenxeploai))%></td>
+                    
                   </tr>
-                  <%}%>
+
+
                 </tbody>
               </table>
-        </div>
+            </div>
+
+              <div class="container-fluid mt-3 row">
+                <!-- <table class="table table-dark text-center">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Người chấm</th>
+                        <th scope="col">Điểm Mục Đích</th>
+                        <th scope="col">Điểm Nội Dung</th>
+                        <th scope="col">Điểm Ứng Dụng</th>
+                        <th scope="col">Điểm Trình Bày</th>
+                        <th scope="col">Nhận Xét</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                     <% for(let i=0;i<allChiTietDiem.length;i++){%>
+                        <tr>
+                        <td><%=allChiTietDiem[i].tennhanvien%></td>
+                        <td><%=(allChiTietDiem[i].diem_muc_dich===null? '' :  (allChiTietDiem[i].diem_muc_dich.toFixed(2)))%></td>
+                        <td><%=(allChiTietDiem[i].diem_noi_dung===null? '' :  (allChiTietDiem[i].diem_noi_dung.toFixed(2)))%></td>
+                        <td><%=(allChiTietDiem[i].diem_ung_dung===null? '' :  (allChiTietDiem[i].diem_ung_dung.toFixed(2)))%></td>
+                        <td><%=(allChiTietDiem[i].diem_trinh_bay===null? '':  (allChiTietDiem[i].diem_trinh_bay.toFixed(2)))%></td>
+                        <td><%=(allChiTietDiem[i].noidung===null? '':  (allChiTietDiem[i].noidung))%></td>
+                      </tr>
+                      <%}%>
+                    </tbody>
+                  </table> -->
+                  <% for(let i=0;i<allChiTietDiem.length;i++){%>
+                    <div class="card col m-3 bg-dark text-white" >
+                        <div class="card-body">
+                          <h5 class="card-subtitle ">Người chấm: <%=allChiTietDiem[i].tennhanvien%></h5>
+                          <div>Điểm mục đích: <%=(allChiTietDiem[i].diem_muc_dich===null? '' :  (allChiTietDiem[i].diem_muc_dich.toFixed(2)))%></div>
+                          <div>Điểm mục đích: <%=(allChiTietDiem[i].diem_noi_dung===null? '' :  (allChiTietDiem[i].diem_noi_dung.toFixed(2)))%></div>
+                          <div>Điểm mục đích: <%=(allChiTietDiem[i].diem_ung_dung===null? '' :  (allChiTietDiem[i].diem_ung_dung.toFixed(2)))%></div>
+                          <div>Điểm mục đích: <%=(allChiTietDiem[i].diem_trinh_bay===null? '' :  (allChiTietDiem[i].diem_trinh_bay.toFixed(2)))%></div>
+                          <div><%=(allChiTietDiem[i].noidung===null? '':  (allChiTietDiem[i].noidung))%></div>
+                        </div>
+                      </div>
+                  <%}%>
+                </div>
+            <%}%>
     </body>
 </html>

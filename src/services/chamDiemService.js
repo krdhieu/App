@@ -86,9 +86,29 @@ let editChiTietDiem = (
         }
     });
 };
+
+/// lay tat ca chi tiet diem + thong tin nguoi cham cua sang kien theo ma sang kien
+
+let getAllChiTietDiemOfSangKien = (maSangKien) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [allChiTietDiem] = await connectDB.execute(
+                `SELECT chitietchamdiem.*, nhanvien.tennhanvien, nhanxet.noidung from chitietchamdiem 
+                LEFT JOIN thanhvienhoidong on thanhvienhoidong.mathanhvien= chitietchamdiem.mathanhvien 
+                LEFT JOIN nhanvien on nhanvien.manhanvien = thanhvienhoidong.manhanvien 
+                LEFT JOIN nhanxet on nhanxet.mathanhvien=thanhvienhoidong.mathanhvien  WHERE chitietchamdiem.masangkien=?`,
+                [maSangKien]
+            );
+            resolve(allChiTietDiem);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     createChiTietChamDiem: createChiTietChamDiem,
     checkDaChamDiem: checkDaChamDiem,
     getChiTietDiemOfThanhVien: getChiTietDiemOfThanhVien,
     editChiTietDiem: editChiTietDiem,
+    getAllChiTietDiemOfSangKien: getAllChiTietDiemOfSangKien,
 };

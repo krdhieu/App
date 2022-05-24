@@ -12,6 +12,8 @@ import verifyAccessToken from '../controller/middleware/verifyAccessToken';
 import hoiDongKHController from '../controller/hoiDongKHController';
 import nhanvienController from '../controller/nhanvienController';
 import nhanXetController from '../controller/nhanXetController';
+import diemTrungBinhController from '../controller/diemTrungBinhController';
+import danhGiaSangKienController from '../controller/danhGiaSangKienController';
 import jwt from 'jsonwebtoken';
 import path from 'path';
 import multer from 'multer';
@@ -39,8 +41,8 @@ const storage = multer.diskStorage({
         cb(
             null,
             'sangkien-' +
-            sangkien[0].masangkien +
-            path.extname(file.originalname)
+                sangkien[0].masangkien +
+                path.extname(file.originalname)
         );
     },
 });
@@ -57,7 +59,10 @@ let upload = multer({ storage: storage, fileFilter: Filter });
 const initRouter = (app) => {
     //phong ban
     router.get('/quanlyphongban', phongbanController.viewPhongBan); ////chinh
-    router.get('/quanlyphongban/sua/:maphongban', phongbanController.editPhongBan);
+    router.get(
+        '/quanlyphongban/sua/:maphongban',
+        phongbanController.editPhongBan
+    );
     router.post('/uploadphongban', phongbanController.uploadPhongban);
     router.post('/addphongban', phongbanController.addPhongban);
     // chuc vu
@@ -185,6 +190,7 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAndAdminGiamKhao,
         chamDiemController.getDetailSangKien
     );
+    //hien thi trang danh sach cham diem
     router.get('/get-cham-diem', chamDiemController.getChamDiemPage);
     //sua thong tin thanh vien hd
     router.post('/edit-thanhvien-hd', thanhVienHDKHController.editThanhVienHD);
@@ -256,6 +262,21 @@ const initRouter = (app) => {
     //trang dang nhap
     router.get('/', loginController.getLogin);
     router.get('/download/file/', downloadAttachFileController.download);
+    //hien thi trang diem trung binh sang kien + action xep loai + xem chi tiet diem sk
+    router.get(
+        '/danhgia-sangkien',
+        diemTrungBinhController.getDiemByMaSangKien
+    );
+    // create update xep loai sang kien
+    router.post(
+        '/xep-loai-sk',
+        danhGiaSangKienController.createUpdateDanhGiaSK
+    );
+    // chi tiet diem + xep loai sang kien + nhan xet
+    router.get(
+        '/chitietdiem-xeploai-nhanxet',
+        diemTrungBinhController.chiTietDiemDanhGiaXepLoaiNhanXet
+    );
     return app.use('/', router);
 };
 
