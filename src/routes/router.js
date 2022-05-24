@@ -92,10 +92,10 @@ const initRouter = (app) => {
         '/uploadtrangthaisangkien',
         trangthaisangkienController.uploadTrangthaisangkien
     );
-    router.post(
-        '/addtrangthaisangkien',
-        trangthaisangkienController.addTrangthaisangkien
-    );
+    // router.post(
+    //     '/addtrangthaisangkien',
+    //     trangthaisangkienController.addTrangthaisangkien
+    // );
     // tạo nhân viên
     router.get('/quanlynhanvien', nhanvienController.viewNhanvien); //chinh
     router.get(

@@ -21,16 +21,17 @@ let uploadTrangthaisangkien = async (req, res) => {
     return res.redirect('/quanlytrangthaisangkien')
 }
 
-let addTrangthaisangkien = async (req, res) => {
-    let { tentrangthai, motatrangthai } = req.body;
-    if (!tentrangthai) {
-        res.redirect('/quanlytrangthaisangkien');
-    }
-    await connectDB.execute('INSERT INTO trangthaisangkien(tentrangthai,motatrangthai)  VALUES (? , ?)',
-        [tentrangthai, motatrangthai]);
-    return res.redirect('/quanlytrangthaisangkien')
-}
+// let addTrangthaisangkien = async (req, res) => {
+//     let { tentrangthai, motatrangthai } = req.body;
+//     if (!tentrangthai) {
+//         res.redirect('/quanlytrangthaisangkien');
+//     }
+//     await connectDB.execute('INSERT INTO trangthaisangkien(tentrangthai,motatrangthai)  VALUES (? , ?)',
+//         [tentrangthai, motatrangthai]);
+//     return res.redirect('/quanlytrangthaisangkien')
+// }
 
 module.exports = {
-    viewTrangthaisangkien, editTrangthaisangkien, uploadTrangthaisangkien, addTrangthaisangkien
+    viewTrangthaisangkien, editTrangthaisangkien, uploadTrangthaisangkien,
+    //addTrangthaisangkien
 }
