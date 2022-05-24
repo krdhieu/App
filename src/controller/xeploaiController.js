@@ -21,16 +21,16 @@ let uploadXeploai = async (req, res) => {
     return res.redirect('/quanlyxeploai')
 }
 
-let addXeploai = async (req, res) => {
-    let { tenxeploai, motaxeploai } = req.body;
-    if (!tenxeploai) {
-        res.redirect('/quanlyxeploai');
-    }
-    await connectDB.execute('INSERT INTO xeploai(tenxeploai, motaxeploai)  VALUES (? ,? )',
-        [tenxeploai, motaxeploai]);
-    return res.redirect('/quanlyxeploai')
-}
+// let addXeploai = async (req, res) => {
+//     let { tenxeploai, motaxeploai } = req.body;
+//     if (!tenxeploai) {
+//         res.redirect('/quanlyxeploai');
+//     }
+//     await connectDB.execute('INSERT INTO xeploai(tenxeploai, motaxeploai)  VALUES (? ,? )',
+//         [tenxeploai, motaxeploai]);
+//     return res.redirect('/quanlyxeploai')
+// }
 
 module.exports = {
-    viewXeploai, editXeploai, uploadXeploai, addXeploai
+    viewXeploai, editXeploai, uploadXeploai,
 }
