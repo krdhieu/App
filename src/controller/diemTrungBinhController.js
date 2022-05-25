@@ -39,6 +39,7 @@ let getDiemByMaSangKien = async (req, res) => {
 
 let chiTietDiemDanhGiaXepLoaiNhanXet = async (req, res) => {
     let { masangkien } = req.query;
+    console.log(req.query);
     if (!masangkien) {
         return res.send('Wrong!');
     }

@@ -14,38 +14,85 @@
 </head>
 
 <body>
-    <div>
-        <h1>Thêm mới sáng kiến</h1>
-        <form action="/addsangkien" method="post">
-            <!-- Vertical -->
-            <div class="form-group">
-                <!-- Tên sáng kiến -->
-                <label>Tên sáng kiến</label>
-                <input type="text" name="tensangkien" class="form-control" value="" required>
-                <!-- muctieu  -->
-                <label>Mục tiêu</label>
-                <input type="text" name="muctieu" class="form-control" value="" required>
-                <!-- noidung  -->
-                <label>Nội dung</label>
-                <br>
-                <textarea name="noidung" id="noidung" cols="80" rows="5" required></textarea>
-                <br>
-                <!-- loiich  -->
-                <label>Lợi ích</label>
-                <input type="text" name="loiich" class="form-control" value="" required>
-                <!-- doituong  -->
-                <label>Đối tượng</label>
-                <input type="text" name="doituong" class="form-control" value="" required>
+    <%if(typeof(alert)!=='undefined') { if(alert==='1' ){%>
+        <div class="alert alert-danger alert-dismissible position-absolute">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>Warning!</strong> Không tồn tại nhân viên
+        </div>
+        <%} else {%>
+            <div class="alert alert-danger alert-dismissible position-absolute">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <strong>Warning!</strong> Nhân viên đã trong dự án khác
             </div>
-            <div class="nguoithamgia_2" id="troly">
-                <label>Mã trợ lý</label>
-                <input type="text" name="manhanvien_2" class="form-control" hiddenvalue="null">
-            </div>
-            <!-- Submit -->
-            <br>
-            <button type=" submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+            <% }}%>
+                <div>
+                    <h1>Thêm mới sáng kiến</h1>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <form action="/addsangkien" method="post">
+                                    <div class="form-group">
+                                        <!-- Tên sáng kiến -->
+                                        <label>Tên sáng kiến</label>
+                                        <input type="text" name="tensangkien" class="form-control" value="" required>
+                                        <!-- muctieu  -->
+                                        <label>Mục tiêu</label>
+                                        <input type="text" name="muctieu" class="form-control" value="" required>
+                                        <!-- noidung  -->
+                                        <label>Nội dung</label>
+                                        <br>
+                                        <textarea name="noidung" id="noidung" class="form-control" cols="80" rows="5"
+                                            required></textarea>
+                                        <br>
+                                        <!-- loiich  -->
+                                        <label>Lợi ích</label>
+                                        <input type="text" name="loiich" class="form-control" value="" required>
+                                        <!-- doituong  -->
+                                        <label>Đối tượng</label>
+                                        <input type="text" name="doituong" class="form-control" value="" required>
+                                    </div>
+                                    <div class="nguoithamgia_2" id="troly">
+                                        <label>Mã trợ lý</label>
+                                        <% if (dataNhanvien !=null) { %>
+                                            <input type="text" name="manhanvien_2" class="form-control"
+                                                value="<%= dataNhanvien[0].manhanvien%>" readonly>
+                                            <%} else {%>
+                                                <input type="text" name="manhanvien_2" class="form-control"
+                                                    hiddenvalue="null" readonly>
+                                                <% }%>
+                                    </div>
+                                    <br>
+                                    <%if(typeof(alert)!=='undefined') { if(alert==='1' ){%>
+                                        <p style="color: red;"><strong>Warning!</strong> Không tồn tại nhân viên</p>
+                                        <%} else {%>
+                                            <p style="color: red;"><strong>Warning!</strong> Nhân viên đã trong dự
+                                                án khác</p>
+                                            <% }}%>
+                                                <!-- Submit -->
+                                                <button type=" submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+                            <div class="col-sm-4">
+                                <br>
+                                <h3>Thêm trợ lý</h3>
+                                <form action="/create-sangkien" method="get">
+                                    <input type="text" class="form-control" name="manhanvien">
+                                    <br>
+                                    <button type="submit" class="btn btn-primary">Kiểm tra</button>
+                                    <br>
+                                </form>
+                                <% if (dataNhanvien !=null) { %>
+                                    <p>
+                                        Tên nhân viên: <%= dataNhanvien[0].tennhanvien %> <br>
+                                            Phòng ban: <%= dataNhanvien[0].tenphongban %> <br>
+                                                Chức vụ: <%= dataNhanvien[0].tenchucvu %> <br>
+
+                                    </p>
+                                    <%}%>
+                            </div>
+                        </div>
+                    </div>
+
 </body>
 
 </html>
