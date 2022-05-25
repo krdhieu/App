@@ -60,9 +60,14 @@ let viewSangkien = async (req, res) => {
         }
     }
     if (trangthai) {
-        if (trangthai != '') {
-            matrangthai = trangthai;
-        }
+        matrangthai = trangthai;
+    }
+    else {
+        const [rows] = await connectDB.execute(`SELECT * FROM sangkien 
+        inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai
+        inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien 
+        where sangkien.madotsangkien = ?`, [madotsangkien]);
+        return res.render('showsangkien.ejs', { dataSangkien: rows, dataDotsangkien: datadotsangkien, dataTrangthai: datatrangthai });
     }
     const [rows] = await connectDB.execute(`SELECT * FROM sangkien 
         inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai

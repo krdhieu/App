@@ -1,165 +1,85 @@
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-            crossorigin="anonymous"
-        />
-        <link rel="stylesheet" href="/scss/styles.scss" />
-        <title>Chi tiet sang kien</title>
-    </head>
 
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8">
-                    <h3>Sáng kiến</h3>
-                    <label>Tên sáng kiến</label>
-                    <input
-                        type="text"
-                        name="tensangkien"
-                        class="form-control"
-                        value="<%= dataSangkien.tensangkien %>"
-                        readonly
-                    />
-                    <!-- <label for="">Người chủ trì</label>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script defer src="/src/showHideSideBar.js"></script> -->
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/scss/styles.scss" />
+    <title>Chi tiet sang kien</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <h3>Sáng kiến</h3>
+                <label>Tên sáng kiến</label>
+                <input type="text" name="tensangkien" class="form-control" value="<%= dataSangkien.tensangkien %>"
+                    readonly />
+                <!-- <label for="">Người chủ trì</label>
             <input type="text" name="chutri" class="form-control" value="<% %>">
             <label for="">Người trợ lý</label>
             <input type="text" name="troly" class="form-control" value="<% %>"> -->
-                    <label for="">Mục tiêu</label>
-                    <input
-                        type="text"
-                        name="muctieu"
-                        class="form-control"
-                        value="<%= dataSangkien.muctieu %>"
-                        readonly
-                    />
-                    <label for="">Nội dung</label>
-                    <textarea
-                        name="noidung"
-                        id=""
-                        class="form-control"
-                        readonly
-                        cols="30"
-                        rows="10"
-                    >
+                <label for="">Mục tiêu</label>
+                <input type="text" name="muctieu" class="form-control" value="<%= dataSangkien.muctieu %>" readonly />
+                <label for="">Nội dung</label>
+                <textarea name="noidung" id="" class="form-control" readonly cols="30" rows="10">
                     <%= dataSangkien.noidung %>
                     </textarea>
-                    <label for="">Lợi ích</label>
-                    <input
-                        type="text"
-                        name="loiich"
-                        class="form-control"
-                        value="<%= dataSangkien.loiich %>"
-                        readonly
-                    />
-                    <label for="">Đối tượng</label>
-                    <input
-                        type="text"
-                        name="doituong"
-                        class="form-control"
-                        value="<%= dataSangkien.doituong %>"
-                        readonly
-                    />
+                <label for="">Lợi ích</label>
+                <input type="text" name="loiich" class="form-control" value="<%= dataSangkien.loiich %>" readonly />
+                <label for="">Đối tượng</label>
+                <input type="text" name="doituong" class="form-control" value="<%= dataSangkien.doituong %>" readonly />
+            </div>
+            <!-- gui file  -->
+            <div class="col-sm-4">
+                <div class="uploadfile">
+                    <form method="post" action="/upload-file" enctype="multipart/form-data">
+                        <div>
+                            <label for="">Upload: </label>
+                            <input type="file" name="profile_file" />
+                        </div>
+                        <div>
+                            <button type="submit">Save me</button>
+                        </div>
+                    </form>
                 </div>
-                <!-- gui file  -->
-                <div class="col-sm-4">
-                    <div class="uploadfile">
-                        <form
-                            method="post"
-                            action="/upload-file"
-                            enctype="multipart/form-data"
-                        >
-                            <div>
-                                <label for="">Upload: </label>
-                                <input type="file" name="profile_file" />
-                            </div>
-                            <div>
-                                <button type="submit">Save me</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div>
-                        <!-- nguoi tham gia -->
-                        <form action="">
-                            <h3>Người chủ trì</h3>
-                            <label for="">Mã nhân viên</label>
-                            <input
-                                type="text"
-                                name="manhanvien"
-                                class="form-control"
-                                value="<%= dataChutri.manhanvien %>"
-                                readonly
-                            />
-                            <label for="">Tên nhân viên</label>
-                            <input
-                                type="text"
-                                name="tennhanvien"
-                                class="form-control"
-                                value="<%= dataChutri.tennhanvien %>"
-                                readonly
-                            />
-                            <label for="">Tỷ lệ đóng góp</label>
-                            <input
-                                type="number"
-                                name="tyledonggop"
-                                min="0"
-                                max="100"
-                                class="form-control"
-                                value="<%= dataChutri.tyledonggop %>"
-                            />
-                            <%if(JSON.stringify(dataTroly)!=null) { %>
+                <div>
+                    <!-- nguoi tham gia -->
+                    <form action="">
+                        <h3>Người chủ trì</h3>
+                        <label for="">Mã nhân viên</label>
+                        <input type="text" name="manhanvien" class="form-control" value="<%= dataChutri.manhanvien %>"
+                            readonly />
+                        <label for="">Tên nhân viên</label>
+                        <input type="text" name="tennhanvien" class="form-control" value="<%= dataChutri.tennhanvien %>"
+                            readonly />
+                        <label for="">Tỷ lệ đóng góp</label>
+                        <input type="number" name="tyledonggop" min="0" max="100" class="form-control"
+                            value="<%= dataChutri.tyledonggop %>" />
+                        <%if(JSON.stringify(dataTroly)!=null) { %>
                             <h3>Trợ lý</h3>
                             <label for="">Mã nhân viên</label>
-                            <input
-                                type="text"
-                                name="id"
-                                class="form-control"
-                                value="<%= dataTroly.manhanvien %>"
-                                readonly
-                            />
+                            <input type="text" name="id" class="form-control" value="<%= dataTroly.manhanvien %>"
+                                readonly />
                             <label for="">Tên nhân viên</label>
-                            <input
-                                type="text"
-                                name="tennhanvien"
-                                class="form-control"
-                                value="<%= dataTroly.tennhanvien %>"
-                                readonly
-                            />
+                            <input type="text" name="tennhanvien" class="form-control"
+                                value="<%= dataTroly.tennhanvien %>" readonly />
                             <label for="">Tỷ lệ đóng góp</label>
-                            <input
-                                type="text"
-                                name="tyledonggop"
-                                min="0"
-                                max="100"
-                                class="form-control"
-                                value="<%= dataTroly.tyledonggop %>"
-                            />
+                            <input type="text" name="tyledonggop" min="0" max="100" class="form-control"
+                                value="<%= dataTroly.tyledonggop %>" />
                             <% } %>
-                        </form>
-                    </div>
-                    <a href="">Xem đánh giá</a>
+                    </form>
                 </div>
+                <a href="">Xem đánh giá</a>
             </div>
         </div>
-        <script
-            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"
-        ></script>
-    </body>
+    </div>
+</body>
+
 </html>

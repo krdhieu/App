@@ -155,11 +155,12 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAdmin,
         trangthaisangkienController.uploadTrangthaisangkien
     );
-    router.post(
-        '/addtrangthaisangkien',
-        verifyAccessToken.verifyAccessTokenAdmin,
-        trangthaisangkienController.addTrangthaisangkien
-    );
+    // router.post(
+    //     '/addtrangthaisangkien',
+    //     verifyAccessToken.verifyAccessTokenAdmin,
+    //     trangthaisangkienController.addTrangthaisangkien
+    // );
+
     // tạo nhân viên
     router.get(
         '/quanlynhanvien',
