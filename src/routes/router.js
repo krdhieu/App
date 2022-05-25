@@ -207,6 +207,7 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenMiddleware,
         nhanvienController.uploadNhanvienuser
     );
+
     // tạo sang kien
 
     router.get(
@@ -493,6 +494,11 @@ const initRouter = (app) => {
     router.get(
         '/get-all-khenthuong',
         verifyAccessToken.verifyAccessTokenAdmin,
+        khenThuongController.getAllKhenThuong
+    );
+
+    router.post(
+        '/search-khenthuong-dot',
         khenThuongController.getAllKhenThuong
     );
     return app.use('/', router);

@@ -59,6 +59,20 @@ let editThanhVienHD = (idThanhVienHD, idChucVu, idHDKH) => {
         }
     });
 };
+// kiem tra thanh vien nay da trong hoi dong hien tai hay chua
+let checkThanhVienHD = (maNhanVien, maHoiDong) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [check] = await connectDB.execute(
+                `SELECT * FROM thanhvienhoidong WHERE manhanvien=? and mahoidong=?`,
+                [maNhanVien, maHoiDong]
+            );
+            resolve(check);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 
 module.exports = {
     getAllThanhVienHDKH,
@@ -66,4 +80,5 @@ module.exports = {
     editThanhVienHD: editThanhVienHD,
     getAllThanhVienHDKHJoinNhanVienJoinChucVu:
         getAllThanhVienHDKHJoinNhanVienJoinChucVu,
+    checkThanhVienHD,
 };

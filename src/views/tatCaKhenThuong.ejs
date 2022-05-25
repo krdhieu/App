@@ -155,11 +155,22 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid mt-3">
+        <div class="container-fluid row mt-3">
+            <form action="/search-khenthuong-dot" class="col-3" method="post" >
+                <select name="maDotTimKiem" class="form-select">
+                    <% for (let i=0;i<allDot.length;i++){%>
+                            <option value="<%=allDot[i].madotsangkien%>"><%=allDot[i].tendotsangkien%></option>
+                        <%}%>
+                </select>
+                <button type="submit" class="btn btn-info mt-1">Tìm Kiếm</button>
+            </form>
+        </div>
+        <div class="container-fluid mt-3 row">
             <h4 class="text-white">Tất cả khen thưởng</h4>
         </div>
 
         <div class="container-fluid mt-3">
+
             <table class="table table-dark text-center">
                 <thead class="thead-dark">
                     <tr>
