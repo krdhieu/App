@@ -1,16 +1,41 @@
 import req from 'express/lib/request';
 import connectDB from '../configs/connectDB';
 import jwt from 'jsonwebtoken';
-import res from 'express/lib/response';
+import res, { redirect } from 'express/lib/response';
 import multer from 'multer';
 import moment from 'moment';
 import chuanhoachuoi, { chuanhoavanban } from '../services/chuanhoachuoi';
 
 // chuyển tới trang tạo sáng kiến
 let createSangkien = async (req, res) => {
-    const [phongban, fields_phongban] = await connectDB.execute('SELECT * FROM phongban ');
-    const [chucvu, fields_chucvu] = await connectDB.execute('SELECT * FROM chucvu ');
-    return res.render('createsangkien.ejs', { dataPhongban: phongban, dataChucvu: chucvu });
+    let { alert } = req.query;
+    let { manhanvien } = req.query;
+    let [nhanvien] = []
+    if (manhanvien) {
+        [nhanvien] = await connectDB.execute(`Select * from nhanvien
+        inner join phongban on nhanvien.maphongban = phongban.maphongban
+        inner join chucvu on nhanvien.machucvu = chucvu.machucvu
+        where manhanvien = ?`, [manhanvien])
+    }
+    const [phongban] = await connectDB.execute('SELECT * FROM phongban ');
+    const [chucvu] = await connectDB.execute('SELECT * FROM chucvu ');
+    const [dot] = await connectDB.execute(`select ngaybatdau,ngaydungdangky from dotsangkien where trangthai = ?`, [1])
+    let ngaybatdau = moment(dot[0].ngaybatdau).format('YYYYMMDD');
+    let ngaydungdangky = moment(dot[0].ngaydungdangky).format('YYYYMMDD');
+    let hientai = moment().utcOffset('+0700').format('YYYYMMDD');
+    //let hientai = moment('2022-03-20').format('YYYYMMDD'); // test
+    if (hientai <= ngaydungdangky || hientai >= ngaybatdau) {
+        if (manhanvien) {
+            if (nhanvien.length == 1) {
+                return res.render('createsangkien.ejs', { dataPhongban: phongban, dataChucvu: chucvu, alert: alert, dataNhanvien: nhanvien });
+            }
+            return res.render('createsangkien.ejs', { dataPhongban: phongban, dataChucvu: chucvu, alert: alert, dataNhanvien: null });
+        }
+        return res.render('createsangkien.ejs', { dataPhongban: phongban, dataChucvu: chucvu, alert: alert, dataNhanvien: null });
+    }
+    else {
+        return res.send('<p style= "font-size: 24px">Chưa mở đợt đăng ký</p><a href="/home">Trở về</a> ')
+    }
 }
 
 // tải dữ liệu sáng kiến mới từ trang tạo
@@ -22,12 +47,9 @@ let addSangkien = async (req, res) => {
     doituong = chuanhoachuoi.chuanhoa(doituong);
     let manhanvien_1 = req.nhanVienId;
     if (manhanvien_2) {
-        let [nhanvien_2] = await connectDB.execute('select count(*) as "soluong" from nhanvien where manhanvien = ? and trangthai =?', [manhanvien_2, 1]);
-        if (nhanvien_2[0].soluong == 0) {
-            return res.status(200).send('<p>Không tồn tại nhân viên <a href="/create-sangkien">Trở về</a></p>');
-        }
         let [nguoithamgia_2] = await connectDB.execute('SELECT count(*) as "soluong" FROM `nguoithamgia` INNER JOIN sangkien ON nguoithamgia.masangkien=sangkien.masangkien WHERE manhanvien = ? and matrangthai = 1 or matrangthai=2;', [manhanvien_2]);
         if (nguoithamgia_2[0].soluong >= 1) {
+            return res.redirect('/create-sangkien?alert=' + encodeURIComponent('2'));
             return res.status(200).send('<p>Đã trong 1 dự án <a href="/create-sangkien">Trở về</a></p>');
         }
     }
@@ -48,7 +70,7 @@ let addSangkien = async (req, res) => {
 }
 // view sáng kiến
 let viewSangkien = async (req, res) => {
-    const [dotsangkien1] = await connectDB.execute(`select * from dotsangkien where trangthai=?`, [1]);
+    const [dotsangkien1] = await connectDB.execute(`select * from dotsangkien where madotsangkien = (SELECT max(madotsangkien) FROM dotsangkien)`);
     let madotsangkien = dotsangkien1[0].madotsangkien;
     let matrangthai = 2;
     const [datadotsangkien] = await connectDB.execute(`select * from dotsangkien`);
@@ -72,6 +94,7 @@ let viewSangkien = async (req, res) => {
     const [rows] = await connectDB.execute(`SELECT * FROM sangkien 
         inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai
         inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien 
+        inner join xetduyet on sangkien.masangkien = xetduyet.masangkien
         where sangkien.madotsangkien = ? and sangkien.matrangthai=?`, [madotsangkien, matrangthai]);
     return res.render('showsangkien.ejs', { dataSangkien: rows, dataDotsangkien: datadotsangkien, dataTrangthai: datatrangthai });
 }
@@ -90,28 +113,38 @@ let quanlyduyetSangkien = async (req, res) => {
 
 const upload = multer().single('profile_file');
 let UploadProfileFile = async (req, res) => {
-    upload(req, res, async function (err) {
-        if (req.fileValidationError) {
-            return res.send(req.fileValidationError);
-        }
-        else if (!req.file) {
-            return res.send('Please select an file to upload');
-        }
-        else if (err instanceof multer.MulterError) {
-            return res.send(err);
-        }
-        else if (err) {
-            return res.send(err);
-        }
-        let filename = req.file.filename;
+    const [dot] = await connectDB.execute(`select hannop from dotsangkien where trangthai = ?`, [1])
+    let hannop = moment(dot[0].hannop).format('YYYYMMDD');
+    let hientai = moment().utcOffset('+0700').format('YYYYMMDD');
+    //let hientai = moment('2022-03-20').format('YYYYMMDD'); // test
+    console.log('hientai: ' + hientai + ' ngay dung: ' + hannop);
+    console.log(hientai >= hannop)
+    if (hientai <= hannop) {
+        upload(req, res, async function (err) {
+            if (req.fileValidationError) {
+                return res.send(req.fileValidationError);
+            }
+            else if (!req.file) {
+                return res.send('Please select an file to upload');
+            }
+            else if (err instanceof multer.MulterError) {
+                return res.send(err);
+            }
+            else if (err) {
+                return res.send(err);
+            }
+            let filename = req.file.filename;
 
-        await connectDB.execute(`update sangkien set dinhkem = ?`, [filename]);
-        // Display uploaded image for user validation
-        return res.send(`gui thanh cong`);
-        // console.log('>>>>>>>>>>>>> name file ', filename);
+            await connectDB.execute(`update sangkien set dinhkem = ?`, [filename]);
+            // Display uploaded image for user validation
+            return res.send(`gui thanh cong`);
+            // console.log('>>>>>>>>>>>>> name file ', filename);
 
-    });
-
+        });
+    }
+    else {
+        return res.send('<p style= "font-size: 24px">Đã quá hạn nộp</p><a href="/home">Trở về</a> ')
+    }
 }
 let detailSangkien = async (req, res) => {
     const [nguoithamgia] = await connectDB.execute('SELECT * FROM nguoithamgia where manhanvien = ?', [req.nhanVienId]);
@@ -163,5 +196,5 @@ let history = async (req, res) => {
 }
 module.exports = {
     addSangkien, createSangkien, viewSangkien, UploadProfileFile, detailSangkien, duyetSangkien,
-    huySangkien, huy1Sangkien, quanlyduyetSangkien, history
+    huySangkien, huy1Sangkien, quanlyduyetSangkien, history,
 }
