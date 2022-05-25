@@ -70,7 +70,7 @@ let addSangkien = async (req, res) => {
 }
 // view sáng kiến
 let viewSangkien = async (req, res) => {
-    const [dotsangkien1] = await connectDB.execute(`select * from dotsangkien where trangthai=?`, [1]);
+    const [dotsangkien1] = await connectDB.execute(`select * from dotsangkien where madotsangkien = (SELECT max(madotsangkien) FROM dotsangkien)`);
     let madotsangkien = dotsangkien1[0].madotsangkien;
     let matrangthai = 2;
     const [datadotsangkien] = await connectDB.execute(`select * from dotsangkien`);
@@ -94,6 +94,7 @@ let viewSangkien = async (req, res) => {
     const [rows] = await connectDB.execute(`SELECT * FROM sangkien 
         inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai
         inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien 
+        inner join xetduyet on sangkien.masangkien = xetduyet.masangkien
         where sangkien.madotsangkien = ? and sangkien.matrangthai=?`, [madotsangkien, matrangthai]);
     return res.render('showsangkien.ejs', { dataSangkien: rows, dataDotsangkien: datadotsangkien, dataTrangthai: datatrangthai });
 }

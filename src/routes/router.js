@@ -256,15 +256,6 @@ const initRouter = (app) => {
         upload.single('profile_file'),
         sangkienController.UploadProfileFile
     );
-<<<<<<< HEAD
-    router.get('/home/history', verifyAccessToken.verifyAccessTokenMiddleware, sangkienController.history);
-    // tạo đợt sáng kiến-----------------------------------------------------------------------------------------
-    router.get('/quanlydotsangkien', dotsangkienController.viewDotsangkien); //chinh
-    router.post('/adddotsangkien', dotsangkienController.addDotsangkien);
-    router.get('/editdotsangkien', dotsangkienController.suaDotsangkien);
-    router.post('/uploaddotsangkien', dotsangkienController.uploadDotsangkien);
-    router.get('/ketthucdot', dotsangkienController.ketthucDotsangkien);
-=======
     //lich su sang kien
     router.get(
         '/home/history',
@@ -298,7 +289,7 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAdmin,
         dotsangkienController.ketthucDotsangkien
     );
->>>>>>> a9280c5a6aebfd01d736fbb50f79146a9054504e
+
     //-----------------------------------------------------------------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------//
     //sua nhan xet

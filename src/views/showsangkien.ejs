@@ -76,14 +76,25 @@
                         <td>
                             <%= dataSangkien[i].tentrangthai %>
                         </td>
-                        <td><a href="/chitietdiem-xeploai-nhanxet?masangkien=<%= dataSangkien[i].masangkien %>"
-                                target="_self" title="Chi tiết sáng kiến"><i class="fa-solid fa-file-alt"></a>
+                        <td>
+                            <% if (dataSangkien[i].matrangthai !==4){ %>
+                                <a href="/chitietdiem-xeploai-nhanxet?masangkien=<%= dataSangkien[i].masangkien %>"
+                                    target="_self" title="Chi tiết sáng kiến"><i class="fa-solid fa-file-alt"></a>
+                                <% } else {%>
+                                    <button type="button" onclick="myfunc()">Lý do</button>
+                                    <%}%>
+                                        <script>
+                                            function myfunc() {
+                                                alert("<%= dataSangkien[i].lydotuchoi%>");
+                                            }
+                                        </script>
                         </td>
                     </tr>
                     <% } %>
             </tbody>
         </table>
     </div>
+
 </body>
 
 </html>
