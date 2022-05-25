@@ -18,9 +18,8 @@
         ></script>
         <!-- <script defer src="/src/showHideSideBar.js"></script> -->
         <link rel="stylesheet" href="/css/styles.css" />
-        <title>Home</title>
+        <title>Document</title>
     </head>
-
     <body style="background-color: #808080">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <button
@@ -156,5 +155,36 @@
                 </div>
             </div>
         </div>
+        <div class="container-fluid mt-3">
+            <h4 class="text-white">Tất cả khen thưởng</h4>
+        </div>
+
+        <div class="container-fluid mt-3">
+            <table class="table table-dark text-center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Mã Sáng Kiến</th>
+                        <th scope="col">Đợt Sáng Kiến</th>
+                        <th scope="col">Tên Sáng Kiến</th>
+                        <th scope="col">Xếp Loại</th>
+                        <th scope="col">Mức thưởng</th>
+                    </tr>
+                </thead>
+                <tbody> 
+         <% for(let i=0;i<allKhenThuong.length;i++){%>
+                        <tr>
+                            <th><%=i+1%></th>
+                            <td><%=allKhenThuong[i].masangkien%></td>
+                            <td><%=allKhenThuong[i].tensangkien%></td>
+                            <td><%=allKhenThuong[i].tendotsangkien%></td>
+                            <td><%=allKhenThuong[i].tenxeploai%></td>
+                            <td><%=allKhenThuong[i].muckhenthuong%></td>
+                        </tr>
+                    <%}%>
+         </tbody>
+            </table>
+        </div> 
+
     </body>
 </html>
