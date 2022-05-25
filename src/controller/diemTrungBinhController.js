@@ -58,7 +58,6 @@ let chiTietDiemDanhGiaXepLoaiNhanXet = async (req, res) => {
     let allChiTietDiem = await chamDiemService.getAllChiTietDiemOfSangKien(
         masangkien
     );
-    console.log('>>>>>>>>>>>', allChiTietDiem);
     return res.render('chiTietXepLoai.ejs', {
         thongTinSangKien: thongTinSangKien[0],
         allChiTietDiem,

@@ -63,7 +63,7 @@ let getSangKienDangThucHienLeftJoinDanhGia = () => {
     });
 };
 
-// lay thong tin sang kien + danh gia sang kien + xep loai theo ma sang kien
+// lay thong tin sang kien + danh gia sang kien + xep loai -  ma sang kien
 
 let getSangKienDangThucHienLeftJoinDanhGiaByMaSangKien = (maSangKien) => {
     return new Promise(async (resolve, reject) => {
@@ -82,10 +82,32 @@ let getSangKienDangThucHienLeftJoinDanhGiaByMaSangKien = (maSangKien) => {
         }
     });
 };
+
+/// lay thong tin sang kien + xep loai + muc thuong hien tai
+
+let getSangKienDangThucHienLeftJoinDanhGiaAndMucThuongByMaSangKien = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [sangkien] = await connectDB.execute(
+                `SELECT sangkien.*,danhgiasangkien.maxeploai,xeploai.tenxeploai ,muckhenthuong,makhenthuong
+                FROM sangkien 
+                LEFT JOIN danhgiasangkien on sangkien.masangkien= danhgiasangkien.masangkien 
+                LEFT JOIN xeploai ON xeploai.maxeploai= danhgiasangkien.maxeploai
+                LEFT JOIN khenthuong ON khenthuong.masangkien = sangkien.masangkien
+                WHERE sangkien.matrangthai=2`
+            );
+            resolve(sangkien);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 module.exports = {
     getSangKienDaDuyet,
     getDetailSangKien,
     getSangKienDangThucHien,
     getSangKienDangThucHienLeftJoinDanhGia,
     getSangKienDangThucHienLeftJoinDanhGiaByMaSangKien,
+    getSangKienDangThucHienLeftJoinDanhGiaAndMucThuongByMaSangKien,
 };

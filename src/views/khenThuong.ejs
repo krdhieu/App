@@ -114,7 +114,7 @@
                     >
 
                     <a
-                        href="/quanlynhanvien/:search"
+                        href="/quanlynhanvien"
                         class="btn btn-dark btn-sm text-start"
                         >Quản Lý Nhân Viên</a
                     >
@@ -155,131 +155,89 @@
                 </div>
             </div>
         </div>
-        <%if(typeof(alert)!=='undefined' && alert=='2'){%>
+        <%if(typeof(alert)!=='undefined' && alert=='1'){%>
             <div class="alert alert-success alert-dismissible position-absolute">
                 <button
                     type="button"
                     class="btn-close"
                     data-bs-dismiss="alert"
                 ></button>
-                <strong>Success!</strong> Xếp loại Sáng kiến đã được cập nhật
+                <strong>Success!</strong> Mức khen thưởng đã được cập nhật
             </div>
             <%}%>
-        <div class="container-fluid mb-0">
-            <h1 class="mb-0 text-white">Xếp loại sáng kiến</h1>
+        <div class="container-fluid mt-3">
+            <h4 class="text-white">Khen thưởng</h4>
         </div>
-
-      
-        <% if(typeof(alert)!=='undefined' && alert==='1'){%>
-        <div>
-            <h1>Không có sáng kiến cần đánh giá</h1>
-        </div>
-        <%} else {%>
-
-        <div class="container-fluid mt-3 ">
+        <%if(typeof(alert)!=='undefined' && alert=='0'){%>
+            <div>
+                <h4>Không có sáng kiến cần khen thưởng</h4>
+            </div>
+        <%}else{%>
+        <div class="container-fluid mt-3">
+            
             <table class="table table-dark text-center">
                 <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Mã Sáng Kiến</th>
-                    <th scope="col">Tên Sáng Kiến</th>
-                    <th scope="col">Điểm Trung Bình <br> Mục Đích</th>
-                    <th scope="col">Điểm Trung Bình <br> Nội Dung</th>
-                    <th scope="col">Điểm Trung Bình <br> Ứng Dụng</th>
-                    <th scope="col">Điểm Trung Bình <br> Trình Bày</th>
-                    <th scope="col">Xếp Loại</th>
-                    <th scope="col" width="200px">Actions</th>
-                  </tr>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Mã Sáng Kiến</th>
+                        <th scope="col">Tên Sáng Kiến</th>
+                        <th scope="col">Xếp Loại</th>
+                        <th scope="col">Mức thưởng</th>
+                        <th scope="col" width="200px">Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    <% for(let i=0;i<diemSangKien.length;i++){%>
-                  <tr>
-                    <th scope="row"><%=i + 1%></th>
-                    <td><%=diemSangKien[i].masangkien%></td>
-                    <td><%=diemSangKien[i].tensangkien%></td>
-                    <td><%=(diemSangKien[i].diem.tbmucdich===null? '' :  (diemSangKien[i].diem.tbmucdich.toFixed(2)))%></td>
-                    <td><%=(diemSangKien[i].diem.tbnoidung===null? '' :  (diemSangKien[i].diem.tbnoidung.toFixed(2)))%></td>
-                    <td><%=(diemSangKien[i].diem.tbungdung===null? '' :  (diemSangKien[i].diem.tbungdung.toFixed(2)))%></td>
-                    <td><%=(diemSangKien[i].diem.tbtrinhbay===null? '':  (diemSangKien[i].diem.tbtrinhbay.toFixed(2)))%></td>
-                    <td><%=(diemSangKien[i].tenxeploai===null? '':  (diemSangKien[i].tenxeploai))%></td>
-                    <td>
-                        <button type="button" class="btn btn-primary"  title="Xếp loại sáng kiến" data-bs-toggle="modal" data-bs-target="#sk<%=diemSangKien[i].masangkien%>"> 
-                            <i class="fa-solid fa-pen"></i>
-                        </button>
-                        
-                        <a href="/chitietdiem-xeploai-nhanxet?masangkien=<%=diemSangKien[i].masangkien%>" class="btn btn-primary"  data-bs-toggle="tooltip" title="Chi tiết điểm"> 
-                            
-                            <i class="fa-solid fa-file-lines"></i>
-                        </a>
-                    </td>
-                  </tr>
-                  <div class="modal" id="sk<%=diemSangKien[i].masangkien%>">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                  
- 
-                        <div class="modal-header">
-                          <h4 class="modal-title">Xếp loại sáng kiến</h4>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                  
+                    <% for(let i=0;i<sangKien.length;i++){%>
+                        <tr>
+                            <th><%=i+1%></th>
+                            <td><%=sangKien[i].masangkien%></td>
+                            <td><%=sangKien[i].tensangkien%></td>
+                            <td><%=sangKien[i].tenxeploai%></td>
+                            <td><%=sangKien[i].muckhenthuong%></td>
+                            <td> 
+                                <button type="button" class="btn btn-primary"  title="Khen thưởng sáng kiến" data-bs-toggle="modal" data-bs-target="#sk<%=sangKien[i].masangkien%>"> 
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                            </td>
+                        </tr>
 
-                        <div class="modal-body">
-                          <form action="/xep-loai-sk" method="post">
-                              <div class="form-group">
-                                  <label for="">Mã sáng kiến:</label>
-                                <input type="text" name="maSangKien" class="form-control" value="<%=diemSangKien[i].masangkien%>" readonly> 
-                              </div>
-                             
-                              <div class="form-group">
-                                <div>
-                                    Điểm trung bình: 
-                                    <% if(diemSangKien[i].diem.tbmucdich!==null && diemSangKien[i].diem.tbnoidung!==null &&
-                                    diemSangKien[i].diem.tbungdung!==null&&
-                                    diemSangKien[i].diem.tbtrinhbay!==null) {%>
-                                        <div class="fw-bold">
-                                            <%= ((parseFloat(diemSangKien[i].diem.tbmucdich) +
-                                             parseFloat(diemSangKien[i].diem.tbnoidung) +
-                                             parseFloat(diemSangKien[i].diem.tbungdung) +
-                                             parseFloat(diemSangKien[i].diem.tbtrinhbay))/4).toFixed(2) %>
-                                        </div>
-                                    <%}%>
+                        <div class="modal" id="sk<%=sangKien[i].masangkien%>">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Khen thưởng sáng kiến</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>                        
+                                    <div class="modal-body">
+                                        <form action="/khen-thuong" method="post">
+                                            <div class="form-group">
+                                                <label for="">Mã sáng kiến:</label>
+                                            <input type="text" name="maSangKien" class="form-control" value="<%=sangKien[i].masangkien%>" readonly> 
+                                            </div>
+                              <!-- Muc thuong hien tai -->
+                                            <div class="form-group" >
+                                                <label for="">Mã thưởng hiện tại</label>
+                                                <input type="text" name="maMucThuongHienTai" class="form-control"  value="<%=sangKien[i].makhenthuong%>"  readonly> 
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <label for="">Mức thưởng</label>
+                                                <input type="number" name="mucThuongMoi" class="form-control" required >
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <button type="submit" class="btn btn-primary"> Save </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                    </div>
                                 </div>
                             </div>
-                            <!-- xeploaicu -->
-                            <div class="form-group" hidden>
-                                <label for="">Xếp Loại Cũ</label>
-                                <input type="text" name="maXepLoaiCu" class="form-control" value="<%=diemSangKien[i].maxeploai%>" readonly> 
-                            </div>
-
-                              <div class="form-group mt-2">
-                                  <label for="">Loại:</label>
-                                <select name="maXepLoaiMoi" class="form-control">
-                                    <% for(let i=0;i<loaiXepLoai.length;i++){%>
-                                        <option value="<%=loaiXepLoai[i].maxeploai%>"><%=loaiXepLoai[i].tenxeploai%> : <%=loaiXepLoai[i].motaxeploai%></option>
-                                    <%}%>
-                                </select>
-                              </div>
-                              <div class="form-group mt-2">
-                                <button type="submit" class="btn btn-primary"> Save </button>
-                              </div>
-                          </form>
                         </div>
-                        
-
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        </div>
-                  
-                      </div>
-                    </div>
-                  </div>
-
-
-                  <%}%>
+                    <%}%>
                 </tbody>
-              </table>
-              <%}%>
-              
+            </table>          
+        </div>
+        <%}%>
     </body>
 </html>
