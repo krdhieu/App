@@ -32,9 +32,10 @@ const getAllHDKH = async (req, res) => {
 
 //trang thong tin chi tiet cua 1 hdkh
 const getDetailHDKH = async (req, res) => {
-    let { id } = req.query;
+    let { id, alert } = req.query;
+
     if (!id) {
-        return res.send('Missing required parameter');
+        return res.send('Khong tim thay ma hoi dong');
     }
 
     let detail = await hoiDongKhoaHocService.getDetailHDKH(id);
@@ -53,6 +54,7 @@ const getDetailHDKH = async (req, res) => {
         detail: detail[0],
         allChucVu,
         allThanhVien,
+        alert,
     });
 };
 

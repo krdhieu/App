@@ -1,6 +1,6 @@
 import sangKienService from '../services/sangKienService';
 import khenThuongService from '../services/khenThuongService';
-import { all } from 'express/lib/application';
+import dotSangKienService from '../services/dotSangKienService';
 let getKhenThuong = async (req, res) => {
     let { alert } = req.query;
     let sangKien =
@@ -34,10 +34,24 @@ let createUpdateKhenThuong = async (req, res) => {
 // trang tat ca khen thuong
 
 let getAllKhenThuong = async (req, res) => {
-    let allKhenThuong = await khenThuongService.getAllKhenThuong();
-    console.log(allKhenThuong);
+    let { maDotTimKiem } = req.body;
+    if (!maDotTimKiem) {
+        let allKhenThuong = await khenThuongService.getAllKhenThuong();
+        let allDot = await dotSangKienService.getAllDot();
+        console.log(allDot);
+        return res.render('tatCaKhenThuong.ejs', {
+            allKhenThuong,
+            allDot,
+        });
+    }
+    let allKhenThuong = await khenThuongService.getAllKhenThuongTheoDot(
+        maDotTimKiem
+    );
+    let allDot = await dotSangKienService.getAllDot();
+    console.log(allDot);
     return res.render('tatCaKhenThuong.ejs', {
         allKhenThuong,
+        allDot,
     });
 };
 

@@ -42,8 +42,8 @@ const storage = multer.diskStorage({
         cb(
             null,
             'sangkien-' +
-            sangkien[0].masangkien +
-            path.extname(file.originalname)
+                sangkien[0].masangkien +
+                path.extname(file.originalname)
         );
     },
 });
@@ -207,7 +207,8 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenMiddleware,
         nhanvienController.uploadNhanvienuser
     );
-    // tạo sang kien-------------------------------------------------------------------------
+
+    // tạo sang kien
 
     router.get(
         '/quanlysangkien',
@@ -495,6 +496,11 @@ const initRouter = (app) => {
     router.get(
         '/get-all-khenthuong',
         verifyAccessToken.verifyAccessTokenAdmin,
+        khenThuongController.getAllKhenThuong
+    );
+
+    router.post(
+        '/search-khenthuong-dot',
         khenThuongController.getAllKhenThuong
     );
     return app.use('/', router);

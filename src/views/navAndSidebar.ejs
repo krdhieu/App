@@ -1,0 +1,136 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button
+        type="button"
+        class="navbar-brand btn mx-2 show-hide-sidebar"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#custom-sidebar"
+    >
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="container-fluid p-0">
+        <a class="navbar-brand btn" href="/home">Home</a>
+    </div>
+    <!-- dropdown -->
+    <div
+        class="btn-group me-sm-5"
+        role="group"
+        aria-label="Button group with nested dropdown"
+    >
+        <div class="btn-group me-3" role="group">
+            <button
+                id="btnGroupDrop1"
+                type="button"
+                class="btn btn-primary dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+            >
+                Account
+            </button>
+            <ul
+                class="dropdown-menu bg-dark"
+                aria-labelledby="btnGroupDrop1"
+            >
+                <li>
+                    <a
+                        class="dropdown-item text-white-50"
+                        href="/get-change-password"
+                        >Đổi mật khẩu</a
+                    >
+                </li>
+                <li>
+                    <a class="dropdown-item text-danger" href="/logout">
+                        <i
+                            class="fa-solid fa-arrow-right-from-bracket small"
+                        >
+                        </i>
+                        <span>Đăng xuất</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- sidebar -->
+<div class="container-fluid p-0 row sidebar-container">
+    <div
+        class="custom-sidebar offcanvas offcanvas-start col-2"
+        id="custom-sidebar"
+    >
+        <div
+            class="sidebar-custom btn-group-vertical p-0"
+            style="background-color: #212529; height: 100vh"
+        >
+            <a
+                href="/quanlyphongban"
+                class="btn btn-dark btn-sm text-start"
+                >Quản Lý Phòng Ban</a
+            >
+
+            <a
+                href="/quanlychucvu"
+                class="btn btn-dark btn-sm text-start"
+                >Quản Lý Chức Vụ</a
+            >
+
+            <a
+                href="/quanlychucvuhd"
+                class="btn btn-dark btn-sm text-start"
+                >Quản Lý Chức Vụ HĐ</a
+            >
+
+            <a
+                href="/quanlyxeploai"
+                class="btn btn-dark btn-sm text-start"
+                >Quản Lý Xếp Loại</a
+            >
+
+            <a
+                href="/quanlytrangthaisangkien"
+                class="btn btn-dark btn-sm text-start"
+                >Quản Lý Trạng Thái Sáng Kiến</a
+            >
+
+            <a
+                href="/quanlynhanvien/:search"
+                class="btn btn-dark btn-sm text-start"
+                >Quản Lý Nhân Viên</a
+            >
+
+            <a
+                href="/create-sangkien"
+                class="btn btn-dark btn-sm text-start"
+                >Đăng ký sáng kiến</a
+            >
+
+            <a
+                href="/quanlysangkien"
+                class="btn btn-dark btn-sm text-start"
+                >Duyệt Sáng Kiến
+            </a>
+
+            <a
+                href="/quanlydotsangkien"
+                class="btn btn-dark btn-sm text-start"
+                >Quản Lý Đợt Sáng Kiến</a
+            >
+
+            <a
+                href="/get-cham-diem"
+                class="btn btn-dark btn-sm text-start"
+                >Chấm điểm</a
+            >
+
+            <a href="/get-hdkh" class="btn btn-dark btn-sm text-start"
+                >Quản Lý Hội Đồng Khoa Học</a
+            >
+
+            <a
+                href="/manage-account"
+                class="btn btn-dark btn-sm text-start"
+                >Quản Lý Tài Khoản</a
+            >
+        </div>
+    </div>
+</div>
+
+</div>
