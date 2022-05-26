@@ -37,7 +37,7 @@
             </select>
             <button type="submit" class="submit"> search</button>
         </form>
-        <table class="table">
+        <table class="table" id="headerTable">
             <thead>
                 <tr>
                     <th scope="col">STT</th>
@@ -78,8 +78,10 @@
                         </td>
                         <td>
                             <% if (dataSangkien[i].matrangthai !==4){ %>
-                                <a href="/chitietdiem-xeploai-nhanxet?masangkien=<%= dataSangkien[i].masangkien %>"
-                                    target="_self" title="Chi tiết sáng kiến"><i class="fa-solid fa-file-alt"></a>
+                                <!-- <a href="/chitietdiem-xeploai-nhanxet?masangkien=<%= dataSangkien[i].masangkien %>"
+                                    target="_self" title="Chi tiết sáng kiến"><i class="fa-solid fa-file-alt"></a> -->
+                                <a href="/detailsangkien?masangkien=<%= dataSangkien[i].masangkien %>"
+                                    title="Chi tiết sáng kiến"><i class="fa-solid fa-file-alt"></i></a>
                                 <% } else {%>
                                     <button type="button" onclick="myfunc()">Lý do</button>
                                     <%}%>
@@ -93,8 +95,11 @@
                     <% } %>
             </tbody>
         </table>
+        <iframe id="txtArea1" style="display:none"></iframe>
+        <button id="btnExport" onclick="fnExcelReport();"> EXPORT </button>
     </div>
-
+    <script defer src="/src/downloadReport.js">
+    </script>
 </body>
 
 </html>
