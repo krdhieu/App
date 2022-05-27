@@ -14,49 +14,50 @@
 </head>
 
 <body>
-    <div>
-        <h1>Danh sách chức vụ</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Chức vụ hội đồng </th>
-                    <th scope="col">Mô tả chức vụ hội đồng</th>
-                    <th scope="col">Tác vụ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for( let i=0 ; i < dataChucvuhd.length; i++){ %>
+    <%- include('navAndSidebar') -%>
+        <div>
+            <h1>Danh sách chức vụ</h1>
+            <table class="table">
+                <thead>
                     <tr>
-                        <th scope="row">
-                            <%= i +1 %>
-                        </th>
-                        <td>
-                            <%= dataChucvuhd[i].tenchucvuhd %>
-                        </td>
-                        <td>
-                            <%= dataChucvuhd[i].motachucvuhd %>
-                        </td>
-                        <td><a href="/quanlychucvuhd/sua/<%= dataChucvuhd[i].machucvuhd %>" target="_self"
-                                title="Sửa chức vụ hội đồng"><i class="fa-solid fa-pen"></a></td>
+                        <th scope="col">STT</th>
+                        <th scope="col">Chức vụ hội đồng </th>
+                        <th scope="col">Mô tả chức vụ hội đồng</th>
+                        <th scope="col">Tác vụ</th>
                     </tr>
-                    <% } %>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <% for( let i=0 ; i < dataChucvuhd.length; i++){ %>
+                        <tr>
+                            <th scope="row">
+                                <%= i +1 %>
+                            </th>
+                            <td>
+                                <%= dataChucvuhd[i].tenchucvuhd %>
+                            </td>
+                            <td>
+                                <%= dataChucvuhd[i].motachucvuhd %>
+                            </td>
+                            <td><a href="/quanlychucvuhd/sua/<%= dataChucvuhd[i].machucvuhd %>" target="_self"
+                                    title="Sửa chức vụ hội đồng"><i class="fa-solid fa-pen"></a></td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
 
-        <h1>Thêm mới chức vụ</h1>
-        <form action="/addchucvuhd" method="post">
-            <!-- them chuc vu hoi dong -->
-            <div class="form-group">
-                <label>Tên chức vụ hội đồng</label>
-                <input type="text" name="tenchucvu" maxlength="100" class="form-control" value="">
-                <label for="">Mô tả chức vụ hội đồng</label>
-                <textarea name="motachucvuhd" id="" cols="30" rows="10"></textarea>
-                <button type=" submit" class="btn btn-primary">Submit</button>
-            </div>
+            <h1>Thêm mới chức vụ</h1>
+            <form action="/addchucvuhd" method="post">
+                <!-- them chuc vu hoi dong -->
+                <div class="form-group">
+                    <label>Tên chức vụ hội đồng</label>
+                    <input type="text" name="tenchucvu" maxlength="100" class="form-control" value="">
+                    <label for="">Mô tả chức vụ hội đồng</label>
+                    <textarea name="motachucvuhd" class="form-control" id="" cols="30" rows="10"></textarea>
+                    <button type=" submit" class="btn btn-primary">Submit</button>
+                </div>
 
-        </form>
-    </div>
+            </form>
+        </div>
 </body>
 
 </html>

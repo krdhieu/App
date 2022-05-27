@@ -1,5 +1,9 @@
 import req from 'express/lib/request';
 import connectDB from '../configs/connectDB';
+import sangKienService from '../services/sangKienService';
+import diemTrungBinhService from '../services/diemTrungBinhService';
+import xepLoaiService from '../services/xepLoaiService';
+import chamDiemService from '../services/chamDiemService';
 import jwt from 'jsonwebtoken';
 import res, { redirect } from 'express/lib/response';
 import multer from 'multer';
@@ -8,6 +12,10 @@ import chuanhoachuoi, { chuanhoavanban } from '../services/chuanhoachuoi';
 
 // chuyển tới trang tạo sáng kiến
 let createSangkien = async (req, res) => {
+    const [dot] = await connectDB.execute(`select ngaybatdau,ngaydungdangky from dotsangkien where trangthai = ?`, [1])
+    if (dot.length === 0) {
+        return res.redirect('/home?alerts=' + encodeURIComponent('chuamodotdangky'))
+    }
     let { alert } = req.query;
     let { manhanvien } = req.query;
     let [nhanvien] = []
@@ -19,7 +27,6 @@ let createSangkien = async (req, res) => {
     }
     const [phongban] = await connectDB.execute('SELECT * FROM phongban ');
     const [chucvu] = await connectDB.execute('SELECT * FROM chucvu ');
-    const [dot] = await connectDB.execute(`select ngaybatdau,ngaydungdangky from dotsangkien where trangthai = ?`, [1])
     let ngaybatdau = moment(dot[0].ngaybatdau).format('YYYYMMDD');
     let ngaydungdangky = moment(dot[0].ngaydungdangky).format('YYYYMMDD');
     let hientai = moment().utcOffset('+0700').format('YYYYMMDD');
@@ -34,7 +41,7 @@ let createSangkien = async (req, res) => {
         return res.render('createsangkien.ejs', { dataPhongban: phongban, dataChucvu: chucvu, alert: alert, dataNhanvien: null });
     }
     else {
-        return res.send('<p style= "font-size: 24px">Chưa mở đợt đăng ký</p><a href="/home">Trở về</a> ')
+        return res.redirect('/home?alerts=' + encodeURIComponent('4'))
     }
 }
 
@@ -64,9 +71,9 @@ let addSangkien = async (req, res) => {
             await connectDB.execute('INSERT INTO `nguoithamgia`(`manhanvien`, `masangkien`, `vaitro`) VALUES (?,?,?)',
                 [manhanvien_2, id_sangkien_new.insertId, 1]);
         }
-        return res.send('đăng ký thành công')
+        return res.redirect('/home?alert=' + encodeURIComponent('3'));
     }
-    return res.send('chưa tới đợt đăng ký')
+    return res.redirect('/home?alert=' + encodeURIComponent('4'));
 }
 // view sáng kiến
 let viewSangkien = async (req, res) => {
@@ -137,7 +144,7 @@ let UploadProfileFile = async (req, res) => {
 
             await connectDB.execute(`update sangkien set dinhkem = ?`, [filename]);
             // Display uploaded image for user validation
-            return res.send(`gui thanh cong`);
+            return res.send(`Gửi thành công <a href="/chitietsangkien">Ấn đây để trở về</a>`);
             // console.log('>>>>>>>>>>>>> name file ', filename);
 
         });
@@ -161,11 +168,48 @@ let detailSangkien = async (req, res) => {
             }
         }
         else {
-            return res.send("hien tai cua chung ta")
+            return res.redirect('/home?alert=' + encodeURIComponent('5'));
         }
     }
     else {
-        return res.send('chua co sang kien')
+        return res.redirect('/home?alert=' + encodeURIComponent('5'));
+    }
+}
+let chitietSangkien = async (req, res) => {
+    let masangkien = req.query.masangkien;
+    const [sangkien] = await connectDB.execute('SELECT * FROM sangkien where masangkien = ?', [req.query.masangkien]);
+    let thongTinSangKien = [];
+    let sangKien =
+        await sangKienService.getSangKienDangThucHienLeftJoinDanhGiaByMaSangKien(
+            masangkien
+        );
+
+    let diem = await diemTrungBinhService.getDiemByMaSangKien(masangkien);
+    thongTinSangKien.push({
+        sangKien: sangKien[0],
+        diem: diem[0],
+    });
+
+    let allChiTietDiem = await chamDiemService.getAllChiTietDiemOfSangKien(
+        masangkien
+    );
+    if (sangkien[0]) {
+        const [thanhvien] = await connectDB.execute('SELECT * FROM nguoithamgia inner join nhanvien on nguoithamgia.manhanvien = nhanvien.manhanvien where masangkien = ?', [sangkien[0].masangkien]);
+        if (thanhvien[0].vaitro == 0) {
+            return res.render('detail-sangkien.ejs', {
+                dataSangkien: sangkien[0], dataChutri: thanhvien[0], dataTroly: thanhvien[1], thongTinSangKien: thongTinSangKien[0],
+                allChiTietDiem,
+            });
+        }
+        else {
+            return res.render('detail-sangkien.ejs', {
+                dataSangkien: sangkien[0], dataChutri: thanhvien[1], dataTroly: thanhvien[0], thongTinSangKien: thongTinSangKien[0],
+                allChiTietDiem,
+            });
+        }
+    }
+    else {
+        return res.redirect('/home?alert=' + encodeURIComponent('5'));
     }
 }
 let duyetSangkien = async (req, res) => {
@@ -173,7 +217,7 @@ let duyetSangkien = async (req, res) => {
     let currentDate = moment().utcOffset('+0700').format('YYYY-MM-DD');
     await connectDB.execute('update sangkien set matrangthai = ? where masangkien = ?', [2, masangkien]);
     await connectDB.execute('insert into xetduyet(manhanvien,masangkien,ngayxetduyet) values (?,?,?) ', [1, masangkien, currentDate])
-    return res.redirect('/quanlysangkien');
+    return res.redirect('/quanlyduyetsangkien');
 }
 let huySangkien = async (req, res) => {
     let masangkien = req.params.masangkien;
@@ -184,7 +228,7 @@ let huy1Sangkien = async (req, res) => {
     let currentDate = moment().utcOffset('+0700').format('YYYY-MM-DD');
     await connectDB.execute('update sangkien set matrangthai = ? where masangkien = ?', [4, masangkien]);
     await connectDB.execute('insert into xetduyet(manhanvien,masangkien,ngayxetduyet,lydotuchoi) values (?,?,?,?) ', [1, masangkien, currentDate, lydotuchoi])
-    return res.redirect('/quanlysangkien');
+    return res.redirect('/quanlyduyetsangkien');
 }
 let history = async (req, res) => {
     const [sangkien] = await connectDB.execute(`select * from sangkien 
@@ -192,9 +236,9 @@ let history = async (req, res) => {
         inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien
         inner join nguoithamgia on sangkien.masangkien = nguoithamgia.masangkien
         WHERE manhanvien = ?`, [req.nhanVienId]);
-    return res.render('historySangkien', { dataSangkien: sangkien })
+    return res.render('historySangkien.ejs', { dataSangkien: sangkien })
 }
 module.exports = {
     addSangkien, createSangkien, viewSangkien, UploadProfileFile, detailSangkien, duyetSangkien,
-    huySangkien, huy1Sangkien, quanlyduyetSangkien, history,
+    huySangkien, huy1Sangkien, quanlyduyetSangkien, history, chitietSangkien
 }

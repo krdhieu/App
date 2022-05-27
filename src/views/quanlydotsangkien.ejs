@@ -14,83 +14,86 @@
 </head>
 
 <body>
-    <div>
-        <h1>Danh sách đợt sáng kiến</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">Tên</th>
-                    <th scope="col">Trạng thái</th>
-                    <th scope="col">Ngày bắt đầu</th>
-                    <th scope="col">Ngày kết thúc</th>
-                    <th scope="col">Ngày hết hạn đăng ký</th>
-                    <th scope="col">Hạn nộp</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- dot sang kien -->
-                <% let checkdot=true; %>
-                    <% for( let i=0 ; i < dataSangkien.length; i++){ %>
-                        <tr>
-                            <th scope="row">
-                                <%= dataSangkien[i].madotsangkien %>
-                            </th>
-                            <td>
-                                <%= dataSangkien[i].tendotsangkien %>
-                            </td>
-                            <td>
-                                <% if (dataSangkien[i].trangthai) { checkdot=false; %>
-                                    <p>Đang tiến hành</p>
-                                    <% }else { %>
-                                        <p>Kết thúc</p>
-                                        <% } %>
+    <%- include('navAndSidebar') -%>
+        <div>
+            <h1>Danh sách đợt sáng kiến</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Tên</th>
+                        <th scope="col">Trạng thái</th>
+                        <th scope="col">Ngày bắt đầu</th>
+                        <th scope="col">Ngày kết thúc</th>
+                        <th scope="col">Ngày hết hạn đăng ký</th>
+                        <th scope="col">Hạn nộp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- dot sang kien -->
+                    <% let checkdot=true; %>
+                        <% for( let i=0 ; i < dataSangkien.length; i++){ %>
+                            <tr>
+                                <th scope="row">
+                                    <%= dataSangkien[i].madotsangkien %>
+                                </th>
+                                <td>
+                                    <%= dataSangkien[i].tendotsangkien %>
+                                </td>
+                                <td>
+                                    <% if (dataSangkien[i].trangthai) { checkdot=false; %>
+                                        <p>Đang tiến hành</p>
+                                        <% }else { %>
+                                            <p>Kết thúc</p>
+                                            <% } %>
 
-                            </td>
-                            <td>
-                                <%= moment(dataSangkien[i].ngaybatdau).format( 'DD/MM/YYYY' ) %>
-                            </td>
-                            <td>
-                                <%= moment(dataSangkien[i].ngayketthuc).format( 'DD/MM/YYYY' ) %>
-                            </td>
-                            <td>
-                                <%= moment(dataSangkien[i].ngaydungdangky).format( 'DD/MM/YYYY' ) %>
-                            </td>
-                            <td>
-                                <%= moment(dataSangkien[i].hannop).format( 'DD/MM/YYYY' ) %>
-                            </td>
-                        </tr>
-                        <% } %>
-            </tbody>
-        </table>
-        <% if (checkdot){%>
-            <h1>Thêm mới Đợt sáng kiến</h1>
-            <form action="/adddotsangkien" method="post">
-                <div class="form-group">
-                    <label>Tên Đợt</label>
-                    <input type="text" name="tendotsangkien" maxlength="255" class="form-control" value="">
-                    <label>Ngày bắt đầu</label>
-                    <input type="date" name="ngaybatdau" min="<%= moment().utcOffset('+0700').format('YYYY-MM-DD'); %>"
-                        max="2025-01-01" class="form-control" value="">
-                    <label>Ngày kết thúc</label>
-                    <input type="date" name="ngayketthuc" min="<%= moment().utcOffset('+0700').format('YYYY-MM-DD'); %>"
-                        max="2025-01-01" class="form-control" value="">
-                    <label>Ngày kết thúc đăng ký sáng kiến</label>
-                    <input type="date" name="ngaydungdangky"
-                        min="<%= moment().utcOffset('+0700').format('YYYY-MM-DD'); %>" max="2025-01-01"
-                        class="form-control" value="">
-                    <label>Hạn nộp bản báo cáo</label>
-                    <input type="date" name="hannop" class="form-control"
-                        min="<%= moment().utcOffset('+0700').format('YYYY-MM-DD'); %>" max="2025-01-01" value="">
-                    <!-- submit -->
-                    <button type=" submit" class="btn btn-primary">Submit</button>
-                </div>
+                                </td>
+                                <td>
+                                    <%= moment(dataSangkien[i].ngaybatdau).format( 'DD/MM/YYYY' ) %>
+                                </td>
+                                <td>
+                                    <%= moment(dataSangkien[i].ngayketthuc).format( 'DD/MM/YYYY' ) %>
+                                </td>
+                                <td>
+                                    <%= moment(dataSangkien[i].ngaydungdangky).format( 'DD/MM/YYYY' ) %>
+                                </td>
+                                <td>
+                                    <%= moment(dataSangkien[i].hannop).format( 'DD/MM/YYYY' ) %>
+                                </td>
+                            </tr>
+                            <% } %>
+                </tbody>
+            </table>
+            <% if (checkdot){%>
+                <h1>Thêm mới Đợt sáng kiến</h1>
+                <form action="/adddotsangkien" method="post">
+                    <div class="form-group">
+                        <label>Tên Đợt</label>
+                        <input type="text" name="tendotsangkien" maxlength="255" class="form-control" value="">
+                        <label>Ngày bắt đầu</label>
+                        <input type="date" name="ngaybatdau"
+                            min="<%= moment().utcOffset('+0700').format('YYYY-MM-DD'); %>" max="2025-01-01"
+                            class="form-control" value="">
+                        <label>Ngày kết thúc</label>
+                        <input type="date" name="ngayketthuc"
+                            min="<%= moment().utcOffset('+0700').format('YYYY-MM-DD'); %>" max="2025-01-01"
+                            class="form-control" value="">
+                        <label>Ngày kết thúc đăng ký sáng kiến</label>
+                        <input type="date" name="ngaydungdangky"
+                            min="<%= moment().utcOffset('+0700').format('YYYY-MM-DD'); %>" max="2025-01-01"
+                            class="form-control" value="">
+                        <label>Hạn nộp bản báo cáo</label>
+                        <input type="date" name="hannop" class="form-control"
+                            min="<%= moment().utcOffset('+0700').format('YYYY-MM-DD'); %>" max="2025-01-01" value="">
+                        <!-- submit -->
+                        <button type=" submit" class="btn btn-primary">Submit</button>
+                    </div>
 
-            </form>
-            <% }else{ %>
-                <a href="/editdotsangkien">Chỉnh sửa đợt sáng kiến hiện tại</a>
-                <%} %>
-    </div>
+                </form>
+                <% }else{ %>
+                    <a href="/editdotsangkien">Chỉnh sửa đợt sáng kiến hiện tại</a>
+                    <%} %>
+        </div>
 </body>
 
 </html>

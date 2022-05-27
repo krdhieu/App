@@ -251,6 +251,7 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenNhanVien,
         sangkienController.detailSangkien
     );
+    router.get('/detailsangkien', verifyAccessToken.verifyAccessTokenNhanVien, sangkienController.chitietSangkien)
     router.post(
         '/upload-file',
         verifyAccessToken.verifyAccessTokenNhanVien,

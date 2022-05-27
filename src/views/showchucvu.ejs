@@ -14,65 +14,66 @@
 </head>
 
 <body>
-    <h1>Danh sách chức vụ</h1>
-    <button onclick="myfunc()" id="themchucvu">Thêm Chức vụ</button>
-    <div id="themmoichucvu" style="display: none;">
-        <form action="/addchucvu" method="post">
-            <!-- Vertical -->
-            <div class="form-group">
-                <label>Tên chức vụ</label>
-                <input type="text" name="tenchucvu" maxlength="100" class="form-control" value="">
-                <label>Mô tả chức vụ</label>
-                <textarea name="motachucvu" class="form-control" id="" cols="30" rows="10"></textarea>
-                <button type=" submit" class="btn btn-primary">Submit</button>
-            </div>
+    <%- include('navAndSidebar') -%>
+        <h1>Danh sách chức vụ</h1>
+        <button onclick="myfunc()" id="themchucvu">Thêm Chức vụ</button>
+        <div id="themmoichucvu" style="display: none;">
+            <form action="/addchucvu" method="post">
+                <!-- Vertical -->
+                <div class="form-group">
+                    <label>Tên chức vụ</label>
+                    <input type="text" name="tenchucvu" maxlength="100" class="form-control" value="">
+                    <label>Mô tả chức vụ</label>
+                    <textarea name="motachucvu" class="form-control" id="" cols="30" rows="10"></textarea>
+                    <button type=" submit" class="btn btn-primary">Submit</button>
+                </div>
 
-        </form>
-    </div>
-    <script language="javascript">
+            </form>
+        </div>
+        <script language="javascript">
 
-        function myfunc() {
-            if (document.getElementById("themmoichucvu").style.display == 'none') {
-                document.getElementById("themmoichucvu").style.display = 'block';
-                document.getElementById("themchucvu").innerHTML = "Ẩn"
+            function myfunc() {
+                if (document.getElementById("themmoichucvu").style.display == 'none') {
+                    document.getElementById("themmoichucvu").style.display = 'block';
+                    document.getElementById("themchucvu").innerHTML = "Ẩn"
+                }
+                else {
+                    document.getElementById("themmoichucvu").style.display = 'none';
+                    document.getElementById("themchucvu").innerHTML = "Thêm chức vụ"
+                }
             }
-            else {
-                document.getElementById("themmoichucvu").style.display = 'none';
-                document.getElementById("themchucvu").innerHTML = "Thêm chức vụ"
-            }
-        }
 
-    </script>
-    <div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Chức vụ</th>
-                    <th scope="col">Mô tả chức vụ</th>
-                    <th scope="col">Tác vụ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- chuc vu -->
-                <% for( let i=0 ; i < dataChucvu.length; i++){ %>
+        </script>
+        <div>
+            <table class="table">
+                <thead>
                     <tr>
-                        <th scope="row">
-                            <%= i +1 %>
-                        </th>
-                        <td>
-                            <%= dataChucvu[i].tenchucvu %>
-                        </td>
-                        <td>
-                            <%= dataChucvu[i].motachucvu %>
-                        </td>
-                        <td><a href="/quanlychucvu/sua/<%= dataChucvu[i].machucvu %>" target="_self"
-                                title="Sửa chức vụ"><i class="fa-solid fa-pen"></a></td>
+                        <th scope="col">STT</th>
+                        <th scope="col">Chức vụ</th>
+                        <th scope="col">Mô tả chức vụ</th>
+                        <th scope="col">Tác vụ</th>
                     </tr>
-                    <% } %>
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    <!-- chuc vu -->
+                    <% for( let i=0 ; i < dataChucvu.length; i++){ %>
+                        <tr>
+                            <th scope="row">
+                                <%= i +1 %>
+                            </th>
+                            <td>
+                                <%= dataChucvu[i].tenchucvu %>
+                            </td>
+                            <td>
+                                <%= dataChucvu[i].motachucvu %>
+                            </td>
+                            <td><a href="/quanlychucvu/sua/<%= dataChucvu[i].machucvu %>" target="_self"
+                                    title="Sửa chức vụ"><i class="fa-solid fa-pen"></a></td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
 </body>
 
 </html>

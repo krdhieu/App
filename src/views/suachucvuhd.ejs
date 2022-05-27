@@ -14,25 +14,26 @@
 </head>
 
 <body>
-    <div>
-        <form action="/uploadchucvuhd" method="post">
+    <%- include('navAndSidebar') -%>
+        <div>
+            <form action="/uploadchucvuhd" method="post">
 
-            <!-- Vertical -->
-            <div class="form-group">
-                <label>id</label>
-                <input type="text" name="machucvuhd" class="form-control" value="<%= dataChucvuhd.machucvuhd %>"
-                    readonly>
-                <label>Tên Phòng Ban</label>
-                <input type="text" name="tenchucvuhd" maxlength="100" class="form-control"
-                    value="<%= dataChucvuhd.tenchucvuhd %>" required>
-                <label>Mô tả chức vụ hội đồng</label>
-                <textarea name="motachucvuhd" class="form-control" id="" cols="30"
-                    rows="10"><%= dataChucvuhd.motachucvuhd %></textarea>
-                <button type=" submit" class="btn btn-primary">Submit</button>
-            </div>
+                <!-- Vertical -->
+                <div class="form-group">
+                    <label>id</label>
+                    <input type="text" name="machucvuhd" class="form-control" value="<%= dataChucvuhd.machucvuhd %>"
+                        readonly>
+                    <label>Tên Phòng Ban</label>
+                    <input type="text" name="tenchucvuhd" maxlength="100" class="form-control"
+                        value="<%= dataChucvuhd.tenchucvuhd %>" required>
+                    <label>Mô tả chức vụ hội đồng</label>
+                    <textarea name="motachucvuhd" class="form-control" id="" cols="30"
+                        rows="10"><%= dataChucvuhd.motachucvuhd %></textarea>
+                    <button type=" submit" class="btn btn-primary">Submit</button>
+                </div>
 
-        </form>
-    </div>
+            </form>
+        </div>
 </body>
 
 </html>

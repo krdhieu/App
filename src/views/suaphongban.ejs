@@ -14,27 +14,28 @@
 </head>
 
 <body>
-    <div>
-        <form action="/uploadphongban" method="post">
-            <!-- Vertical -->
-            <div class="form-group">
-                <label>Mã phòng ban</label>
-                <input type="text" name="maphongban" class="form-control" value="<%= dataPhongban.maphongban %>"
-                    readonly />
-                <label>Tên Phòng Ban</label>
-                <input type="text" name="tenphongban" class="form-control" value="<%= dataPhongban.tenphongban %>"
-                    required />
-                <label>Năm thành lập</label>
-                <input type="date" name="namthanhlap" id="namthanhlap" class="form-control"
-                    value="<%=moment(dataPhongban.ngaythanhlap).format( 'YYYY-MM-DD' )%>" required />
-                <label>Mô tả phòng ban</label>
-                <textarea name="motaphongban" class="form-control" id="" cols="30"
-                    rows="10"><%= dataPhongban.motaphongban %></textarea>
-                <button type=" submit" class="btn btn-primary">
-                    Submit</button>
-            </div>
-        </form>
-    </div>
+    <%- include('navAndSidebar') -%>
+        <div>
+            <form action="/uploadphongban" method="post">
+                <!-- Vertical -->
+                <div class="form-group">
+                    <label>Mã phòng ban</label>
+                    <input type="text" name="maphongban" class="form-control" value="<%= dataPhongban.maphongban %>"
+                        readonly />
+                    <label>Tên Phòng Ban</label>
+                    <input type="text" name="tenphongban" class="form-control" value="<%= dataPhongban.tenphongban %>"
+                        required />
+                    <label>Năm thành lập</label>
+                    <input type="date" name="namthanhlap" id="namthanhlap" class="form-control"
+                        value="<%=moment(dataPhongban.ngaythanhlap).format( 'YYYY-MM-DD' )%>" required />
+                    <label>Mô tả phòng ban</label>
+                    <textarea name="motaphongban" class="form-control" id="" cols="30"
+                        rows="10"><%= dataPhongban.motaphongban %></textarea>
+                    <button type=" submit" class="btn btn-primary">
+                        Submit</button>
+                </div>
+            </form>
+        </div>
 </body>
 
 </html>

@@ -16,13 +16,15 @@
             defer
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         ></script>
+        <script src="/src/downloadReport.js"></script>
+
         <link rel="stylesheet" href="/css/styles.css" />
         <title>Document</title>
     </head>
     
     <body style="background-color: #808080">
         <%- include('navAndSidebar.ejs'); -%>
-        <div class="container-fluid mt-3 row">
+        <div class="container-fluid mt-3 row" >
             <div class="text-white col-3">Mã hội đồng: <%=detail.mahoidong%></div>
             <div class="text-white col-3">
                 Ngày thành lập : <%=
@@ -52,7 +54,7 @@
         <% if(detail.trangthai===1){%>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNew" >Thêm thành viên hội đồng</button>
         <% }%>
-            <table class="table table-dark text-center mt-3">
+            <table class="table table-dark text-center mt-3" id="detailHDKH">
                 <caption class="text-white" style="caption-side: top;">Thành viên hội đồng</caption>
                 <thead class="thead-dark">
                     <tr >
@@ -63,9 +65,33 @@
                         <%if(detail.trangthai===1){%>
                         <th scope="col" width="200px">Actions</th>
                         <%}%>
+                        <th hidden>Mã hội đồng</th>
+                        <th hidden>Nhiệm vụ</th>
+                        <th hidden>Trạng thái</th>
+                        <th hidden>Ngày thành lập</th>
+                        <th hidden>Ngày kết thúc</th>
                     </tr>
                  </thead>
                  <tbody>
+                     <tr>
+                         <td hidden></td>
+                         <td hidden></td>
+                         <td hidden></td>
+                         <td hidden></td>
+                         <td hidden></td>
+                         <td hidden><%=detail.mahoidong%></td>
+                         <td hidden><%=detail.nhiemvu%></td>
+                         <td hidden><%=(detail.trangthai == '1'?'Đang trong nhiệm kỳ':
+                            'Đã kết thúc nhiệm kỳ')%></td>
+                            <td hidden><%=moment(detail.ngaythanhlap).format('MM/DD/YYYY'); %></td>
+                            <% if(detail.trangthai!==1){%>
+                                <td hidden>
+                                     <%=moment(detail.ngayketthuc).format('MM/DD/YYYY'); %>
+                                </td>
+                            <%}else {%>
+                                <td hidden></td>
+                                <%}%>
+                     </tr>
                 <% for(let i=0;i<allThanhVien.length;i++){ %>
                 <tr >
                     <td><%=allThanhVien[i].mathanhvien%></td>
@@ -80,7 +106,6 @@
                     <div class="modal" id="tv<%=allThanhVien[i].mathanhvien%>">
                         <div class="modal-dialog">
                           <div class="modal-content">
-                      
                             <!-- Modal Header -->
                             <div class="modal-header">
                               <h4 class="modal-title">Cập nhật thông tin thành viên</h4>
@@ -141,10 +166,10 @@
                 <%}%>
             </tbody>
             </table>
+       
             
         </div>
 
-        
 <!-- them thanh vien -->
 
             <div class="modal" id="addNew">
@@ -191,8 +216,11 @@
                 </div>
               </div>
 
+            <!-- export -->
 
-            
+             <div class="container-fluid">
+                <button class="btn btn-primary" onclick="fnExcelReport('detailHDKH');">Export</button>
+             </div>
 
     </body>
 </html>

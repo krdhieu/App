@@ -14,80 +14,82 @@
 </head>
 
 <body>
-    <h1>Danh sách phòng ban</h1>
-    <button onclick="myfunc()" id="themphongban">Thêm phòng ban</button>
-    <div id="themmoiphongban" style="display: none">
-        <form action="/addphongban" method="post">
-            <!-- Vertical -->
-            <div class="form-group">
-                <label>Tên Phòng Ban</label>
-                <input type="text" name="tenphongban" class="form-control" value="" required />
-                <label>Năm thành lập</label>
-                <input type="date" name="ngaythanhlap" max="<%= moment().utcOffset('+0700').format('YYYY-MM-DD'); %>"
-                    max="2000-01-01" class="form-control" value="" required />
-                <label>Mô tả phòng ban</label>
-                <textarea name="motaphongban" class="form-control" id="" cols="20" rows="5"></textarea>
-                <button type=" submit" class="btn btn-primary">
-                    Submit
-                </button>
-            </div>
-        </form>
-    </div>
-    <script language="javascript">
-        function myfunc() {
-            if (
-                document.getElementById('themmoiphongban').style.display ==
-                'none'
-            ) {
-                document.getElementById('themmoiphongban').style.display =
-                    'block';
-                document.getElementById('themphongban').innerHTML = 'Ẩn';
-            } else {
-                document.getElementById('themmoiphongban').style.display =
-                    'none';
-                document.getElementById('themphongban').innerHTML =
-                    'Thêm phòng ban';
+    <%- include('navAndSidebar') -%>
+        <h1>Danh sách phòng ban</h1>
+        <button onclick="myfunc()" id="themphongban">Thêm phòng ban</button>
+        <div id="themmoiphongban" style="display: none">
+            <form action="/addphongban" method="post">
+                <!-- Vertical -->
+                <div class="form-group">
+                    <label>Tên Phòng Ban</label>
+                    <input type="text" name="tenphongban" class="form-control" value="" required />
+                    <label>Năm thành lập</label>
+                    <input type="date" name="ngaythanhlap"
+                        max="<%= moment().utcOffset('+0700').format('YYYY-MM-DD'); %>" max="2000-01-01"
+                        class="form-control" value="" required />
+                    <label>Mô tả phòng ban</label>
+                    <textarea name="motaphongban" class="form-control" id="" cols="20" rows="5"></textarea>
+                    <button type=" submit" class="btn btn-primary">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+        <script language="javascript">
+            function myfunc() {
+                if (
+                    document.getElementById('themmoiphongban').style.display ==
+                    'none'
+                ) {
+                    document.getElementById('themmoiphongban').style.display =
+                        'block';
+                    document.getElementById('themphongban').innerHTML = 'Ẩn';
+                } else {
+                    document.getElementById('themmoiphongban').style.display =
+                        'none';
+                    document.getElementById('themphongban').innerHTML =
+                        'Thêm phòng ban';
+                }
             }
-        }
-    </script>
-    <div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Tên phòng ban</th>
-                    <th scope="col">Năm thành lập</th>
-                    <th scope="col">Mô tả phòng ban</th>
-                    <th scope="col">Tác vụ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for( let i=0 ; i < dataPhongban.length; i++){ %>
+        </script>
+        <div>
+            <table class="table">
+                <thead>
                     <tr>
-                        <th scope="row">
-                            <%= i +1 %>
-                        </th>
-                        <td>
-                            <%= dataPhongban[i].tenphongban %>
-                        </td>
-
-                        <td>
-                            <%= moment(dataPhongban[i].ngaythanhlap).format( 'DD/MM/YYYY' ) %>
-                        </td>
-
-                        <td>
-                            <%= dataPhongban[i].motaphongban %>
-                        </td>
-
-                        <td>
-                            <a href="/quanlyphongban/sua/<%= dataPhongban[i].maphongban %>" target="_self"
-                                title="Sửa phòng ban"><i class="fa-solid fa-pen"></i></a>
-                        </td>
+                        <th scope="col">STT</th>
+                        <th scope="col">Tên phòng ban</th>
+                        <th scope="col">Năm thành lập</th>
+                        <th scope="col">Mô tả phòng ban</th>
+                        <th scope="col">Tác vụ</th>
                     </tr>
-                    <% } %>
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    <% for( let i=0 ; i < dataPhongban.length; i++){ %>
+                        <tr>
+                            <th scope="row">
+                                <%= i +1 %>
+                            </th>
+                            <td>
+                                <%= dataPhongban[i].tenphongban %>
+                            </td>
+
+                            <td>
+                                <%= moment(dataPhongban[i].ngaythanhlap).format( 'DD/MM/YYYY' ) %>
+                            </td>
+
+                            <td>
+                                <%= dataPhongban[i].motaphongban %>
+                            </td>
+
+                            <td>
+                                <a href="/quanlyphongban/sua/<%= dataPhongban[i].maphongban %>" target="_self"
+                                    title="Sửa phòng ban"><i class="fa-solid fa-pen"></i></a>
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
 </body>
 
 </html>

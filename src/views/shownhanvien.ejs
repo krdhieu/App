@@ -14,165 +14,167 @@
 </head>
 
 <body>
-    <h1>Danh sách nhân viên</h1>
-    <div id="search">
-        <form action="/quanlynhanvien" method="get">
-            <label>Phòng ban</label>
-            <select name="searchPhongban">
-                <option value=""></option>
-                <% for (let i=0; i<dataPhongban.length;i++){ %>
-                    <option value="<%=dataPhongban[i].maphongban%>">
-                        <%=dataPhongban[i].tenphongban%>
-                    </option>
-                    <% } %>
-            </select><label>Chức vụ</label>
-            <select name="searchChucvu">
-                <option value=""></option>
-                <% for (let i=0; i<dataChucvu.length;i++){ %>
-                    <option value="<%=dataChucvu[i].machucvu%>">
-                        <%=dataChucvu[i].tenchucvu%>
-                    </option>
-                    <% } %>
-            </select>
-            </select><label>Tên nhân viên</label>
-            <input type="text" name="search">
-            <button type="submit">Submit</button>
-        </form>
-    </div>
-    <button onclick="myfunc()" id="themnhanvien">Thêm nhân viên</button>
-    <div id="themmoinhanvien" style="display: none;">
-        <form action="/addnhanvien" method="post">
-
-            <!-- Vertical -->
-            <div class="form-group">
-                <!-- Phòng ban -->
+    <%- include('navAndSidebar') -%>
+        <h1>Danh sách nhân viên</h1>
+        <div id="search">
+            <form action="/quanlynhanvien" method="get">
                 <label>Phòng ban</label>
-                <select name="maphongban" class="form-control" required>
+                <select name="searchPhongban">
+                    <option value=""></option>
                     <% for (let i=0; i<dataPhongban.length;i++){ %>
                         <option value="<%=dataPhongban[i].maphongban%>">
                             <%=dataPhongban[i].tenphongban%>
                         </option>
                         <% } %>
-                </select>
-                <!-- chức vụ -->
-                <label>Chức vụ</label>
-                <select name="machucvu" class="form-control" required>
+                </select><label>Chức vụ</label>
+                <select name="searchChucvu">
+                    <option value=""></option>
                     <% for (let i=0; i<dataChucvu.length;i++){ %>
                         <option value="<%=dataChucvu[i].machucvu%>">
                             <%=dataChucvu[i].tenchucvu%>
                         </option>
                         <% } %>
                 </select>
-                <br>
-                <!-- Trình độ  -->
-                <label>Trình độ học vấn</label>
-                <input type="text" name="trinhdohocvan" class="form-control" value="" required>
-                <!-- Tên nhân viên  -->
-                <label>Tên nhân viên</label>
-                <input type="text" name="tennhanvien" class="form-control" value="" required>
-                <!-- Giới tính  -->
-                <label>Giới tính</label>
-                <select name="gioitinh" class="form-control" required>
-                    <option value="1">Nam</option>
-                    <option value="0">Nữ</option>
-                </select>
-                <!-- Năm sinh  -->
-                <label>Ngày sinh</label>
-                <input type="date" name="ngaysinh" class="form-control" min="1950-01-01" max="2006-01-01" value=""
-                    required>
-                <!-- Ngày vào làm  -->
-                <label>Ngày vào làm</label>
-                <% let currentDate=moment().utcOffset('+0700').format('YYYY-MM-DD'); %>
-                    <input type="date" name="ngayvaolam" class="form-control" min="2000-01-01" max="<%= currentDate %>"
-                        value="" required>
-                    <!-- Số điện thoại  -->
-                    <label>Số điện thoại</label>
-                    <input type="text" name="sdt" class="form-control" value="" maxlength="10" minlength="10" required>
-                    <!-- Submit -->
-                    <button type=" submit" class="btn btn-primary">Submit</button>
-            </div>
+                </select><label>Tên nhân viên</label>
+                <input type="text" name="search">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <button onclick="myfunc()" id="themnhanvien">Thêm nhân viên</button>
+        <div id="themmoinhanvien" style="display: none;">
+            <form action="/addnhanvien" method="post">
 
-        </form>
-    </div>
-    <script language="javascript">
+                <!-- Vertical -->
+                <div class="form-group">
+                    <!-- Phòng ban -->
+                    <label>Phòng ban</label>
+                    <select name="maphongban" class="form-control" required>
+                        <% for (let i=0; i<dataPhongban.length;i++){ %>
+                            <option value="<%=dataPhongban[i].maphongban%>">
+                                <%=dataPhongban[i].tenphongban%>
+                            </option>
+                            <% } %>
+                    </select>
+                    <!-- chức vụ -->
+                    <label>Chức vụ</label>
+                    <select name="machucvu" class="form-control" required>
+                        <% for (let i=0; i<dataChucvu.length;i++){ %>
+                            <option value="<%=dataChucvu[i].machucvu%>">
+                                <%=dataChucvu[i].tenchucvu%>
+                            </option>
+                            <% } %>
+                    </select>
+                    <br>
+                    <!-- Trình độ  -->
+                    <label>Trình độ học vấn</label>
+                    <input type="text" name="trinhdohocvan" class="form-control" value="" required>
+                    <!-- Tên nhân viên  -->
+                    <label>Tên nhân viên</label>
+                    <input type="text" name="tennhanvien" class="form-control" value="" required>
+                    <!-- Giới tính  -->
+                    <label>Giới tính</label>
+                    <select name="gioitinh" class="form-control" required>
+                        <option value="1">Nam</option>
+                        <option value="0">Nữ</option>
+                    </select>
+                    <!-- Năm sinh  -->
+                    <label>Ngày sinh</label>
+                    <input type="date" name="ngaysinh" class="form-control" min="1950-01-01" max="2006-01-01" value=""
+                        required>
+                    <!-- Ngày vào làm  -->
+                    <label>Ngày vào làm</label>
+                    <% let currentDate=moment().utcOffset('+0700').format('YYYY-MM-DD'); %>
+                        <input type="date" name="ngayvaolam" class="form-control" min="2000-01-01"
+                            max="<%= currentDate %>" value="" required>
+                        <!-- Số điện thoại  -->
+                        <label>Số điện thoại</label>
+                        <input type="text" name="sdt" class="form-control" value="" maxlength="10" minlength="10"
+                            required>
+                        <!-- Submit -->
+                        <button type=" submit" class="btn btn-primary">Submit</button>
+                </div>
 
-        function myfunc() {
-            if (document.getElementById("themmoinhanvien").style.display == 'none') {
-                document.getElementById("themmoinhanvien").style.display = 'block';
-                document.getElementById("themnhanvien").innerHTML = "Ẩn"
+            </form>
+        </div>
+        <script language="javascript">
+
+            function myfunc() {
+                if (document.getElementById("themmoinhanvien").style.display == 'none') {
+                    document.getElementById("themmoinhanvien").style.display = 'block';
+                    document.getElementById("themnhanvien").innerHTML = "Ẩn"
+                }
+                else {
+                    document.getElementById("themmoinhanvien").style.display = 'none';
+                    document.getElementById("themnhanvien").innerHTML = "Thêm nhân viên"
+                }
             }
-            else {
-                document.getElementById("themmoinhanvien").style.display = 'none';
-                document.getElementById("themnhanvien").innerHTML = "Thêm nhân viên"
-            }
-        }
 
-    </script>
-    <div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Họ tên</th>
-                    <th scope="col">Phòng ban</th>
-                    <th scope="col">Chức vụ</th>
-                    <th scope="col">Trình độ học vấn</th>
-                    <th scope="col">Giới tính</th>
-                    <th scope="col">Năm sinh</th>
-                    <th scope="col">sdt</th>
-                    <th scope="col">Ngày vào làm</th>
-                    <th scope="col">Trạng thái</th>
-                    <th scope="col" width="100px">Tác vụ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for( let i=0 ; i < dataNhanvien.length; i++){ %>
+        </script>
+        <div>
+            <table class="table">
+                <thead>
                     <tr>
-                        <th scope="row">
-                            <%= dataNhanvien[i].manhanvien %>
-                        </th>
-                        <td>
-                            <%= dataNhanvien[i].tennhanvien %>
-                        </td>
-                        <td>
-                            <%= dataNhanvien[i].tenphongban %>
-                        </td>
-                        <td>
-                            <%= dataNhanvien[i].tenchucvu %>
-                        </td>
-                        <td>
-                            <%= dataNhanvien[i].trinhdohocvan %>
-                        </td>
-                        <td>
-                            <% if (dataNhanvien[i].gioitinh==true){%>
-                                Nam
-                                <% } else { %>
-                                    Nữ
-                                    <% } %>
-                        </td>
-                        <td>
-                            <%= moment(dataNhanvien[i].ngaysinh).format( 'DD-MM-YYYY' ) %>
-                        </td>
-                        <td>
-                            <%= dataNhanvien[i].sdt %>
-                        </td>
-                        <td>
-                            <%= moment(dataNhanvien[i].ngayvaolam).format( 'DD-MM-YYYY' ) %>
-                        </td>
-                        <td>
-                            <% if (dataNhanvien[i].trangthai==true){%>
-                                Còn làm
-                                <% } else { %>
-                                    Nghỉ việc
-                                    <% } %>
-                        </td>
-                        <td><a href="/quanlynhanvien/sua/<%= dataNhanvien[i].manhanvien %>" target="_self"
-                                title="Sửa nhân viên"><i class="fa-solid fa-pen"></i></a></td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Họ tên</th>
+                        <th scope="col">Phòng ban</th>
+                        <th scope="col">Chức vụ</th>
+                        <th scope="col">Trình độ học vấn</th>
+                        <th scope="col">Giới tính</th>
+                        <th scope="col">Năm sinh</th>
+                        <th scope="col">sdt</th>
+                        <th scope="col">Ngày vào làm</th>
+                        <th scope="col">Trạng thái</th>
+                        <th scope="col" width="100px">Tác vụ</th>
                     </tr>
-                    <% } %>
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    <% for( let i=0 ; i < dataNhanvien.length; i++){ %>
+                        <tr>
+                            <th scope="row">
+                                <%= dataNhanvien[i].manhanvien %>
+                            </th>
+                            <td>
+                                <%= dataNhanvien[i].tennhanvien %>
+                            </td>
+                            <td>
+                                <%= dataNhanvien[i].tenphongban %>
+                            </td>
+                            <td>
+                                <%= dataNhanvien[i].tenchucvu %>
+                            </td>
+                            <td>
+                                <%= dataNhanvien[i].trinhdohocvan %>
+                            </td>
+                            <td>
+                                <% if (dataNhanvien[i].gioitinh==true){%>
+                                    Nam
+                                    <% } else { %>
+                                        Nữ
+                                        <% } %>
+                            </td>
+                            <td>
+                                <%= moment(dataNhanvien[i].ngaysinh).format( 'DD-MM-YYYY' ) %>
+                            </td>
+                            <td>
+                                <%= dataNhanvien[i].sdt %>
+                            </td>
+                            <td>
+                                <%= moment(dataNhanvien[i].ngayvaolam).format( 'DD-MM-YYYY' ) %>
+                            </td>
+                            <td>
+                                <% if (dataNhanvien[i].trangthai==true){%>
+                                    Còn làm
+                                    <% } else { %>
+                                        Nghỉ việc
+                                        <% } %>
+                            </td>
+                            <td><a href="/quanlynhanvien/sua/<%= dataNhanvien[i].manhanvien %>" target="_self"
+                                    title="Sửa nhân viên"><i class="fa-solid fa-pen"></i></a></td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
 </body>
 
 </html>
