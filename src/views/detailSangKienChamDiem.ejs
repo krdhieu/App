@@ -21,97 +21,129 @@
         <link rel="stylesheet" href="/css/styles.css"/>
         <title>Document</title>
     </head>
-    <body>
-        <div class="container-fluid row main-container">
-            <div class="col-3 ntg-container  ">
-                <h4 class="text-center">Người tham gia sáng kiến</h4>
+    <body class="mycolor-gray">
+        <% if(typeof(alert)!== 'undefined' && alert==='suadiemthanhcong' ){%>
+            <div
+                class="alert alert-success alert-dismissible position-absolute"
+                style="z-index: 1"
+            >
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                ></button>
+                <strong>Success!</strong> Cập nhật điểm sáng kiến thành công
+            </div>
+            <%}%>
+        <% if(typeof(alert)!== 'undefined' && alert==='nhanxetthanhcong' ){%>
+            <div
+                class="alert alert-success alert-dismissible position-absolute"
+                style="z-index: 1"
+            >
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                ></button>
+                <strong>Success!</strong> Cập nhật nhận xét sáng kiến thành công
+            </div>
+            <%}%>
+        <%- include('navAndSidebar.ejs') -%>
+        <div class="container-fluid row pe-0">
+            <div class=" col-lg-3 border-1 bg-black text-white  mt-3 ">
+                <h4 class="text-center col-sm-12 me-3">Người tham gia sáng kiến</h4>
                 <% for(let i=0;i<nguoiThamGia.length;i++){%>
-                    <div>Ma nhan vien: <%= nguoiThamGia[i].manhanvien%></div>
-                    <div>Ten Nhan Vien: <%= nguoiThamGia[i].tennhanvien%></div>
-                    <div>Vai Tro: <%= (nguoiThamGia[i].vaitro===0?'Nguoi Tham Gia':'Chu Tri')%></div>   
+                    <div>
+                        <div> Mã nhân viên: <%= nguoiThamGia[i].manhanvien%></div>
+                        <div> Tên nhân viên: <%= nguoiThamGia[i].tennhanvien%></div>
+                        <div> Vai trò: <%= (nguoiThamGia[i].vaitro===0?'Người tham gia':'Chủ trì')%></div> 
+                    </div>
+                    <br>
                 <%}%>
             </div>
-            <div class="col-8 sk-container offset-1">
-                <h4 class="text-center">Chi tiết sáng kiến</h4>
-                <div>Tên sáng kiến: <%=detailSangKien.tensangkien%></div>
-                <div>Mục tiêu sáng kiến: <%=detailSangKien.muctieu%></div>
-                <div>Nội dung sáng kiến: <%=detailSangKien.noidung%></div>
-                <div>Đánh giá lợi ích thu được: <%=detailSangKien.loiich%></div>
-                <div>File chi tiết đính kèm:    <a href="/download/file?filename=<%=detailSangKien.dinhkem%>" target="_blank">Xem file đính kèm</a></div>
+            <div class="col-sm-1 m-3"></div>
+            <div class="col-sm-8 bg-black mt-3 text-white w-auto px-3" >
+                <h4 class="text-center col-12">Sáng kiến</h4>
+                <div class="col-12">Tên sáng kiến: <%=detailSangKien.tensangkien%></div><br>
+                <div class="col-12">Tóm tắt mục tiêu sáng kiến: <%=detailSangKien.muctieu%></div><br>
+                <div class="col-12">Tóm tắt nội dung sáng kiến: <%=detailSangKien.noidung%></div><br>
+                <div class="col-12">Đánh giá lợi ích thu được: <%=detailSangKien.loiich%></div><br>
+                <div class="col-12">File chi tiết đính kèm:    <a href="/download/file?filename=<%=detailSangKien.dinhkem%>" target="_blank">Xem file đính kèm</a></div>
+                <br>
             </div>
-            <%if(typeof showDiemDaCham ==='undefined' ){%>
-            <div class="row text-center">
+        </div>
+        <%if(typeof showDiemDaCham ==='undefined' ){%>
+            <div class="container-fluid row text-center ">
                 <h4>Chấm điểm</h4>
                 <form action="/create-chitiet-chamdiem" method="post" class="row">
-                    <input type="text" value="<%=detailSangKien.masangkien%>"  class="form-control" name="sangKienId">
-                    <input type="text" value="<%=thanhVienHDDaDangNhap.mathanhvien%>" class="form-control" name="thanhVienHDId">
+                    <input type="text" value="<%=detailSangKien.masangkien%>"  class="form-control" name="sangKienId" hidden>
+                    <input type="text" value="<%=thanhVienHDDaDangNhap.mathanhvien%>" class="form-control" name="thanhVienHDId" hidden>
                     <div class="col-3">
                         <label for="">Điểm mục đích</label>
                         <input type="number" step="0.1" name="diemMucDich" 
-                            class="form-control input-diem mucdich" required min="0" max="10">
+                            class="form-control border-3 border-warning" required min="0" max="10">
                     </div>
                     <div class="col-3">
                         <label for="">Điểm nội dung</label>
                         <input type="number" step="0.1" name="diemNoiDung" 
-                            class="form-control input-diem noidung" required min="0" max="10">
+                            class="form-control border-3 border-primary" required min="0" max="10">
                     </div>
                     <div class="col-3">
                         <label for="">Điểm ứng dụng</label>
                         <input type="number" step="0.1" name="diemUngDung" 
-                            class="form-control input-diem ungdung" required min="0" max="10">
+                            class="form-control border-3 border-danger" required min="0" max="10">
                     </div>
                    <div class="col-3">
                         <label for="">Điểm trình bày</label>
                         <input type="number" step="0.1" name="diemTrinhBay" 
-                            class="form-control input-diem trinhbay" required min="0" max="10">
+                            class="form-control border-3 border-success" required min="0" max="10">
                    </div>
                    <div class="col-12 row mt-3">
                        <div class="col-8"></div>
-                        <button type="submit" class="btn btn-success col-4 me-0">Save</button>
+                        <button type="submit" class="btn btn-primary col-4 me-0">Save</button>
                    </div>
                 </form>
             </div>
             <%}%>
-        </div>
         <%if(typeof showDiemDaCham !=='undefined' ){%>
-        <div class="row text-center">
-            <h4>Sửa điểm</h4>
-            <form action="/edit-chitiet-chamdiem" method="post" class="row">
-                <input type="text" value="<%=showDiemDaCham[0].masangkien%>"  class="form-control " name="sangKienId">
-                <input type="text" value="<%=showDiemDaCham[0].mathanhvien%>" class="form-control " name="thanhVienHDId">
+        <div class="  text-center  text-white bg-gradient  border border-light mt-3 p-2">
+            <h4>Chấm điểm</h4>
+            <form action="/edit-chitiet-chamdiem" method="post" class="row" >
+                <input type="text" value="<%=showDiemDaCham[0].masangkien%>"  class="form-control " name="sangKienId" hidden>
+                <input type="text" value="<%=showDiemDaCham[0].mathanhvien%>" class="form-control " name="thanhVienHDId" hidden>
                 <div class="col-3">
                     <label for="">Điểm mục đích</label>
                     <input type="number" step="0.1" name="diemMucDich" 
-                        class="form-control input-diem mucdich" required min="0" max="10" 
-                        value="<%=showDiemDaCham[0].diem_muc_dich%>"
+                        class="form-control  border-3 border-warning" required min="0" max="10" 
+                        value="<%=showDiemDaCham[0].diem_muc_dich.toFixed(2)%>"
                         >
                 </div>
                 <div class="col-3">
                     <label for="">Điểm nội dung</label>
                     <input type="number" step="0.1" name="diemNoiDung" 
-                        class="form-control input-diem noidung" required min="0" max="10"
-                        value="<%=showDiemDaCham[0].diem_noi_dung%>">
+                        class="form-control  border-3 border-primary" required min="0" max="10"
+                        value="<%=showDiemDaCham[0].diem_noi_dung.toFixed(2)%>">
                 </div>
                 <div class="col-3">
                     <label for="">Điểm ứng dụng</label>
                     <input type="number" step="0.1" name="diemUngDung" 
-                        class="form-control input-diem ungdung" required min="0" max="10"
-                        value="<%=showDiemDaCham[0].diem_ung_dung%>">
+                        class="form-control border-3 border-danger" required min="0" max="10"
+                        value="<%=showDiemDaCham[0].diem_ung_dung.toFixed(2)%>">
                 </div>
                <div class="col-3">
-                    <label for="">Điểm trình bày</label>
+                    <label for="" >Điểm trình bày</label>
                     <input type="number" step="0.1" name="diemTrinhBay" 
-                        class="form-control input-diem trinhbay" required min="0" max="10"
-                        value="<%=showDiemDaCham[0].diem_trinh_bay%>">
+                        class="form-control border-3 border-success" required min="0" max="10"
+                        value="<%=showDiemDaCham[0].diem_trinh_bay.toFixed(2)%>">
                </div>
-               <div class="col-12 row mt-3">
+               <div class="col-12 row mt-3 p-0">
                    <div class="col-8"></div>
-                    <button type="submit" class="btn btn-success col-4 me-0">Save</button>
+                    <button type="submit" class="btn btn-primary   col-4 me-0">Save</button>
                </div>
             </form>
         </div>
         <%}%>
-        <div class="notification-success" ><%= (typeof message !=='undefined' ? message:'')%></div>
+        
     </div>
 
 
@@ -119,25 +151,27 @@
 
 
     <% if(nhanXet.length!==1){%>
-    <div class="container-fluid">
-        <div>Thêm nhận xét</div>
+    <div class="container-fluid ">
+        <h4 class="text-white">Nhận xét</h4>
         <form action="/create-nhanxet" method="post">
-            sangkien
-            <input type="text"  value="<%=detailSangKien.masangkien%>"   name="maSangKien" class="form-control" readonly>
-            <input type="text"  value="<%=thanhVienHDDaDangNhap.mathanhvien%>"  name="maThanhVien" class="form-control" readonly>
-            <input type="text" name="nhanXet" class="form-control">
-            <button type="submit" class="btn btn-success">Save</button>
+
+            <input type="text"  value="<%=detailSangKien.masangkien%>"   name="maSangKien" class="form-control" readonly hidden>
+            <input type="text"  value="<%=thanhVienHDDaDangNhap.mathanhvien%>"  name="maThanhVien" class="form-control" readonly hidden>
+            <textarea type="text" name="nhanXet" class="form-control" rows="10" style="resize: none;"></textarea>
+            <button type="submit" class="btn btn-primary mt-1">Save</button>
         </form>
     </div>
     <%} else {%>
     <div class="container-fluid">
-        <div>Sửa nhận xét</div>
+        <h4 class="text-white">Nhận xét</h4>
         <form action="/edit-nhanxet" method="post">
-            sangkien
-            <input type="text"  value="<%=detailSangKien.masangkien%>"  name="maSangKien" class="form-control" readonly>
-            <input type="text"  value="<%=thanhVienHDDaDangNhap.mathanhvien%>"  name="maThanhVien" class="form-control" readonly>
-            <input type="text" name="nhanXet" class="form-control" value="<%=nhanXet[0].noidung%>">
-            <button type="submit" class="btn btn-success">Save</button>
+
+            <input type="text"  value="<%=detailSangKien.masangkien%>"  name="maSangKien" class="form-control" readonly hidden>
+            <input type="text"  value="<%=thanhVienHDDaDangNhap.mathanhvien%>"  name="maThanhVien" class="form-control" readonly hidden>
+            <textarea type="text" name="nhanXet" class="form-control"  rows="10" style="resize: none;">
+                <%=nhanXet[0].noidung%>
+                </textarea> 
+            <button type="submit" class="btn btn-primary mt-1">Save</button>
         </form>
     </div>
     <%}%>

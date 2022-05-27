@@ -6,7 +6,6 @@ let download = async (req, res) => {
     }
     console.log(filename);
     const file = path.join(path.dirname(__dirname), `\\files\\${filename}`);
-    console.log(file);
     return res.download(file);
 };
 

@@ -11,6 +11,20 @@ let getAllDot = () => {
     });
 };
 
+let getDotHienTai = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [dotHienTai] = await connectDB.execute(
+                `SELECT * FROM dotsangkien WHERE dotsangkien.trangthai=1`
+            );
+            resolve(dotHienTai);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 module.exports = {
     getAllDot,
+    getDotHienTai,
 };

@@ -8,8 +8,22 @@
         <i class="fa-solid fa-bars"></i>
     </button>
     <div class="container-fluid p-0">
-        <a class="navbar-brand btn" href="/home">Home</a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="navbar-brand btn" href="/home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a
+                    class="navbar-brand btn"
+                    href="/chitietsangkien"
+                    data-bs-toggle="tooltip"
+                    title="Sáng kiến của tôi"
+                    ><i class="fa-solid fa-star"></i
+                ></a>
+            </li>
+        </ul>
     </div>
+
     <!-- dropdown -->
     <div
         class="btn-group me-sm-5"
@@ -26,10 +40,14 @@
             >
                 Account
             </button>
-            <ul
-                class="dropdown-menu bg-dark"
-                aria-labelledby="btnGroupDrop1"
-            >
+            <ul class="dropdown-menu bg-dark" aria-labelledby="btnGroupDrop1">
+                <li>
+                    <a
+                        class="dropdown-item text-white-50"
+                        href="/thongtincanhan"
+                        >Thông tin cá nhân</a
+                    >
+                </li>
                 <li>
                     <a
                         class="dropdown-item text-white-50"
@@ -39,9 +57,7 @@
                 </li>
                 <li>
                     <a class="dropdown-item text-danger" href="/logout">
-                        <i
-                            class="fa-solid fa-arrow-right-from-bracket small"
-                        >
+                        <i class="fa-solid fa-arrow-right-from-bracket small">
                         </i>
                         <span>Đăng xuất</span>
                     </a>
@@ -51,36 +67,47 @@
     </div>
 </nav>
 <!-- sidebar -->
-<div class="container-fluid p-0 row sidebar-container">
+<div class="container-fluid row">
     <div
-        class="custom-sidebar offcanvas offcanvas-start col-2"
+        class="offcanvas offcanvas-start col-2"
+        data-bs-keyboard="false"
+        data-bs-backdrop="true"
         id="custom-sidebar"
     >
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Mobifone</h5>
+            <button
+                type="button"
+                class="btn-close text-reset"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"
+            ></button>
+        </div>
         <div
-            class="sidebar-custom btn-group-vertical p-0"
+            class="btn-group-vertical offcanvas-body border rounded"
             style="background-color: #212529; height: 100vh"
         >
-            <a
-                href="/quanlyphongban"
-                class="btn btn-dark btn-sm text-start"
+            <a href="/get-hdkh" class="btn btn-dark btn-sm text-start"
+                >Quản Lý Hội Đồng Khoa Học</a
+            >
+
+            <a href="/manage-account" class="btn btn-dark btn-sm text-start"
+                >Quản Lý Tài Khoản</a
+            >
+
+            <a href="/quanlyphongban" class="btn btn-dark btn-sm text-start"
                 >Quản Lý Phòng Ban</a
             >
 
-            <a
-                href="/quanlychucvu"
-                class="btn btn-dark btn-sm text-start"
+            <a href="/quanlychucvu" class="btn btn-dark btn-sm text-start"
                 >Quản Lý Chức Vụ</a
             >
 
-            <a
-                href="/quanlychucvuhd"
-                class="btn btn-dark btn-sm text-start"
+            <a href="/quanlychucvuhd" class="btn btn-dark btn-sm text-start"
                 >Quản Lý Chức Vụ HĐ</a
             >
 
-            <a
-                href="/quanlyxeploai"
-                class="btn btn-dark btn-sm text-start"
+            <a href="/quanlyxeploai" class="btn btn-dark btn-sm text-start"
                 >Quản Lý Xếp Loại</a
             >
 
@@ -90,47 +117,27 @@
                 >Quản Lý Trạng Thái Sáng Kiến</a
             >
 
-            <a
-                href="/quanlynhanvien/:search"
-                class="btn btn-dark btn-sm text-start"
+            <a href="/quanlynhanvien" class="btn btn-dark btn-sm text-start"
                 >Quản Lý Nhân Viên</a
             >
-
-            <a
-                href="/create-sangkien"
-                class="btn btn-dark btn-sm text-start"
-                >Đăng ký sáng kiến</a
-            >
-
-            <a
-                href="/quanlysangkien"
-                class="btn btn-dark btn-sm text-start"
-                >Duyệt Sáng Kiến
-            </a>
-
-            <a
-                href="/quanlydotsangkien"
-                class="btn btn-dark btn-sm text-start"
+            <a href="/quanlydotsangkien" class="btn btn-dark btn-sm text-start"
                 >Quản Lý Đợt Sáng Kiến</a
             >
 
-            <a
-                href="/get-cham-diem"
-                class="btn btn-dark btn-sm text-start"
+            <a href="/create-sangkien" class="btn btn-dark btn-sm text-start"
+                >Đăng ký sáng kiến</a
+            >
+
+            <a href="/quanlysangkien" class="btn btn-dark btn-sm text-start"
+                >Duyệt Sáng Kiến
+            </a>
+
+            <a href="/get-cham-diem" class="btn btn-dark btn-sm text-start"
                 >Chấm điểm</a
             >
-
-            <a href="/get-hdkh" class="btn btn-dark btn-sm text-start"
-                >Quản Lý Hội Đồng Khoa Học</a
-            >
-
-            <a
-                href="/manage-account"
-                class="btn btn-dark btn-sm text-start"
-                >Quản Lý Tài Khoản</a
+            <a href="/get-all-khenthuong" class="btn btn-dark btn-sm text-start"
+                >Tất cả khen thưởng</a
             >
         </div>
     </div>
-</div>
-
 </div>
