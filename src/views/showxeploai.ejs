@@ -14,35 +14,36 @@
 </head>
 
 <body>
-    <div>
-        <h1>Danh sách Xếp loại</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Xếp loại</th>
-                    <th scope="col">Mô tả xếp loại</th>
-                    <th scope="col">Tác vụ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for( let i=0 ; i < dataXeploai.length; i++){ %>
+    <%- include('navAndSidebar') -%>
+        <div>
+            <h1>Danh sách Xếp loại</h1>
+            <table class="table">
+                <thead>
                     <tr>
-                        <th scope="row">
-                            <%= i +1 %>
-                        </th>
-                        <td>
-                            <%= dataXeploai[i].tenxeploai %>
-                        </td>
-                        <td>
-                            <%= dataXeploai[i].motaxeploai %>
-                        </td>
-                        <td><a href="/quanlyxeploai/sua/<%= dataXeploai[i].maxeploai %>" target="_self">Sửa</a></td>
+                        <th scope="col">STT</th>
+                        <th scope="col">Xếp loại</th>
+                        <th scope="col">Mô tả xếp loại</th>
+                        <th scope="col">Tác vụ</th>
                     </tr>
-                    <% } %>
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    <% for( let i=0 ; i < dataXeploai.length; i++){ %>
+                        <tr>
+                            <th scope="row">
+                                <%= i +1 %>
+                            </th>
+                            <td>
+                                <%= dataXeploai[i].tenxeploai %>
+                            </td>
+                            <td>
+                                <%= dataXeploai[i].motaxeploai %>
+                            </td>
+                            <td><a href="/quanlyxeploai/sua/<%= dataXeploai[i].maxeploai %>" target="_self">Sửa</a></td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
 </body>
 
 </html>

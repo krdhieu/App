@@ -16,12 +16,13 @@
 </head>
 
 <body>
-    <form action="/quanlysangkien/huysangkien" method="post">
-        <input type=" text" name="masangkien" class="form-control" id="" value="<%= masangkien %>" readonly>
-        <label for=""> ly do huy</label>
-        <input type="text" class="form-control" name="lydotuchoi" value="" required>
-        <button type="submit">Xác nhận</button>
-    </form>
+    <%- include('navAndSidebar') -%>
+        <form action="/quanlysangkien/huysangkien" method="post">
+            <input type=" text" name="masangkien" class="form-control" id="" value="<%= masangkien %>" readonly>
+            <label for=""> ly do huy</label>
+            <input type="text" class="form-control" name="lydotuchoi" value="" required>
+            <button type="submit">Xác nhận</button>
+        </form>
 </body>
 
 </html>

@@ -14,92 +14,93 @@
 </head>
 
 <body>
-    <div>
-        <h1>Danh sách sáng kiến</h1>
-        <form action="/quanlysangkien" method="get">
-            <label for="">Đợt sáng kiến: </label>
-            <select name="dotsangkien" id="">
-                <option value=""></option>
-                <% for (let i=0; i<dataDotsangkien.length;i++){ %>
-                    <option value="<%=dataDotsangkien[i].madotsangkien%>">
-                        <%=dataDotsangkien[i].tendotsangkien%>
-                    </option>
-                    <% } %>
-            </select>
-            <label for="">Trạng thái sáng kiến: </label>
-            <select name="trangthai" id="">
-                <option value=""></option>
-                <% for (let i=0; i<dataTrangthai.length;i++){ %>
-                    <option value="<%=dataTrangthai[i].matrangthai%>">
-                        <%=dataTrangthai[i].tentrangthai%>
-                    </option>
-                    <% } %>
-            </select>
-            <button type="submit" class="submit"> search</button>
-        </form>
-        <table class="table" id="headerTable">
-            <thead>
-                <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Tên sáng kiến</th>
-                    <th scope="col">Mục tiêu</th>
-                    <!-- <th scope="col">Nội dung</th> -->
-                    <th scope="col">Lợi ích</th>
-                    <th scope="col">Đối tượng</th>
-                    <th scope="col">Đợt</th>
-                    <th scope="col">Trạng thái</th>
-                    <!-- <th scope="col">Đính kèm</th> -->
-                    <th scope="col" width="100px">Tác vụ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for( let i=0 ; i < dataSangkien.length; i++){ %>
+    <%- include('navAndSidebar') -%>
+        <div>
+            <h1>Danh sách sáng kiến</h1>
+            <form action="/quanlysangkien" method="get">
+                <label for="">Đợt sáng kiến: </label>
+                <select name="dotsangkien" id="">
+                    <option value=""></option>
+                    <% for (let i=0; i<dataDotsangkien.length;i++){ %>
+                        <option value="<%=dataDotsangkien[i].madotsangkien%>">
+                            <%=dataDotsangkien[i].tendotsangkien%>
+                        </option>
+                        <% } %>
+                </select>
+                <label for="">Trạng thái sáng kiến: </label>
+                <select name="trangthai" id="">
+                    <option value=""></option>
+                    <% for (let i=0; i<dataTrangthai.length;i++){ %>
+                        <option value="<%=dataTrangthai[i].matrangthai%>">
+                            <%=dataTrangthai[i].tentrangthai%>
+                        </option>
+                        <% } %>
+                </select>
+                <button type="submit" class="submit"> search</button>
+            </form>
+            <table class="table" id="headerTable">
+                <thead>
                     <tr>
-                        <th scope="row">
-                            <%= i +1 %>
-                        </th>
-                        <td>
-                            <%= dataSangkien[i].tensangkien %>
-                        </td>
-                        <td>
-                            <%= dataSangkien[i].muctieu %>
-                        </td>
-                        <td>
-                            <%= dataSangkien[i].loiich %>
-                        </td>
-                        <td>
-                            <%= dataSangkien[i].doituong %>
-                        </td>
-                        <td>
-                            <%= dataSangkien[i].tendotsangkien %>
-                        </td>
-                        <td>
-                            <%= dataSangkien[i].tentrangthai %>
-                        </td>
-                        <td>
-                            <% if (dataSangkien[i].matrangthai !==4){ %>
-                                <!-- <a href="/chitietdiem-xeploai-nhanxet?masangkien=<%= dataSangkien[i].masangkien %>"
-                                    target="_self" title="Chi tiết sáng kiến"><i class="fa-solid fa-file-alt"></a> -->
-                                <a href="/detailsangkien?masangkien=<%= dataSangkien[i].masangkien %>"
-                                    title="Chi tiết sáng kiến"><i class="fa-solid fa-file-alt"></i></a>
-                                <% } else {%>
-                                    <button type="button" onclick="myfunc()">Lý do</button>
-                                    <%}%>
-                                        <script>
-                                            function myfunc() {
-                                                alert("<%= dataSangkien[i].lydotuchoi%>");
-                                            }
-                                        </script>
-                        </td>
+                        <th scope="col">STT</th>
+                        <th scope="col">Tên sáng kiến</th>
+                        <th scope="col">Mục tiêu</th>
+                        <!-- <th scope="col">Nội dung</th> -->
+                        <th scope="col">Lợi ích</th>
+                        <th scope="col">Đối tượng</th>
+                        <th scope="col">Đợt</th>
+                        <th scope="col">Trạng thái</th>
+                        <!-- <th scope="col">Đính kèm</th> -->
+                        <th scope="col" width="100px">Tác vụ</th>
                     </tr>
-                    <% } %>
-            </tbody>
-        </table>
-        <iframe id="txtArea1" style="display:none"></iframe>
-        <button id="btnExport" onclick="fnExcelReport();"> EXPORT </button>
-    </div>
-    <script defer src="/src/downloadReport.js">
-    </script>
+                </thead>
+                <tbody>
+                    <% for( let i=0 ; i < dataSangkien.length; i++){ %>
+                        <tr>
+                            <th scope="row">
+                                <%= i +1 %>
+                            </th>
+                            <td>
+                                <%= dataSangkien[i].tensangkien %>
+                            </td>
+                            <td>
+                                <%= dataSangkien[i].muctieu %>
+                            </td>
+                            <td>
+                                <%= dataSangkien[i].loiich %>
+                            </td>
+                            <td>
+                                <%= dataSangkien[i].doituong %>
+                            </td>
+                            <td>
+                                <%= dataSangkien[i].tendotsangkien %>
+                            </td>
+                            <td>
+                                <%= dataSangkien[i].tentrangthai %>
+                            </td>
+                            <td>
+                                <% if (dataSangkien[i].matrangthai !==4){ %>
+                                    <!-- <a href="/chitietdiem-xeploai-nhanxet?masangkien=<%= dataSangkien[i].masangkien %>"
+                                    target="_self" title="Chi tiết sáng kiến"><i class="fa-solid fa-file-alt"></a> -->
+                                    <a href="/detailsangkien?masangkien=<%= dataSangkien[i].masangkien %>"
+                                        title="Chi tiết sáng kiến"><i class="fa-solid fa-file-alt"></i></a>
+                                    <% } else {%>
+                                        <button type="button" onclick="myfunc()">Lý do</button>
+                                        <%}%>
+                                            <script>
+                                                function myfunc() {
+                                                    alert("<%= dataSangkien[i].lydotuchoi%>");
+                                                }
+                                            </script>
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+            <iframe id="txtArea1" style="display:none"></iframe>
+            <button id="btnExport" onclick="fnExcelReport();"> EXPORT </button>
+        </div>
+        <script defer src="/src/downloadReport.js">
+        </script>
 </body>
 
 </html>

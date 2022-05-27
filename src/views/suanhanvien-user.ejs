@@ -14,46 +14,48 @@
 </head>
 
 <body>
-    <div>
-        <form action="/uploadnhanvien-user" method="post">
+    <%- include('navAndSidebar') -%>
+        <div>
+            <form action="/uploadnhanvien-user" method="post">
 
-            <!-- Vertical -->
-            <div class="form-group">
-                <!-- ID -->
-                <label>Mã nhân viên</label>
-                <input type="text" name="manhanvien" class="form-control" value="<%= dataNhanvien.manhanvien %>"
-                    readonly>
-                <label>Trình độ học vấn</label>
-                <input type="text" name="trinhdohocvan" class="form-control" value="<%= dataNhanvien.trinhdohocvan %>">
-                <!-- Tên nhân viên  -->
-                <label>Tên nhân viên</label>
-                <input type="text" name="tennhanvien" required class="form-control"
-                    value="<%= dataNhanvien.tennhanvien %>">
-                <!-- Giới tính  -->
-                <label>Giới tính</label> <br>
-                <select name="gioitinh" class="form-control" value>
-                    <option value="1">Nam</option>
-                    <option value="0">Nữ</option>
-                </select>
-                <!-- Năm sinh  -->
-                <label>Ngày sinh</label>
-                <input type="date" name="ngaysinh" class="form-control"
-                    value="<%=String(moment(dataNhanvien.ngaysinh).format('YYYY-MM-DD'));%>" min="1950-01-01"
-                    max="2006-01-01" required>
-                <!-- Ngày vào làm  -->
-                <label>Ngày vào làm</label>
-                <input type="date" name="ngayvaolam" class="form-control"
-                    value="<%=String(moment(dataNhanvien.ngayvaolam).format('YYYY-MM-DD'));%>" min="2000-01-01"
-                    max="<%= moment().utcOffset('+0700').format('YYYY-MM-DD'); %>" value="" required>
-                <!-- Số điện thoại  -->
-                <label>Số điện thoại</label>
-                <input type="text" name="sdt" class="form-control" value="<%= dataNhanvien.sdt %>" maxlength="10"
-                    minlength="10" required>
-                <!-- Submit -->
-                <button type=" submit" class="btn btn-primary">Submit</button>
-            </div>
-        </form>
-    </div>
+                <!-- Vertical -->
+                <div class="form-group">
+                    <!-- ID -->
+                    <label>Mã nhân viên</label>
+                    <input type="text" name="manhanvien" class="form-control" value="<%= dataNhanvien.manhanvien %>"
+                        readonly>
+                    <label>Trình độ học vấn</label>
+                    <input type="text" name="trinhdohocvan" class="form-control"
+                        value="<%= dataNhanvien.trinhdohocvan %>">
+                    <!-- Tên nhân viên  -->
+                    <label>Tên nhân viên</label>
+                    <input type="text" name="tennhanvien" required class="form-control"
+                        value="<%= dataNhanvien.tennhanvien %>">
+                    <!-- Giới tính  -->
+                    <label>Giới tính</label> <br>
+                    <select name="gioitinh" class="form-control" value>
+                        <option value="1">Nam</option>
+                        <option value="0">Nữ</option>
+                    </select>
+                    <!-- Năm sinh  -->
+                    <label>Ngày sinh</label>
+                    <input type="date" name="ngaysinh" class="form-control"
+                        value="<%=String(moment(dataNhanvien.ngaysinh).format('YYYY-MM-DD'));%>" min="1950-01-01"
+                        max="2006-01-01" required>
+                    <!-- Ngày vào làm  -->
+                    <label>Ngày vào làm</label>
+                    <input type="date" name="ngayvaolam" class="form-control"
+                        value="<%=String(moment(dataNhanvien.ngayvaolam).format('YYYY-MM-DD'));%>" min="2000-01-01"
+                        max="<%= moment().utcOffset('+0700').format('YYYY-MM-DD'); %>" value="" required>
+                    <!-- Số điện thoại  -->
+                    <label>Số điện thoại</label>
+                    <input type="text" name="sdt" class="form-control" value="<%= dataNhanvien.sdt %>" maxlength="10"
+                        minlength="10" required>
+                    <!-- Submit -->
+                    <button type=" submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
 </body>
 
 </html>

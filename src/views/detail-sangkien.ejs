@@ -14,167 +14,175 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-8">
-                <h3>Sáng kiến</h3>
-                <label>Tên sáng kiến</label>
-                <input type="text" name="tensangkien" class="form-control" value="<%= dataSangkien.tensangkien %>"
-                    readonly />
-                <!-- <label for="">Người chủ trì</label>
+    <%- include('navAndSidebar') -%>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h3>Sáng kiến</h3>
+                    <label>Tên sáng kiến</label>
+                    <input type="text" name="tensangkien" class="form-control" value="<%= dataSangkien.tensangkien %>"
+                        readonly />
+                    <!-- <label for="">Người chủ trì</label>
             <input type="text" name="chutri" class="form-control" value="<% %>">
             <label for="">Người trợ lý</label>
             <input type="text" name="troly" class="form-control" value="<% %>"> -->
-                <label for="">Mục tiêu</label>
-                <input type="text" name="muctieu" class="form-control" value="<%= dataSangkien.muctieu %>" readonly />
-                <label for="">Nội dung</label>
-                <textarea name="noidung" id="" class="form-control" readonly cols="30" rows="10">
+                    <label for="">Mục tiêu</label>
+                    <input type="text" name="muctieu" class="form-control" value="<%= dataSangkien.muctieu %>"
+                        readonly />
+                    <label for="">Nội dung</label>
+                    <textarea name="noidung" id="" class="form-control" readonly cols="30" rows="10">
                     <%= dataSangkien.noidung %>
                     </textarea>
-                <label for="">Lợi ích</label>
-                <input type="text" name="loiich" class="form-control" value="<%= dataSangkien.loiich %>" readonly />
-                <label for="">Đối tượng</label>
-                <input type="text" name="doituong" class="form-control" value="<%= dataSangkien.doituong %>" readonly />
-            </div>
-            <!-- gui file  -->
-            <div class="col-sm-4">
-                <div>File chi tiết đính kèm: <a href="/download/file?filename=<%=dataSangkien.dinhkem%>"
-                        target="_blank">Xem file đính kèm</a></div>
-                <div>
-                    <!-- nguoi tham gia -->
-                    <form action="">
-                        <h3>Người chủ trì</h3>
-                        <label for="">Mã nhân viên</label>
-                        <input type="text" name="manhanvien" class="form-control" value="<%= dataChutri.manhanvien %>"
-                            readonly />
-                        <label for="">Tên nhân viên</label>
-                        <input type="text" name="tennhanvien" class="form-control" value="<%= dataChutri.tennhanvien %>"
-                            readonly />
-                        <label for="">Tỷ lệ đóng góp</label>
-                        <input type="number" name="tyledonggop" min="0" max="100" class="form-control"
-                            value="<%= dataChutri.tyledonggop %>" />
-                        <%if(JSON.stringify(dataTroly)!=null) { %>
-                            <h3>Trợ lý</h3>
+                    <label for="">Lợi ích</label>
+                    <input type="text" name="loiich" class="form-control" value="<%= dataSangkien.loiich %>" readonly />
+                    <label for="">Đối tượng</label>
+                    <input type="text" name="doituong" class="form-control" value="<%= dataSangkien.doituong %>"
+                        readonly />
+                </div>
+                <!-- gui file  -->
+                <div class="col-sm-4">
+                    <br>
+                    <br>
+                    <br>
+                    <div>File chi tiết đính kèm: <a href="/download/file?filename=<%=dataSangkien.dinhkem%>"
+                            target="_blank">Xem file đính kèm</a></div>
+                    <div>
+                        <!-- nguoi tham gia -->
+                        <form action="">
+                            <h3>Người chủ trì</h3>
                             <label for="">Mã nhân viên</label>
-                            <input type="text" name="id" class="form-control" value="<%= dataTroly.manhanvien %>"
-                                readonly />
+                            <input type="text" name="manhanvien" class="form-control"
+                                value="<%= dataChutri.manhanvien %>" readonly />
                             <label for="">Tên nhân viên</label>
                             <input type="text" name="tennhanvien" class="form-control"
-                                value="<%= dataTroly.tennhanvien %>" readonly />
+                                value="<%= dataChutri.tennhanvien %>" readonly />
                             <label for="">Tỷ lệ đóng góp</label>
-                            <input type="text" name="tyledonggop" min="0" max="100" class="form-control"
-                                value="<%= dataTroly.tyledonggop %>" />
-                            <% } %>
-                    </form>
+                            <input type="number" name="tyledonggop" min="0" max="100" class="form-control"
+                                value="<%= dataChutri.tyledonggop %>" />
+                            <%if(JSON.stringify(dataTroly)!=null) { %>
+                                <h3>Trợ lý</h3>
+                                <label for="">Mã nhân viên</label>
+                                <input type="text" name="id" class="form-control" value="<%= dataTroly.manhanvien %>"
+                                    readonly />
+                                <label for="">Tên nhân viên</label>
+                                <input type="text" name="tennhanvien" class="form-control"
+                                    value="<%= dataTroly.tennhanvien %>" readonly />
+                                <label for="">Tỷ lệ đóng góp</label>
+                                <input type="text" name="tyledonggop" min="0" max="100" class="form-control"
+                                    value="<%= dataTroly.tyledonggop %>" />
+                                <% } %>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <button type="button" id="btndiem" onclick="myfunc()"> Hiện thị điểm </button>
-    <script>
-        function myfunc() {
-            if (
-                document.getElementById('diem').style.display ==
-                'none'
-            ) {
-                document.getElementById('diem').style.display =
-                    'block';
-                document.getElementById('btndiem').innerHTML = 'Ẩn điểm';
-            } else {
-                document.getElementById('diem').style.display =
-                    'none';
-                document.getElementById('btndiem').innerHTML =
-                    'Hiện thị điểm';
+        <button type="button" id="btndiem" onclick="myfunc()" class="btn btn-primary" style=" margin: 20px 400px ;">
+            Hiện
+            thị điểm </button>
+        <script>
+            function myfunc() {
+                if (
+                    document.getElementById('diem').style.display ==
+                    'none'
+                ) {
+                    document.getElementById('diem').style.display =
+                        'block';
+                    document.getElementById('btndiem').innerHTML = 'Ẩn điểm';
+                } else {
+                    document.getElementById('diem').style.display =
+                        'none';
+                    document.getElementById('btndiem').innerHTML =
+                        'Hiện thị điểm';
+                }
             }
-        }
-    </script>
-    <!-- table -->
-    <div class="diem" id="diem" style="display: none">
-        <% if(typeof(thongTinSangKien.sangKien)==='undefined' ){%>
-            <div class="container-fluid">
-                <div class="text-white">không có thông tin của sáng kiến này</div>
-            </div>
-            <%} else { %>
-
-                <div class="container-fluid mb-0">
-                    <h1 class="mb-0 text-white">Thông tin đánh giá chi tiết Sáng kiến</h1>
+        </script>
+        <!-- table -->
+        <div class="diem" id="diem" style="display: none">
+            <% if(typeof(thongTinSangKien.sangKien)==='undefined' ){%>
+                <div class="container-fluid">
+                    <div class="text-white">không có thông tin của sáng kiến này</div>
                 </div>
-                <div class="container-fluid mt-3 ">
-                    <table class="table table-dark text-center">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Mã Sáng Kiến</th>
-                                <th scope="col">Tên Sáng Kiến</th>
-                                <th scope="col">Điểm Trung Bình <br> Mục Đích</th>
-                                <th scope="col">Điểm Trung Bình <br> Nội Dung</th>
-                                <th scope="col">Điểm Trung Bình <br> Ứng Dụng</th>
-                                <th scope="col">Điểm Trung Bình <br> Trình Bày</th>
-                                <th scope="col">Xếp Loại</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <%=thongTinSangKien.sangKien.masangkien%>
-                                </td>
-                                <td>
-                                    <%=thongTinSangKien.sangKien.tensangkien%>
-                                </td>
-                                <td>
-                                    <%=(thongTinSangKien.diem.tbmucdich===null? '' :
-                                        (thongTinSangKien.diem.tbmucdich.toFixed(2)))%>
-                                </td>
-                                <td>
-                                    <%=(thongTinSangKien.diem.tbnoidung===null? '' :
-                                        (thongTinSangKien.diem.tbnoidung.toFixed(2)))%>
-                                </td>
-                                <td>
-                                    <%=(thongTinSangKien.diem.tbungdung===null? '' :
-                                        (thongTinSangKien.diem.tbungdung.toFixed(2)))%>
-                                </td>
-                                <td>
-                                    <%=(thongTinSangKien.diem.tbtrinhbay===null? '' :
-                                        (thongTinSangKien.diem.tbtrinhbay.toFixed(2)))%>
-                                </td>
-                                <td>
-                                    <%=(thongTinSangKien.sangKien.tenxeploai===null? '' :
-                                        (thongTinSangKien.sangKien.tenxeploai))%>
-                                </td>
+                <%} else { %>
 
-                            </tr>
+                    <div class="container-fluid mb-0">
+                        <h1 class="mb-0 text-white">Thông tin đánh giá chi tiết Sáng kiến</h1>
+                    </div>
+                    <div class="container-fluid mt-3 ">
+                        <table class="table table-dark text-center">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Mã Sáng Kiến</th>
+                                    <th scope="col">Tên Sáng Kiến</th>
+                                    <th scope="col">Điểm Trung Bình <br> Mục Đích</th>
+                                    <th scope="col">Điểm Trung Bình <br> Nội Dung</th>
+                                    <th scope="col">Điểm Trung Bình <br> Ứng Dụng</th>
+                                    <th scope="col">Điểm Trung Bình <br> Trình Bày</th>
+                                    <th scope="col">Xếp Loại</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <%=thongTinSangKien.sangKien.masangkien%>
+                                    </td>
+                                    <td>
+                                        <%=thongTinSangKien.sangKien.tensangkien%>
+                                    </td>
+                                    <td>
+                                        <%=(thongTinSangKien.diem.tbmucdich===null? '' :
+                                            (thongTinSangKien.diem.tbmucdich.toFixed(2)))%>
+                                    </td>
+                                    <td>
+                                        <%=(thongTinSangKien.diem.tbnoidung===null? '' :
+                                            (thongTinSangKien.diem.tbnoidung.toFixed(2)))%>
+                                    </td>
+                                    <td>
+                                        <%=(thongTinSangKien.diem.tbungdung===null? '' :
+                                            (thongTinSangKien.diem.tbungdung.toFixed(2)))%>
+                                    </td>
+                                    <td>
+                                        <%=(thongTinSangKien.diem.tbtrinhbay===null? '' :
+                                            (thongTinSangKien.diem.tbtrinhbay.toFixed(2)))%>
+                                    </td>
+                                    <td>
+                                        <%=(thongTinSangKien.sangKien.tenxeploai===null? '' :
+                                            (thongTinSangKien.sangKien.tenxeploai))%>
+                                    </td>
+
+                                </tr>
 
 
-                        </tbody>
-                    </table>
-                </div>
-                <div class="container-fluid mt-3 row">
-                    </table> -->
-                    <% for(let i=0;i<allChiTietDiem.length;i++){%>
-                        <div class="card col m-3 bg-dark text-white">
-                            <div class="card-body">
-                                <h5 class="card-subtitle ">Người chấm: <%=allChiTietDiem[i].tennhanvien%>
-                                </h5>
-                                <div>Điểm mục đích: <%=(allChiTietDiem[i].diem_muc_dich===null? '' :
-                                        (allChiTietDiem[i].diem_muc_dich.toFixed(2)))%>
-                                </div>
-                                <div>Điểm mục đích: <%=(allChiTietDiem[i].diem_noi_dung===null? '' :
-                                        (allChiTietDiem[i].diem_noi_dung.toFixed(2)))%>
-                                </div>
-                                <div>Điểm mục đích: <%=(allChiTietDiem[i].diem_ung_dung===null? '' :
-                                        (allChiTietDiem[i].diem_ung_dung.toFixed(2)))%>
-                                </div>
-                                <div>Điểm mục đích: <%=(allChiTietDiem[i].diem_trinh_bay===null? '' :
-                                        (allChiTietDiem[i].diem_trinh_bay.toFixed(2)))%>
-                                </div>
-                                <div>
-                                    <%=(allChiTietDiem[i].noidung===null? '' : (allChiTietDiem[i].noidung))%>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="container-fluid mt-3 row">
+                        </table> -->
+                        <% for(let i=0;i<allChiTietDiem.length;i++){%>
+                            <div class="card col m-3 bg-dark text-white">
+                                <div class="card-body">
+                                    <h5 class="card-subtitle ">Người chấm: <%=allChiTietDiem[i].tennhanvien%>
+                                    </h5>
+                                    <div>Điểm mục đích: <%=(allChiTietDiem[i].diem_muc_dich===null? '' :
+                                            (allChiTietDiem[i].diem_muc_dich.toFixed(2)))%>
+                                    </div>
+                                    <div>Điểm mục đích: <%=(allChiTietDiem[i].diem_noi_dung===null? '' :
+                                            (allChiTietDiem[i].diem_noi_dung.toFixed(2)))%>
+                                    </div>
+                                    <div>Điểm mục đích: <%=(allChiTietDiem[i].diem_ung_dung===null? '' :
+                                            (allChiTietDiem[i].diem_ung_dung.toFixed(2)))%>
+                                    </div>
+                                    <div>Điểm mục đích: <%=(allChiTietDiem[i].diem_trinh_bay===null? '' :
+                                            (allChiTietDiem[i].diem_trinh_bay.toFixed(2)))%>
+                                    </div>
+                                    <div>
+                                        <%=(allChiTietDiem[i].noidung===null? '' : (allChiTietDiem[i].noidung))%>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <%}%>
-                </div>
-                <%}%>
-    </div>
+                            <%}%>
+                    </div>
+                    <%}%>
+        </div>
 </body>
 
 </html>

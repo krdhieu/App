@@ -14,54 +14,55 @@
 </head>
 
 <body>
-    <div>
-        <h1>Danh sách sáng kiến</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Tên sáng kiến</th>
-                    <th scope="col">Mục tiêu</th>
-                    <!-- <th scope="col">Nội dung</th> -->
-                    <th scope="col">Lợi ích</th>
-                    <th scope="col">Đối tượng</th>
-                    <!-- <th scope="col">Đợt</th> -->
-                    <th scope="col">Trạng thái</th>
-                    <!-- <th scope="col">Đính kèm</th> -->
-                    <th scope="col">Tác vụ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for( let i=0 ; i < dataSangkien.length; i++){ %>
+    <%- include('navAndSidebar') -%>
+        <div>
+            <h1>Danh sách sáng kiến</h1>
+            <table class="table">
+                <thead>
                     <tr>
-                        <th scope="row">
-                            <%= i +1 %>
-                        </th>
-                        <td>
-                            <%= dataSangkien[i].tensangkien %>
-                        </td>
-                        <td>
-                            <%= dataSangkien[i].muctieu %>
-                        </td>
-                        <td>
-                            <%= dataSangkien[i].loiich %>
-                        </td>
-                        <td>
-                            <%= dataSangkien[i].doituong %>
-                        </td>
-                        <td>
-                            <%= dataSangkien[i].tentrangthai %>
-                        </td>
-                        <td><a href="/quanlysangkien/duyet/<%= dataSangkien[i].masangkien %>" target="_self"
-                                title="Duyệt sáng kiến"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="/quanlysangkien/huy/<%= dataSangkien[i].masangkien %>" target="_self"
-                                title="Hủy sáng kiến"><i class="fa-solid fa-ban"></i></a>
-                        </td>
+                        <th scope="col">STT</th>
+                        <th scope="col">Tên sáng kiến</th>
+                        <th scope="col">Mục tiêu</th>
+                        <!-- <th scope="col">Nội dung</th> -->
+                        <th scope="col">Lợi ích</th>
+                        <th scope="col">Đối tượng</th>
+                        <!-- <th scope="col">Đợt</th> -->
+                        <th scope="col">Trạng thái</th>
+                        <!-- <th scope="col">Đính kèm</th> -->
+                        <th scope="col">Tác vụ</th>
                     </tr>
-                    <% } %>
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    <% for( let i=0 ; i < dataSangkien.length; i++){ %>
+                        <tr>
+                            <th scope="row">
+                                <%= i +1 %>
+                            </th>
+                            <td>
+                                <%= dataSangkien[i].tensangkien %>
+                            </td>
+                            <td>
+                                <%= dataSangkien[i].muctieu %>
+                            </td>
+                            <td>
+                                <%= dataSangkien[i].loiich %>
+                            </td>
+                            <td>
+                                <%= dataSangkien[i].doituong %>
+                            </td>
+                            <td>
+                                <%= dataSangkien[i].tentrangthai %>
+                            </td>
+                            <td><a href="/quanlysangkien/duyet/<%= dataSangkien[i].masangkien %>" target="_self"
+                                    title="Duyệt sáng kiến"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="/quanlysangkien/huy/<%= dataSangkien[i].masangkien %>" target="_self"
+                                    title="Hủy sáng kiến"><i class="fa-solid fa-ban"></i></a>
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
 </body>
 
 </html>

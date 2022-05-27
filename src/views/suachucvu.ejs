@@ -14,24 +14,25 @@
 </head>
 
 <body>
-    <div>
-        <form action="/uploadchucvu" method="post">
+    <%- include('navAndSidebar') -%>
+        <div>
+            <form action="/uploadchucvu" method="post">
 
-            <!-- Vertical -->
-            <div class="form-group">
-                <label>id</label>
-                <input type="text" name="machucvu" class="form-control" value="<%= dataChucvu.machucvu %>" readonly>
-                <label>Tên Chức vụ</label>
-                <input type="text" name="tenchucvu" maxlength="100" class="form-control"
-                    value="<%= dataChucvu.tenchucvu %>">
-                <label>Mô tả chức vụ</label>
-                <textarea name="motachucvu" class="form-control" id="" cols="30"
-                    rows="10"><%= dataChucvu.motachucvu %></textarea>
-                <button type=" submit" class="btn btn-primary">Submit</button>
-            </div>
+                <!-- Vertical -->
+                <div class="form-group">
+                    <label>id</label>
+                    <input type="text" name="machucvu" class="form-control" value="<%= dataChucvu.machucvu %>" readonly>
+                    <label>Tên Chức vụ</label>
+                    <input type="text" name="tenchucvu" maxlength="100" class="form-control"
+                        value="<%= dataChucvu.tenchucvu %>">
+                    <label>Mô tả chức vụ</label>
+                    <textarea name="motachucvu" class="form-control" id="" cols="30"
+                        rows="10"><%= dataChucvu.motachucvu %></textarea>
+                    <button type=" submit" class="btn btn-primary">Submit</button>
+                </div>
 
-        </form>
-    </div>
+            </form>
+        </div>
 </body>
 
 </html>

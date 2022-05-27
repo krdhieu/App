@@ -14,72 +14,74 @@
 </head>
 
 <body>
-    <div>
-        <form action="/uploadnhanvien" method="post">
+    <%- include('navAndSidebar') -%>
+        <div>
+            <form action="/uploadnhanvien" method="post">
 
-            <!-- Vertical -->
-            <div class="form-group">
-                <!-- Mã nhân viên -->
-                <label>Mã nhân viên</label>
+                <!-- Vertical -->
+                <div class="form-group">
+                    <!-- Mã nhân viên -->
+                    <label>Mã nhân viên</label>
+                    <input type="text" name="manhanvien" class="form-control" value="<%= dataNhanvien.manhanvien %>"
+                        readonly>
+                    <!-- Phòng ban -->
+                    <label>Phòng ban</label>
+                    <br>
+                    <select name="maphongban" required>
+                        <% for (let i=0; i<dataPhongban.length;i++){ %>
+                            <option value="<%=dataPhongban[i].maphongban%>">
+                                <%=dataPhongban[i].tenphongban%>
+                            </option>
+                            <% } %>
+                    </select>
+                    <br>
+                    <!-- chức vụ -->
+                    <label>Chức vụ</label>
+                    <br>
+                    <select name="machucvu" required>
+                        <% for (let i=0; i<dataChucvu.length;i++){ %>
+                            <option value="<%=dataChucvu[i].machucvu%>">
+                                <%=dataChucvu[i].tenchucvu%>
+                            </option>
+                            <% } %>
+                    </select>
+                    <br>
+                    <!-- Trình độ  -->
+                    <label>Trình độ đại học</label>
+                    <input type="text" name="trinhdohocvan" class="form-control"
+                        value="<%= dataNhanvien.trinhdohocvan %>">
+                    <!-- Tên nhân viên  -->
+                    <label>Tên nhân viên</label>
+                    <input type="text" name="tennhanvien" class="form-control" value="<%= dataNhanvien.tennhanvien %>"
+                        required>
+                    <!-- Giới tính  -->
+                    <label>Giới tính</label>
+                    <select name="gioitinh" value>
+                        <option value="1">Nam</option>
+                        <option value="0">Nữ</option>
+                    </select>
+                    <!-- Năm sinh  -->
+                    <label>Năm sinh</label>
+                    <input type="date" name="ngaysinh" class="form-control"
+                        value="<%=String(moment(dataNhanvien.ngaysinh).format('YYYY-MM-DD'));%>" required>
+                    <!-- Ngày vào làm  -->
+                    <label>Ngày vào làm</label>
+                    <input type="date" name="ngayvaolam" class="form-control"
+                        value="<%=String(moment(dataNhanvien.ngayvaolam).format('YYYY-MM-DD'));%>" required>
+                    <!-- Số điện thoại  -->
+                    <label>Số điện thoại</label>
+                    <input type="number" name="sdt" class="form-control" value="<%= dataNhanvien.sdt %>" required>
+                    <!-- Submit -->
+                    <button type=" submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+
+            <form action="/setnghiviec" method="post">
                 <input type="text" name="manhanvien" class="form-control" value="<%= dataNhanvien.manhanvien %>"
-                    readonly>
-                <!-- Phòng ban -->
-                <label>Phòng ban</label>
-                <br>
-                <select name="maphongban" required>
-                    <% for (let i=0; i<dataPhongban.length;i++){ %>
-                        <option value="<%=dataPhongban[i].maphongban%>">
-                            <%=dataPhongban[i].tenphongban%>
-                        </option>
-                        <% } %>
-                </select>
-                <br>
-                <!-- chức vụ -->
-                <label>Chức vụ</label>
-                <br>
-                <select name="machucvu" required>
-                    <% for (let i=0; i<dataChucvu.length;i++){ %>
-                        <option value="<%=dataChucvu[i].machucvu%>">
-                            <%=dataChucvu[i].tenchucvu%>
-                        </option>
-                        <% } %>
-                </select>
-                <br>
-                <!-- Trình độ  -->
-                <label>Trình độ đại học</label>
-                <input type="text" name="trinhdohocvan" class="form-control" value="<%= dataNhanvien.trinhdohocvan %>">
-                <!-- Tên nhân viên  -->
-                <label>Tên nhân viên</label>
-                <input type="text" name="tennhanvien" class="form-control" value="<%= dataNhanvien.tennhanvien %>"
-                    required>
-                <!-- Giới tính  -->
-                <label>Giới tính</label>
-                <select name="gioitinh" value>
-                    <option value="1">Nam</option>
-                    <option value="0">Nữ</option>
-                </select>
-                <!-- Năm sinh  -->
-                <label>Năm sinh</label>
-                <input type="date" name="ngaysinh" class="form-control"
-                    value="<%=String(moment(dataNhanvien.ngaysinh).format('YYYY-MM-DD'));%>" required>
-                <!-- Ngày vào làm  -->
-                <label>Ngày vào làm</label>
-                <input type="date" name="ngayvaolam" class="form-control"
-                    value="<%=String(moment(dataNhanvien.ngayvaolam).format('YYYY-MM-DD'));%>" required>
-                <!-- Số điện thoại  -->
-                <label>Số điện thoại</label>
-                <input type="number" name="sdt" class="form-control" value="<%= dataNhanvien.sdt %>" required>
-                <!-- Submit -->
-                <button type=" submit" class="btn btn-primary">Submit</button>
-            </div>
-        </form>
-
-        <form action="/setnghiviec" method="post">
-            <input type="text" name="manhanvien" class="form-control" value="<%= dataNhanvien.manhanvien %>" readonly
-                hidden>
-            <button type="submit">Nghỉ làm</button>
-        </form>
-    </div>
+                    readonly hidden>
+                <button type="submit">Nghỉ làm</button>
+            </form>
+        </div>
 </body>
 
 </html>

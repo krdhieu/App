@@ -13,41 +13,44 @@
 </head>
 
 <body>
-    <form action="/suanhanvien-user" method="post">
+    <%- include('navAndSidebar') -%>
+        <form action="/suanhanvien-user" method="post">
 
-        <!-- Vertical -->
-        <div class="form-group">
-            <!-- ID -->
-            <label>ID</label>
-            <input type="text" name="manhanvien" class="form-control" value="<%= dataNhanvien.manhanvien %>" readonly>
-            <!-- Trình độ  -->
-            <label>Trình độ học vấn</label>
-            <input type="text" name="trinhdohocvan" class="form-control" value="<%= dataNhanvien.trinhdohocvan %>"
-                readonly>
-            <!-- Tên nhân viên  -->
-            <label>Tên nhân viên</label>
-            <input type="text" name="tennhanvien" class="form-control" value="<%= dataNhanvien.tennhanvien %>" readonly>
-            <!-- Giới tính  -->
-            <label>Giới tính</label>
-            <br>
+            <!-- Vertical -->
+            <div class="form-group">
+                <!-- ID -->
+                <label>ID</label>
+                <input type="text" name="manhanvien" class="form-control" value="<%= dataNhanvien.manhanvien %>"
+                    readonly>
+                <!-- Trình độ  -->
+                <label>Trình độ học vấn</label>
+                <input type="text" name="trinhdohocvan" class="form-control" value="<%= dataNhanvien.trinhdohocvan %>"
+                    readonly>
+                <!-- Tên nhân viên  -->
+                <label>Tên nhân viên</label>
+                <input type="text" name="tennhanvien" class="form-control" value="<%= dataNhanvien.tennhanvien %>"
+                    readonly>
+                <!-- Giới tính  -->
+                <label>Giới tính</label>
+                <br>
 
-            <input type="text" name="gioitinh" class="form-control"
-                value="<%if (dataNhanvien.gioitinh==true){%>Nam <% } else {%>Nữ <% } %> " readonly>
-            <!-- Năm sinh  -->
-            <label>Ngày sinh</label>
-            <input type="date" name="ngaysinh" class="form-control"
-                value="<%=String(moment(dataNhanvien.ngaysinh).format('YYYY-MM-DD'));%>" readonly>
-            <!-- Ngày vào làm  -->
-            <label>Ngày vào làm</label>
-            <input type="date" name="ngayvaolam" class="form-control"
-                value="<%=String(moment(dataNhanvien.ngayvaolam).format('YYYY-MM-DD'));%>" readonly>
-            <!-- Số điện thoại  -->
-            <label>Số điện thoại</label>
-            <input type="text" name="sdt" class="form-control" value="<%= dataNhanvien.sdt %>" readonly>
-            <!-- Submit -->
-            <button type=" submit" class="btn btn-primary">Sửa</button>
-        </div>
-    </form>
+                <input type="text" name="gioitinh" class="form-control"
+                    value="<%if (dataNhanvien.gioitinh==true){%>Nam <% } else {%>Nữ <% } %> " readonly>
+                <!-- Năm sinh  -->
+                <label>Ngày sinh</label>
+                <input type="date" name="ngaysinh" class="form-control"
+                    value="<%=String(moment(dataNhanvien.ngaysinh).format('YYYY-MM-DD'));%>" readonly>
+                <!-- Ngày vào làm  -->
+                <label>Ngày vào làm</label>
+                <input type="date" name="ngayvaolam" class="form-control"
+                    value="<%=String(moment(dataNhanvien.ngayvaolam).format('YYYY-MM-DD'));%>" readonly>
+                <!-- Số điện thoại  -->
+                <label>Số điện thoại</label>
+                <input type="text" name="sdt" class="form-control" value="<%= dataNhanvien.sdt %>" readonly>
+                <!-- Submit -->
+                <button type=" submit" class="btn btn-primary">Sửa</button>
+            </div>
+        </form>
 </body>
 
 </html>
