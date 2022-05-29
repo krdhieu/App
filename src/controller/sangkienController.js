@@ -336,9 +336,13 @@ let duyetSangkien = async (req, res) => {
         'insert into xetduyet(manhanvien,masangkien,ngayxetduyet) values (?,?,?) ',
         [req.nhanVienId, masangkien, currentDate]
     );
-
-    return res.redirect('/quanlyduyetsangkien');
+    if (req.roleId === 1) {
+        return res.redirect('/quanlysangkien');
+    } else {
+        return res.redirect('/quanlyduyetsangkien');
+    }
 };
+
 let chitietduyetSangkien = async (req, res) => {
     let masangkien = req.query.masangkien;
     const [sangkien] = await connectDB.execute(
