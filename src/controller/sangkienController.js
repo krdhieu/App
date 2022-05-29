@@ -223,7 +223,7 @@ let duyetSangkien = async (req, res) => {
     let masangkien = req.params.masangkien;
     let currentDate = moment().utcOffset('+0700').format('YYYY-MM-DD');
     await connectDB.execute('update sangkien set matrangthai = ? where masangkien = ?', [2, masangkien]);
-    await connectDB.execute('insert into xetduyet(manhanvien,masangkien,ngayxetduyet) values (?,?,?) ', [1, masangkien, currentDate])
+    await connectDB.execute('insert into xetduyet(manhanvien,masangkien,ngayxetduyet) values (?,?,?) ', [res.nhanVienId, masangkien, currentDate])
     return res.redirect('/quanlyduyetsangkien');
 }
 let chitietduyetSangkien = async (req, res) => {
@@ -251,7 +251,7 @@ let huy1Sangkien = async (req, res) => {
     let { masangkien, lydotuchoi } = req.body;
     let currentDate = moment().utcOffset('+0700').format('YYYY-MM-DD');
     await connectDB.execute('update sangkien set matrangthai = ? where masangkien = ?', [4, masangkien]);
-    await connectDB.execute('insert into xetduyet(manhanvien,masangkien,ngayxetduyet,lydotuchoi) values (?,?,?,?) ', [1, masangkien, currentDate, lydotuchoi])
+    await connectDB.execute('insert into xetduyet(manhanvien,masangkien,ngayxetduyet,lydotuchoi) values (?,?,?,?) ', [res.nhanVienId, masangkien, currentDate, lydotuchoi])
     return res.redirect('/quanlyduyetsangkien');
 }
 let history = async (req, res) => {
