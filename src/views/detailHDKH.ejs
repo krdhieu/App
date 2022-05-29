@@ -74,6 +74,19 @@
                             ></button>
                             <strong>Danger!</strong> Lỗi
                         </div>
+                        <%} else
+                    if(alert==='suathanhcong' ){%>
+                        <div
+                            class="alert alert-success position-absolute alert-dismissible fade show"
+                            style="z-index: 1"
+                        >
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert"
+                            ></button>
+                            <strong>Success!</strong> Cập nhật thông tin thành công
+                        </div>
                         <%}%>
             <%}%>
 
@@ -168,13 +181,25 @@
                       
                             <!-- Modal body -->
                             <div class="modal-body" >
-                                <form action="/edit-thanhvien-hd" method="post" >                          
+                                <form action="/edit-thanhvien-hd" method="post" >   
+                                    <div>
+                                        <label for="id">Mã Hội đồng</label>
+                                        <input
+                                        class="form-control"
+                                        type="text"
+                                        name="idHDKH"
+                                        value="<%=detail.mahoidong%>"
+                                        placeholder="ID thanh vien"
+                                        required
+                                        readonly
+                                    />
+                                    </div>                     
                                     <div>
                                         <label for="id">Mã thành viên</label>
                                         <input
                                         class="form-control"
                                         type="text"
-                                        name="idHDKH"
+                                        name="idThanhVienHD"
                                         value="<%=allThanhVien[i].mathanhvien%>"
                                         placeholder="ID thanh vien"
                                         required

@@ -88,22 +88,33 @@
 
         <div class="container-fluid">
             <div class="text-center text-white">
-                <div>Tên đợt: <%=dotHienTai[0].tendotsangkien%></div>
                 <div>
-                    Ngày bắt đầu:
-                    <%=moment(dotHienTai[0].ngaybatdau).format('MM/DD/YYYY');%>
+                    <h1>Thông báo đợt sáng kiến</h1>
+                    <h2><%=dotHienTai[0].tendotsangkien%></h2>
                 </div>
                 <div>
-                    Ngày kết thúc:
-                    <%=moment(dotHienTai[0].ngayketthuc).format('MM/DD/YYYY');%>
+                    <h4>
+                        Ngày bắt đầu:
+                        <%=moment(dotHienTai[0].ngaybatdau).format('MM/DD/YYYY');%>
+                    </h4>
                 </div>
                 <div>
-                    Hạn đăng ký:
-                    <%=moment(dotHienTai[0].ngaydungdangky).format('MM/DD/YYYY');%>
+                    <h4>
+                        Ngày kết thúc:
+                        <%=moment(dotHienTai[0].ngayketthuc).format('MM/DD/YYYY');%>
+                    </h4>
                 </div>
                 <div>
-                    Hạn nộp báo cáo:
-                    <%=moment(dotHienTai[0].hannop).format('MM/DD/YYYY');%>
+                    <h4>
+                        Hạn đăng ký:
+                        <%=moment(dotHienTai[0].ngaydungdangky).format('MM/DD/YYYY');%>
+                    </h4>
+                </div>
+                <div>
+                    <h4>
+                        Hạn nộp báo cáo:
+                        <%=moment(dotHienTai[0].hannop).format('MM/DD/YYYY');%>
+                    </h4>
                 </div>
             </div>
         </div>
