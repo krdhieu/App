@@ -37,7 +37,7 @@ let createSangkien = async (req, res) => {
     let ngaydungdangky = moment(dot[0].ngaydungdangky).format('YYYYMMDD');
     let hientai = moment().utcOffset('+0700').format('YYYYMMDD');
     //let hientai = moment('2022-03-20').format('YYYYMMDD'); // test
-    if (hientai <= ngaydungdangky || hientai >= ngaybatdau) {
+    if (hientai <= ngaydungdangky && hientai >= ngaybatdau) {
         if (manhanvien) {
             if (nhanvien.length == 1) {
                 return res.render('createsangkien.ejs', { dataPhongban: phongban, dataChucvu: chucvu, alert: alert, dataNhanvien: nhanvien });
@@ -47,7 +47,7 @@ let createSangkien = async (req, res) => {
         return res.render('createsangkien.ejs', { dataPhongban: phongban, dataChucvu: chucvu, alert: alert, dataNhanvien: null });
     }
     else {
-        return res.redirect('/home?alerts=' + encodeURIComponent('4'))
+        return res.redirect('/home?alert=' + encodeURIComponent('4'))
     }
 }
 
