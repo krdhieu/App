@@ -60,8 +60,9 @@ let addSangkien = async (req, res) => {
     doituong = chuanhoachuoi.chuanhoa(doituong);
     let manhanvien_1 = req.nhanVienId;
     if (manhanvien_2) {
-        let [nguoithamgia_2] = await connectDB.execute('SELECT count(*) as "soluong" FROM `nguoithamgia` INNER JOIN sangkien ON nguoithamgia.masangkien=sangkien.masangkien WHERE manhanvien = ? and matrangthai = 1 or matrangthai=2;', [manhanvien_2]);
-        if (nguoithamgia_2[0].soluong >= 1) {
+        let [nguoithamgia_2] = await connectDB.execute('SELECT count(*) as "soluong" FROM `nguoithamgia` INNER JOIN sangkien ON nguoithamgia.masangkien=sangkien.masangkien WHERE manhanvien = ? and (matrangthai = 1 or matrangthai=2);', [manhanvien_2]);
+        let [checkhoidong] = await connectDB.execute('SELECT count(*) as "soluong" FROM thanhvienhoidong WHERE manhanvien = ? and mahoidong = (select max(mahoidong) from hoidongkhoahoc)', [manhanvien_2]);
+        if (nguoithamgia_2[0].soluong >= 1 && checkhoidong[0].soluong >= 1) {
             return res.redirect('/create-sangkien?alert=' + encodeURIComponent('2'));
             return res.status(200).send('<p>Đã trong 1 dự án <a href="/create-sangkien">Trở về</a></p>');
         }
