@@ -28,7 +28,7 @@ let verifyAccessTokenGiamKhao = async (req, res, next) => {
         let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
         let check = await quyenService.checkQuyen(payLoad.roleId);
         if (check !== 'GIAMKHAO' && check !== 'ADMIN') {
-            return res.redirect('/' + encodeURIComponent('1'));
+            return res.redirect('/home?alert=' + encodeURIComponent('1'));
         }
         req.emailLogin = payLoad.email;
         req.nhanVienId = payLoad.nhanVienId;

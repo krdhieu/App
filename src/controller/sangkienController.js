@@ -14,7 +14,7 @@ import chuanhoachuoi, { chuanhoavanban } from '../services/chuanhoachuoi';
 let createSangkien = async (req, res) => {
     const [dot] = await connectDB.execute(`select ngaybatdau,ngaydungdangky from dotsangkien where trangthai = ?`, [1])
     if (dot.length === 0) {
-        return res.redirect('/home?alerts=' + encodeURIComponent('chuamodotdangky'))
+        return res.redirect('/home?alert=' + encodeURIComponent('4'))
     }
     const [checknguoithamgia] = await connectDB.execute(`select count(*) as soluong from nguoithamgia 
         inner join sangkien on nguoithamgia.masangkien = sangkien.masangkien 
@@ -223,11 +223,10 @@ let duyetSangkien = async (req, res) => {
     let masangkien = req.params.masangkien;
     let currentDate = moment().utcOffset('+0700').format('YYYY-MM-DD');
     await connectDB.execute('update sangkien set matrangthai = ? where masangkien = ?', [2, masangkien]);
-    await connectDB.execute('insert into xetduyet(manhanvien,masangkien,ngayxetduyet) values (?,?,?) ', [res.nhanVienId, masangkien, currentDate])
+    await connectDB.execute('insert into xetduyet(manhanvien,masangkien,ngayxetduyet) values (?,?,?) ', [req.nhanVienId, masangkien, currentDate])
     return res.redirect('/quanlyduyetsangkien');
 }
 let chitietduyetSangkien = async (req, res) => {
-    let masangkien = req.query.masangkien;
     const [sangkien] = await connectDB.execute('SELECT * FROM sangkien where masangkien = ?', [req.query.masangkien]);
     if (sangkien[0]) {
         const [thanhvien] = await connectDB.execute('SELECT * FROM nguoithamgia inner join nhanvien on nguoithamgia.manhanvien = nhanvien.manhanvien where masangkien = ?', [sangkien[0].masangkien]);
@@ -251,7 +250,7 @@ let huy1Sangkien = async (req, res) => {
     let { masangkien, lydotuchoi } = req.body;
     let currentDate = moment().utcOffset('+0700').format('YYYY-MM-DD');
     await connectDB.execute('update sangkien set matrangthai = ? where masangkien = ?', [4, masangkien]);
-    await connectDB.execute('insert into xetduyet(manhanvien,masangkien,ngayxetduyet,lydotuchoi) values (?,?,?,?) ', [res.nhanVienId, masangkien, currentDate, lydotuchoi])
+    await connectDB.execute('insert into xetduyet(manhanvien,masangkien,ngayxetduyet,lydotuchoi) values (?,?,?,?) ', [req.nhanVienId, masangkien, currentDate, lydotuchoi])
     return res.redirect('/quanlyduyetsangkien');
 }
 let history = async (req, res) => {

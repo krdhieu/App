@@ -68,7 +68,6 @@
                         <tr>
                             <th scope="row">
                                 <%= i +1 %>
-                                    <%= dataSangkien[i].masangkien %>
                             </th>
                             <td>
                                 <%= dataSangkien[i].tensangkien %>
@@ -90,19 +89,25 @@
                             </td>
                             <td>
                                 <% if (dataSangkien[i].matrangthai !==4){ %>
-                                    <!-- <a href="/chitietdiem-xeploai-nhanxet?masangkien=<%= dataSangkien[i].masangkien %>"
+                                    <!-- <a
+                                    href="/chitietdiem-xeploai-nhanxet?masangkien=<%= dataSangkien[i].masangkien %>"
                                     target="_self" title="Chi tiết sáng kiến"><i class="fa-solid fa-file-alt"></a> -->
-                                    <a href="/detailsangkien?masangkien=<%= dataSangkien[i].masangkien %>"
-                                        class="btn btn-primary" title="Chi tiết sáng kiến"><i
-                                            class="fa-solid fa-file-alt"></i></a>
-                                    <% } else {%>
-                                        <button type="button" onclick="myfunc()">Lý do</button>
-                                        <%}%>
-                                            <script>
-                                                function myfunc() {
-                                                    alert("<%= dataSangkien[i].lydotuchoi%>");
-                                                }
-                                            </script>
+                                    <% if (dataSangkien[i].matrangthai !==1){%>
+                                        <a href="/detailsangkien?masangkien=<%= dataSangkien[i].masangkien %>"
+                                            class="btn btn-primary" title="Chi tiết sáng kiến"><i
+                                                class="fa-solid fa-file-alt"></i></a>
+                                        <% } else {%>
+                                            <a href="/chitietduyetsangkien?masangkien=<%= dataSangkien[i].masangkien %>"
+                                                class="btn btn-primary" target="_self" title="Chi tiết sáng kiến"><i
+                                                    class="fa-solid fa-file-alt"></i></a>
+                                            <% }} else {%>
+                                                <button type="button" onclick="myfunc()">Lý do</button>
+                                                <%}%>
+                                                    <script>
+                                                        function myfunc() {
+                                                            alert("<%= dataSangkien[i].lydotuchoi%>");
+                                                        }
+                                                    </script>
                             </td>
                         </tr>
                         <% } %>
