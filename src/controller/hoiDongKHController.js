@@ -47,9 +47,7 @@ const getDetailHDKH = async (req, res) => {
         await thanhVienHDKHService.getAllThanhVienHDKHJoinNhanVienJoinChucVu(
             id
         );
-    // console.log('all thanh vien', allThanhVien);
-    // console.log('detail', detail);
-    // console.log('all chuc vu', allChucVu);
+
     return res.render('detailHDKH.ejs', {
         detail: detail[0],
         allChucVu,
@@ -60,7 +58,7 @@ const getDetailHDKH = async (req, res) => {
 
 //trang sua hoi dong khoa hoc
 let getEditHDKH = async (req, res) => {
-    let { id } = req.query;
+    let { id, alert } = req.query;
     if (!id) {
         return res.send('Missing required parameter');
     }
@@ -68,7 +66,7 @@ let getEditHDKH = async (req, res) => {
     if (hDKH.length === 0) {
         return res.send('HDKH does not exist');
     }
-    return res.render('editHDKH.ejs', { hDKH: hDKH[0] });
+    return res.render('editHDKH.ejs', { hDKH: hDKH[0], alert: alert });
 };
 
 //sua thong tin hoi dong khoa hoc
@@ -79,7 +77,9 @@ let editHDKH = async (req, res) => {
     }
     await hoiDongKhoaHocService.editHDKH(id, nhiemVu, ngayThanhLap);
 
-    return res.redirect('/get-hdkh');
+    return res.redirect(
+        `/get-edit-hdkh?id=${id}&alert=` + encodeURIComponent('1')
+    );
 };
 
 // ket thuc nhhiem ky hdkh
@@ -92,7 +92,7 @@ let changeStateHDKH = async (req, res) => {
     let currentDate = moment().utcOffset('+0700').format('YYYY-MM-DD');
 
     await hoiDongKhoaHocService.changeStateHDKH(currentDate, id);
-    return res.send('done');
+    return res.redirect('/get-hdkh');
 };
 
 module.exports = {

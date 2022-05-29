@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import login from '../services/loginService';
 import jwt from 'jsonwebtoken';
+import dotSangKienService from '../services/dotSangKienService';
 // hien thi trang login
 let getLogin = (req, res) => {
     let { alert } = req.query;
@@ -55,8 +56,18 @@ const handleLogout = (req, res) => {
 };
 // hien thi trang home
 
-const getHome = (req, res) => {
-    return res.render('home.ejs');
+const getHome = async (req, res) => {
+    let { alert } = req.query;
+    let dotHienTai = await dotSangKienService.getDotHienTai();
+
+    if (dotHienTai.length === 1) {
+        return res.render('home.ejs', { dotHienTai, alert });
+    }
+
+    return res.render('home.ejs', {
+        message: 'Hiện không có đợt sáng kiến',
+        alert,
+    });
 };
 module.exports = {
     getLogin: getLogin,

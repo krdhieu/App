@@ -7,9 +7,11 @@
 
 .login-background {
     height: 100vh;
-    background: linear-gradient(135deg,
-            rgba(34, 193, 195, 1) 0%,
-            rgba(253, 187, 45, 1) 100%);
+    background: linear-gradient(
+        135deg,
+        rgba(34, 193, 195, 1) 0%,
+        rgba(253, 187, 45, 1) 100%
+    );
 }
 
 .login-container {
@@ -52,9 +54,11 @@
     border: none;
     border-radius: 15px;
     outline: none;
-    background: linear-gradient(135deg,
-            rgba(34, 193, 195, 1) 0%,
-            rgba(253, 187, 45, 1) 100%);
+    background: linear-gradient(
+        135deg,
+        rgba(34, 193, 195, 1) 0%,
+        rgba(253, 187, 45, 1) 100%
+    );
     color: white;
     font-size: 16px;
 }
@@ -89,44 +93,6 @@
 }
 
 /****************** trang cham diem *********************/
-.input-diem {
-    color: black;
-    cursor: pointer;
-}
-
-.input-diem.mucdich {
-    background-color: rgb(113, 255, 113);
-}
-
-.input-diem.noidung {
-    background-color: rgb(128, 136, 253);
-}
-
-.input-diem.ungdung {
-    background-color: rgb(250, 255, 146);
-}
-
-.input-diem.trinhbay {
-    background-color: rgb(250, 146, 181);
-}
-
-.main-container {
-    margin: 0;
-}
-
-.notification-success {
-    color: green;
-}
-
-.notification-fail {
-    color: red;
-}
-
-/* trang quan ly tai khoan */
-table th,
-td {
-    vertical-align: middle;
-}
 
 .mycolor-gray {
     background-color: #808080;

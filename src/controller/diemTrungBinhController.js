@@ -2,6 +2,7 @@ import sangKienService from '../services/sangKienService';
 import diemTrungBinhService from '../services/diemTrungBinhService';
 import xepLoaiService from '../services/xepLoaiService';
 import chamDiemService from '../services/chamDiemService';
+import { all } from 'express/lib/application';
 /// hien thi diem cua nhung sang kien co trang thai dang thuc hien - trang xep loai sang kien
 let getDiemByMaSangKien = async (req, res) => {
     let sangKienDangThucHien =
@@ -39,7 +40,7 @@ let getDiemByMaSangKien = async (req, res) => {
 
 let chiTietDiemDanhGiaXepLoaiNhanXet = async (req, res) => {
     let { masangkien } = req.query;
-    console.log(req.query);
+
     if (!masangkien) {
         return res.send('Wrong!');
     }
@@ -58,6 +59,7 @@ let chiTietDiemDanhGiaXepLoaiNhanXet = async (req, res) => {
     let allChiTietDiem = await chamDiemService.getAllChiTietDiemOfSangKien(
         masangkien
     );
+    console.log(allChiTietDiem);
     return res.render('chiTietXepLoai.ejs', {
         thongTinSangKien: thongTinSangKien[0],
         allChiTietDiem,

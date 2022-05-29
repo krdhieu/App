@@ -5,9 +5,16 @@ import hoiDongKhoaHocService from '../services/hoiDongKhoaHocService';
 import nhanXetService from '../services/nhanXetService';
 //hien trhi trang cham diem
 let getChamDiemPage = async (req, res) => {
+    let { alert } = req.query;
+
+    if (!alert) {
+        let sangKien = await sangKienService.getSangKienDaDuyet();
+        return res.render('chamDiem.ejs', { sangKien });
+    }
+
     let sangKien = await sangKienService.getSangKienDaDuyet();
 
-    return res.render('chamDiem.ejs', { sangKien });
+    return res.render('chamDiem.ejs', { sangKien, alert });
 };
 // lay thong tin chi tiet sangkien can cham
 let getDetailSangKien = async (req, res) => {
@@ -20,11 +27,18 @@ let getDetailSangKien = async (req, res) => {
     if (detailSangKien.length !== 1) {
         return res.send('khong ton tai sang kien nay');
     }
+
+    if (detailSangKien[0].trangthaidotsangkien !== 1) {
+        return res.send('Sáng kiến này trong đợt đã kết thúc');
+    }
     let nguoiThamGia = await nguoiThamGiaService.getNguoiThamGia(id);
     let thanhVienHDDaDangNhap =
         await hoiDongKhoaHocService.getThanhVienHDDaDangNhap(req.nhanVienId);
     if (thanhVienHDDaDangNhap.length !== 1) {
-        return res.send('Khong phai thanh vien hoi dong trong dot nay');
+        return res.redirect(
+            '/get-cham-diem?alert=' +
+                encodeURIComponent('khonglathanhvienhoidong')
+        );
     }
     let diemDaCham = await chamDiemService.getChiTietDiemOfThanhVien(
         detailSangKien[0].masangkien,
@@ -35,7 +49,7 @@ let getDetailSangKien = async (req, res) => {
     if (diemDaCham.length === 1) {
         showDiemDaCham = [...diemDaCham];
     }
-    let { message } = req.query;
+    let { alert } = req.query;
     let nhanXet;
     nhanXet = await nhanXetService.getNhanXet(
         thanhVienHDDaDangNhap[0].mathanhvien,
@@ -46,7 +60,7 @@ let getDetailSangKien = async (req, res) => {
         thanhVienHDDaDangNhap: thanhVienHDDaDangNhap[0],
         nguoiThamGia,
         showDiemDaCham: showDiemDaCham,
-        message,
+        alert,
         nhanXet,
     });
 };
@@ -74,18 +88,10 @@ let createChiTietChamDiem = async (req, res) => {
         thanhVienHDId,
         sangKienId
     );
+    // khong can thiet nhung co cung dc
     if (checkDaChamDiem.length !== 0) {
         return res.send('ban da cham diem sang kien nay roi');
     }
-    // console.log(
-    //     'chi tiet cham diem',
-    //     sangKienId,
-    //     thanhVienHDId,
-    //     diemMucDich,
-    //     diemNoiDung,
-    //     diemUngDung,
-    //     diemTrinhBay
-    // );
 
     let check = await chamDiemService.createChiTietChamDiem(
         thanhVienHDId,
@@ -95,7 +101,10 @@ let createChiTietChamDiem = async (req, res) => {
         diemUngDung,
         diemTrinhBay
     );
-    return res.send(check);
+    return res.redirect(
+        `/detail-sangkien?id=${sangKienId}&&alert=` +
+            encodeURIComponent('suadiemthanhcong')
+    );
 };
 // sua chi tiet diem
 let editChiTietChamDiem = async (req, res) => {
@@ -126,13 +135,10 @@ let editChiTietChamDiem = async (req, res) => {
         diemUngDung,
         diemTrinhBay
     );
-    let message = 'Sua diem khong thanh cong';
-    if (check === 'ok') {
-        message = 'Sua Thanh Cong';
-    }
 
     return res.redirect(
-        `/detail-sangkien?id=${sangKienId}&&message=${message}`
+        `/detail-sangkien?id=${sangKienId}&&alert=` +
+            encodeURIComponent('suadiemthanhcong')
     );
 };
 

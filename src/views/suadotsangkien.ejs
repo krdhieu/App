@@ -21,22 +21,22 @@
                 <div class="form-group">
                     <label>Mã đợt sáng kiến</label>
                     <input type="text" name="madotsangkien" class="form-control"
-                        value="<%=dataDotsangkien.madotsangkien %>" readonly>
+                        value="<%=dataDotsangkien.madotsangkien %>" readonly />
                     <label>Tên Đợt</label>
                     <input type="text" name="tendotsangkien" class="form-control"
-                        value="<%=dataDotsangkien.tendotsangkien %>" required>
+                        value="<%=dataDotsangkien.tendotsangkien %>" required />
                     <label>Ngày bắt đầu</label>
                     <input type="date" name="ngaybatdau" class="form-control"
-                        value="<%= moment(dataDotsangkien.ngaybatdau).format('YYYY-MM-DD') %>" required>
+                        value="<%= moment(dataDotsangkien.ngaybatdau).format('YYYY-MM-DD') %>" required />
                     <label>Ngày kết thúc</label>
                     <input type="date" name="ngayketthuc" class="form-control"
-                        value="<%= moment(dataDotsangkien.ngayketthuc).format('YYYY-MM-DD') %>">
+                        value="<%= moment(dataDotsangkien.ngayketthuc).format('YYYY-MM-DD') %>" />
                     <label>Ngày kết thúc đăng ký sáng kiến</label>
                     <input type="date" name="ngaydungdangky" class="form-control"
-                        value="<%= moment(dataDotsangkien.ngaydungdangky).format('YYYY-MM-DD') %>" required>
+                        value="<%= moment(dataDotsangkien.ngaydungdangky).format('YYYY-MM-DD') %>" required />
                     <label>Hạn nộp bản báo cáo</label>
                     <input type="date" name="hannop" class="form-control"
-                        value="<%= moment(dataDotsangkien.hannop).format('YYYY-MM-DD') %>" required>
+                        value="<%= moment(dataDotsangkien.hannop).format('YYYY-MM-DD') %>" required />
                     <!-- submit -->
                     <br>
                     <a href="/quanlydotsangkien"><button type="button" class="btn btn-primary">

@@ -6,12 +6,14 @@ import connectDB from '../configs/connectDB';
 
 // hien thi trang them tai khoan
 let getCreateAccount = async (req, res) => {
+    let { alert } = req.query;
     let allNhanVien = await nhanvienService.getAllNhanVien();
     let allQuyen = await quyenService.getAllQuyen();
 
     return res.render('createAccount.ejs', {
         allQuyen: allQuyen,
         allNhanVien: allNhanVien,
+        alert,
     });
 };
 
@@ -27,22 +29,31 @@ let createAccount = async (req, res) => {
         return item === ' ';
     });
     if (haveBackspace) {
-        return res.send('Not allow backspace in password');
+        return res.redirect(
+            '/get-create-account?alert=' + encodeURIComponent('backspace')
+        );
     }
     //kiem tra tai khoan da ton tai hay chua
     let check = await taikhoanService.getOneAccount(email);
     if (check.length === 1) {
-        return res.send('Account already exists');
+        return res.redirect(
+            '/get-create-account?alert=' + encodeURIComponent('taikhoantontai')
+        );
     }
     let checkNV = await nhanvienService.checkNhanVienTonTai(idNhanVien);
     if (checkNV.length !== 1) {
-        return res.send('nhan vien khong ton tai');
+        return res.redirect(
+            '/get-create-account?alert=' + encodeURIComponent('nhanvienktontai')
+        );
     }
     let checkNVCoTK = await taikhoanService.checkNhanVienDaCoTaiKhoan(
         idNhanVien
     );
     if (checkNVCoTK.length >= 1) {
-        return res.send('nhan vien da co tai khoan');
+        return res.redirect(
+            '/get-create-account?alert=' +
+                encodeURIComponent('nhanviendacotaikhoan')
+        );
     }
     //ma hoa mat khau
     let salt = bcrypt.genSaltSync(10);
@@ -50,7 +61,9 @@ let createAccount = async (req, res) => {
     let data = { email, hash, quyen, idNhanVien };
     //them tai khoan
     await taikhoanService.createAccount(data);
-    return res.send('ok');
+    return res.redirect(
+        '/get-create-account?alert=' + encodeURIComponent('thanhcong')
+    );
 };
 
 // hien thi ta ca tai khoan - phan trang

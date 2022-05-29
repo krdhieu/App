@@ -30,7 +30,10 @@ let editNhanXet = async (req, res) => {
         nhanXet,
         currentDate
     );
-    return res.redirect(`/detail-sangkien?id=${maSangKien}`);
+    return res.redirect(
+        `/detail-sangkien?id=${maSangKien}&alert=` +
+            encodeURIComponent('nhanxetthanhcong')
+    );
 };
 
 module.exports = {

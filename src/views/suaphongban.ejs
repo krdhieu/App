@@ -9,14 +9,13 @@
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- <script defer src="/src/showHideSideBar.js"></script> -->
     <link rel="stylesheet" href="/css/styles.css" />
-    <link rel="stylesheet" href="/scss/styles.scss" />
     <title>Sửa phòng ban</title>
 </head>
 
 <body>
     <%- include('navAndSidebar') -%>
         <div class="container">
-            <h3>Sửa phòng ban</h3>
+            <h1>Sửa phòng ban</h1>
             <form action="/uploadphongban" method="post">
                 <!-- Vertical -->
                 <div class="form-group">
@@ -30,14 +29,13 @@
                     <input type="date" name="namthanhlap" id="namthanhlap" class="form-control"
                         value="<%=moment(dataPhongban.ngaythanhlap).format( 'YYYY-MM-DD' )%>" required />
                     <label>Mô tả phòng ban</label>
-                    <textarea name="motaphongban" class="form-control" id="" cols="30"
-                        rows="10"><%= dataPhongban.motaphongban %></textarea>
+                    <textarea name="motaphongban" class="form-control" id="" cols="30" rows="10">
+                            <%= dataPhongban.motaphongban %></textarea>
                     <br>
                     <a href="/quanlyphongban"><button type="button" class="btn btn-primary">
                             Trở về</button></a>
                     <button type=" submit" class="btn btn-primary float-end">
                         Xác nhận</button>
-
                 </div>
             </form>
         </div>

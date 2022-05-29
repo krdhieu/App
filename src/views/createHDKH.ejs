@@ -1,127 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        />
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        ></script>
+        <!-- <script defer src="/src/showHideSideBar.js"></script> -->
+        <link rel="stylesheet" href="/css/styles.css" />
+        <title>Thành Lập Hội Đồng</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- <script defer src="/src/showHideSideBar.js"></script> -->
-    <link rel="stylesheet" href="/css/styles.css" />
-    <title>Document</title>
-</head>
-
-<body class="mycolor-gray">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <button type="button" class="navbar-brand btn mx-2 show-hide-sidebar" data-bs-toggle="offcanvas"
-            data-bs-target="#custom-sidebar">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <div class="container-fluid p-0">
-            <a class="navbar-brand btn" href="/home">Home</a>
-        </div>
-        <!-- dropdown -->
-        <div class="btn-group me-sm-5" role="group" aria-label="Button group with nested dropdown">
-            <div class="btn-group me-3" role="group">
-                <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Account
-                </button>
-                <ul class="dropdown-menu bg-dark" aria-labelledby="btnGroupDrop1">
-                    <li>
-                        <a class="dropdown-item text-white-50" href="">dasd</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item text-danger" href="/logout">
-                            <i class="fa-solid fa-arrow-right-from-bracket small">
-                            </i>
-                            <span>logout</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- sidebar -->
-    <div class="container-fluid p-0 row sidebar-container display-6">
-        <div class="custom-sidebar offcanvas offcanvas-start col-2" id="custom-sidebar">
-            <div class="sidebar-custom btn-group-vertical p-0" style="background-color: #212529; height: 100vh">
-                <a href="/quanlyphongban" class="btn btn-dark btn-sm text-start">Quản Lý Phòng Ban</a>
-
-                <a href="/quanlychucvu" class="btn btn-dark btn-sm text-start">Quản Lý Chức Vụ</a>
-
-                <a href="/quanlychucvuhd" class="btn btn-dark btn-sm text-start">Quản Lý Chức Vụ HĐ</a>
-
-                <a href="/quanlyxeploai" class="btn btn-dark btn-sm text-start">Quản Lý Xếp Loại</a>
-
-                <a href="/quanlytrangthaisangkien" class="btn btn-dark btn-sm text-start">Quản Lý Trạng Thái Sáng
-                    Kiến</a>
-
-                <a href="/quanlynhanvien/:search" class="btn btn-dark btn-sm text-start">Quản Lý Nhân Viên</a>
-
-                <a href="/create-sangkien" class="btn btn-dark btn-sm text-start">Đăng ký sáng kiến</a>
-
-                <a href="/quanlysangkien" class="btn btn-dark btn-sm text-start">Duyệt Sáng Kiến
-                </a>
-
-                <a href="/quanlydotsangkien" class="btn btn-dark btn-sm text-start">Quản Lý Đợt Sáng Kiến</a>
-
-                <a href="/get-cham-diem" class="btn btn-dark btn-sm text-start">Chấm điểm</a>
-
-                <a href="/get-hdkh" class="btn btn-dark btn-sm text-start">Quản Lý Hội Đồng Khoa Học</a>
-
-                <a href="/manage-account" class="btn btn-dark btn-sm text-start">Quản Lý Tài Khoản</a>
-            </div>
-        </div>
-    </div>
-
-    <!--/////////////////////////////////////////////////////-->
-
-    <div class="container-fluid row mt-3 position-relative">
-        <!-- thongbao -->
+    <body class="mycolor-gray">
         <% if(typeof(alert)!=='undefined' ){ if(alert==='1' ){%>
-            <div class="alert alert-warning position-absolute alert-dismissible fade show">
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                <strong>Warning!</strong> Không thể thêm mới khi có Hội đồng
-                đang trong nhiệm kỳ
+        <div
+            class="alert alert-warning position-absolute alert-dismissible fade show"
+            style="z-index: 1"
+        >
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+            ></button>
+            <strong>Warning!</strong> Không thể thêm mới khi có Hội đồng đang
+            trong nhiệm kỳ
+        </div>
+        <%} else if(alert==='0' ){%>
+        <div
+            class="alert alert-success position-absolute alert-dismissible fade show"
+            style="z-index: 1"
+        >
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+            ></button>
+            <strong>Success!</strong> Thêm thành công
+        </div>
+        <%}%> <%}%> <%- include('navAndSidebar.ejs') -%>
+        <!--/////////////////////////////////////////////////////-->
+
+        <div class="container-fluid row mt-3 position-relative">
+            <!-- thongbao -->
+
+            <!--///////-->
+            <div class="col-12 text-white">
+                <h4>Thêm mới Hội đồng khoa học</h4>
             </div>
-            <%} else if(alert==='0' ){%>
-                <div class="alert alert-success position-absolute alert-dismissible fade show">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    <strong>Success!</strong> Thêm thành công
+            <form action="/create-hdkh" method="post" class="col-12 mt-3">
+                <div class="form-group col-4">
+                    <label for="ngayThanhLap" class="text-white">
+                        <h5>Ngày thành lập</h5>
+                    </label>
+                    <input
+                        type="date"
+                        name="ngayThanhLap"
+                        required
+                        class="form-control"
+                    />
                 </div>
-                <%}%>
-                    <%}%>
-                        <!--///////-->
-                        <div class="col-12 text-white">
-                            <h4>Thêm mới Hội đồng khoa học</h4>
-                        </div>
-                        <form action="/create-hdkh" method="post" class="col-12 mt-3">
-                            <div class="form-group col-4">
-                                <label for="ngayThanhLap" class="text-white">
-                                    <h5>Ngày thành lập</h5>
-                                </label>
-                                <input type="date" name="ngayThanhLap" required class="form-control" />
-                            </div>
-                            <div class="form-group mt-4">
-                                <label for="nhiemVu" class="text-white">
-                                    <h5>Nhiệm vụ</h5>
-                                </label>
-                                <textarea name="nhiemVu" id="nhiemVu" cols="30" rows="15" class="form-control">
+                <div class="form-group mt-4">
+                    <label for="nhiemVu" class="text-white">
+                        <h5>Nhiệm vụ</h5>
+                    </label>
+                    <textarea
+                        name="nhiemVu"
+                        id="nhiemVu"
+                        cols="30"
+                        rows="15"
+                        class="form-control"
+                    >
                     </textarea>
-                            </div>
+                </div>
 
-                            <div>
-                                <button type="submit" class="btn btn-primary btn-lg mt-2" ata-bs-toggle="tooltip"
-                                    title="Lưu">
-                                    <i class="fa-solid fa-floppy-disk"></i>
-                                </button>
-                            </div>
-                        </form>
-    </div>
-</body>
-
+                <div>
+                    <button
+                        type="submit"
+                        class="btn btn-primary mt-2"
+                        ata-bs-toggle="tooltip"
+                        title="Lưu"
+                    >
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </body>
 </html>
