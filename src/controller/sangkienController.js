@@ -224,7 +224,12 @@ let duyetSangkien = async (req, res) => {
     let currentDate = moment().utcOffset('+0700').format('YYYY-MM-DD');
     await connectDB.execute('update sangkien set matrangthai = ? where masangkien = ?', [2, masangkien]);
     await connectDB.execute('insert into xetduyet(manhanvien,masangkien,ngayxetduyet) values (?,?,?) ', [req.nhanVienId, masangkien, currentDate])
-    return res.redirect('/quanlyduyetsangkien');
+    if (req.roleId === 1) {
+        return res.redirect('/quanlysangkien');
+    }
+    else {
+        return res.redirect('/quanlyduyetsangkien');
+    }
 }
 let chitietduyetSangkien = async (req, res) => {
     const [sangkien] = await connectDB.execute('SELECT * FROM sangkien where masangkien = ?', [req.query.masangkien]);
