@@ -96,7 +96,8 @@ let getAllChiTietDiemOfSangKien = (maSangKien) => {
                 `SELECT chitietchamdiem.*, nhanvien.tennhanvien, nhanxet.noidung from chitietchamdiem 
                 LEFT JOIN thanhvienhoidong on thanhvienhoidong.mathanhvien= chitietchamdiem.mathanhvien 
                 LEFT JOIN nhanvien on nhanvien.manhanvien = thanhvienhoidong.manhanvien 
-                LEFT JOIN nhanxet on nhanxet.mathanhvien=thanhvienhoidong.mathanhvien  WHERE chitietchamdiem.masangkien=?`,
+                 JOIN nhanxet on chitietchamdiem.masangkien=nhanxet.masangkien and thanhvienhoidong.mathanhvien=nhanxet.mathanhvien
+                   WHERE chitietchamdiem.masangkien=?`,
                 [maSangKien]
             );
             resolve(allChiTietDiem);
