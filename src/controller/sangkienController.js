@@ -157,12 +157,14 @@ let viewSangkien = async (req, res) => {
         matrangthai = trangthai;
     } else {
         const [rows] = await connectDB.execute(
-            `SELECT * FROM sangkien 
+            `SELECT sangkien.* , trangthaisangkien.* , dotsangkien.* , xetduyet.manhanvien, xetduyet.ngayxetduyet, xetduyet.lydotuchoi FROM sangkien 
         inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai
-        inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien 
+        inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien
+        LEFT JOIN xetduyet on sangkien.masangkien = xetduyet.masangkien
         where sangkien.madotsangkien = ?`,
             [madotsangkien]
         );
+        console.log(rows)
         return res.render('showsangkien.ejs', {
             dataSangkien: rows,
             dataDotsangkien: datadotsangkien,
@@ -177,6 +179,7 @@ let viewSangkien = async (req, res) => {
         where sangkien.madotsangkien = ? and sangkien.matrangthai=?`,
         [madotsangkien, matrangthai]
     );
+    console.log(rows)
     return res.render('showsangkien.ejs', {
         dataSangkien: rows,
         dataDotsangkien: datadotsangkien,
@@ -390,7 +393,7 @@ let huy1Sangkien = async (req, res) => {
     return res.redirect('/quanlyduyetsangkien');
 };
 let history = async (req, res) => {
-<<<<<<< HEAD
+
     const [sangkien] = await connectDB.execute(`select sangkien.* , trangthaisangkien.* , dotsangkien.* , xetduyet.manhanvien, xetduyet.ngayxetduyet, xetduyet.lydotuchoi from sangkien 
         inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai
         inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien
@@ -399,18 +402,6 @@ let history = async (req, res) => {
         WHERE nguoithamgia.manhanvien = ?`, [req.nhanVienId]);
     return res.render('historySangkien.ejs', { dataSangkien: sangkien })
 }
-=======
-    const [sangkien] = await connectDB.execute(
-        `select * from sangkien 
-        inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai
-        inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien
-        inner join nguoithamgia on sangkien.masangkien = nguoithamgia.masangkien
-        WHERE manhanvien = ?`,
-        [req.nhanVienId]
-    );
-    return res.render('historySangkien.ejs', { dataSangkien: sangkien });
-};
->>>>>>> 9917c888b19b12ef590c00b2f7473f9b9a15d23d
 let tylevaitro = async (req, res) => {
     let { masangkien, manhanvien1, manhanvien2, tyledonggop1, tyledonggop2 } =
         req.body;
