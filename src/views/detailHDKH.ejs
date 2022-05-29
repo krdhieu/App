@@ -19,16 +19,70 @@
         <script src="/src/downloadReport.js"></script>
 
         <link rel="stylesheet" href="/css/styles.css" />
-        <title>Document</title>
+        <title>Chi Tiết Hội Đồng</title>
     </head>
     
     <body style="background-color: #808080">
+        <% if(typeof(alert)!=='undefined' ){ if(alert==='0' ){%>
+            <div
+                class="alert alert-success position-absolute alert-dismissible fade show"
+                style="z-index: 1"
+            >
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                ></button>
+                <strong>Success!</strong> Thêm thành viên thành công
+            </div>
+            <%} else
+            if(alert==='2' ){%>
+                <div
+                    class="alert alert-warning position-absolute alert-dismissible fade show"
+                    style="z-index: 1"
+                >
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                    ></button>
+                    <strong>Warning!</strong> Nhân viên không tồn tại
+                </div>
+                <%} else
+                if(alert==='3' ){%>
+                    <div
+                        class="alert alert-warning position-absolute alert-dismissible fade show"
+                        style="z-index: 1"
+                    >
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert"
+                        ></button>
+                        <strong>Warning!</strong> Nhân viên này đã là thành viên hội đồng
+                    </div>
+                    <%} else
+                    if(alert==='1' ){%>
+                        <div
+                            class="alert alert-danger position-absolute alert-dismissible fade show"
+                            style="z-index: 1"
+                        >
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert"
+                            ></button>
+                            <strong>Danger!</strong> Lỗi
+                        </div>
+                        <%}%>
+            <%}%>
+
         <%- include('navAndSidebar.ejs'); -%>
         <div class="container-fluid mt-3 row" >
             <div class="text-white col-3">Mã hội đồng: <%=detail.mahoidong%></div>
             <div class="text-white col-3">
                 Ngày thành lập : <%=
-                moment(detail.ngaythanhlap).format('MM/DD/YYYY'); %>
+                moment(detail.ngaythanhlap).format('DD/MM/YYYY'); %>
             </div>
             <div class="text-white col-3">
                 Trạng thái: <%=(detail.trangthai == '1'?'Đang trong nhiệm kỳ':
@@ -36,7 +90,7 @@
             </div>
             <% if(detail.trangthai!==1){%>
                 <div class="text-white col-3">
-                    Ngày kết thúc : <%=moment(detail.ngayketthuc).format('MM/DD/YYYY'); %>
+                    Ngày kết thúc : <%=moment(detail.ngayketthuc).format('DD/MM/YYYY'); %>
                 </div>
             <%}%>
             <div  class="text-white mt-3">Nhiệm vụ của hội đồng: </div>
@@ -83,10 +137,10 @@
                          <td hidden><%=detail.nhiemvu%></td>
                          <td hidden><%=(detail.trangthai == '1'?'Đang trong nhiệm kỳ':
                             'Đã kết thúc nhiệm kỳ')%></td>
-                            <td hidden><%=moment(detail.ngaythanhlap).format('MM/DD/YYYY'); %></td>
+                            <td hidden><%=moment(detail.ngaythanhlap).format('DD/MM/YYYY'); %></td>
                             <% if(detail.trangthai!==1){%>
                                 <td hidden>
-                                     <%=moment(detail.ngayketthuc).format('MM/DD/YYYY'); %>
+                                     <%=moment(detail.ngayketthuc).format('DD/MM/YYYY'); %>
                                 </td>
                             <%}else {%>
                                 <td hidden></td>
@@ -102,7 +156,7 @@
 
                         
         <!-- form sua thong tin giam khao -->
-                    <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tv<%=allThanhVien[i].mathanhvien%>">edit</button></td>
+                    <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tv<%=allThanhVien[i].mathanhvien%>" title="Sửa thông tin thành viên"><i class="fa-solid fa-pen"></i></button></td>
                     <div class="modal" id="tv<%=allThanhVien[i].mathanhvien%>">
                         <div class="modal-dialog">
                           <div class="modal-content">
@@ -114,8 +168,7 @@
                       
                             <!-- Modal body -->
                             <div class="modal-body" >
-                                <form action="/edit-thanhvien-hd" method="post" >
-                           
+                                <form action="/edit-thanhvien-hd" method="post" >                          
                                     <div>
                                         <label for="id">Mã thành viên</label>
                                         <input

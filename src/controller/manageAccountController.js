@@ -61,7 +61,9 @@ let createAccount = async (req, res) => {
     let data = { email, hash, quyen, idNhanVien };
     //them tai khoan
     await taikhoanService.createAccount(data);
-    return res.send('ok');
+    return res.redirect(
+        '/get-create-account?alert=' + encodeURIComponent('thanhcong')
+    );
 };
 
 // hien thi ta ca tai khoan - phan trang

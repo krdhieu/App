@@ -20,7 +20,7 @@ let getDetailSangKien = (idSangKien) => {
     return new Promise(async (resolve, reject) => {
         try {
             let [detailSangKien] = await connectDB.execute(
-                `SELECT sangkien.*, dotsangkien.tendotsangkien , trangthaisangkien.tentrangthai 
+                `SELECT sangkien.*, dotsangkien.tendotsangkien , trangthaisangkien.tentrangthai ,dotsangkien.trangthai as trangthaidotsangkien
                 FROM sangkien 
                 JOIN dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien
                 JOIN trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai where sangkien.masangkien=?`,

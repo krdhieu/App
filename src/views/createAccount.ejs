@@ -17,12 +17,14 @@
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     ></script>
         <link rel="stylesheet" href="/css/styles.css" />
-        <title>LogIn</title>
+        <title>Tạo Tài Khoản Mới</title>
     </head>
     <body class="mycolor-gray">
         
         <% if(typeof(alert)!=='undefined')  {%>
-            <div
+            
+                <% if(alert=='backspace'){ %>
+                    <div
                 class="alert alert-warning alert-dismissible position-absolute" style="z-index: 1;"
             >
                 <button
@@ -30,19 +32,57 @@
                     class="btn-close"
                     data-bs-dismiss="alert"
                 ></button>
-                <% if(alert=='backspace'){ %>
                     <strong>Warning!</strong> Mật khẩu không được chứa khoảng trắng
+                </div>
                 <%}%>
                 <% if(alert=='taikhoantontai'){ %>
+                    <div
+                    class="alert alert-warning alert-dismissible position-absolute" style="z-index: 1;"
+                >
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                    ></button>
                     <strong>Warning!</strong> Tài khoản đã tồn tại
+                    </div>  
                 <%}%>
                 <% if(alert=='nhanvienktontai'){ %>
+                    <div
+                    class="alert alert-warning alert-dismissible position-absolute" style="z-index: 1;"
+                >
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                    ></button>
                     <strong>Warning!</strong> Mã nhân viên này không tồn tại
+                    </div>
                 <%}%>
                 <% if(alert=='nhanviendacotaikhoan'){ %>
+                    <div
+                    class="alert alert-warning alert-dismissible position-absolute" style="z-index: 1;"
+                >
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                    ></button>
                     <strong>Warning!</strong> Nhân viên này đã có tài khoản
+                    </div>
                 <%}%>
-            </div>
+                <% if(alert=='thanhcong'){ %>
+                    <div
+                    class="alert alert-success alert-dismissible position-absolute" style="z-index: 1;"
+                >
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                    ></button>
+                    <strong>Success!</strong> Tạo tài khoản thành công
+                    </div>
+                <%}%>
             <%}%>
         <%- include('navAndSidebar.ejs') -%>
         <div class="container-fluid row mt-3">
@@ -92,7 +132,7 @@
 
 
                 <button type="submit" class="btn btn-primary col-6 btn-login">
-                    Create
+                    Lưu
                 </button>
             </form>
         </div>

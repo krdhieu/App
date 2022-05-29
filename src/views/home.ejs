@@ -18,7 +18,7 @@
         ></script>
         <!-- <script defer src="/src/showHideSideBar.js"></script> -->
         <link rel="stylesheet" href="/css/styles.css" />
-        <title>Home</title>
+        <title>Trang Chủ</title>
     </head>
 
     <body class="mycolor-gray">
@@ -34,8 +34,58 @@
             ></button>
             <strong>Warning!</strong> Bạn không được cấp quyền vào trang này
         </div>
+        <%}%> <% if(typeof(alert)!== 'undefined' && alert==='5' ){%>
+        <div
+            class="alert alert-warning alert-dismissible position-absolute"
+            style="z-index: 1"
+        >
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+            ></button>
+            <strong>Warning!</strong> Bạn chưa đăng ký sáng kiến trong đợt này
+            <%}%>
+        </div>
+        <% if(typeof(alert)!== 'undefined' && alert==='2' ){%>
+        <div
+            class="alert alert-warning alert-dismissible position-absolute"
+            style="z-index: 1"
+        >
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+            ></button>
+            <strong>Warning!</strong> Nhân viên đã tham gia vào sáng kiến
+        </div>
+        <%}%> <% if(typeof(alert)!== 'undefined' && alert==='3' ){%>
+        <div
+            class="alert alert-warning alert-dismissible position-absolute"
+            style="z-index: 1"
+        >
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+            ></button>
+            <strong>Warning!</strong> Đăng ký thành công, chờ xét duyệt
+        </div>
+        <%}%> <% if(typeof(alert)!== 'undefined' && alert==='4' ){%>
+        <div
+            class="alert alert-warning alert-dismissible position-absolute"
+            style="z-index: 1"
+        >
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+            ></button>
+            <strong>Warning!</strong> Chưa tới đợt đăng ký
+        </div>
         <%}%> <%- include('navAndSidebar.ejs') -%>
         <%if(typeof(dotHienTai)!=='undefined' && dotHienTai.length!==0){%>
+
         <div class="container-fluid">
             <div class="text-center text-white">
                 <div>Tên đợt: <%=dotHienTai[0].tendotsangkien%></div>

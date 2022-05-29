@@ -18,39 +18,41 @@
         ></script>
         <!-- <script defer src="/src/showHideSideBar.js"></script> -->
         <link rel="stylesheet" href="/css/styles.css" />
-        <title>Document</title>
+        <title>Thành Lập Hội Đồng</title>
     </head>
 
     <body class="mycolor-gray">
-        <%}%> <%- include('navAndSidebar.ejs') -%>
+        <% if(typeof(alert)!=='undefined' ){ if(alert==='1' ){%>
+        <div
+            class="alert alert-warning position-absolute alert-dismissible fade show"
+            style="z-index: 1"
+        >
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+            ></button>
+            <strong>Warning!</strong> Không thể thêm mới khi có Hội đồng đang
+            trong nhiệm kỳ
+        </div>
+        <%} else if(alert==='0' ){%>
+        <div
+            class="alert alert-success position-absolute alert-dismissible fade show"
+            style="z-index: 1"
+        >
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+            ></button>
+            <strong>Success!</strong> Thêm thành công
+        </div>
+        <%}%> <%}%> <%- include('navAndSidebar.ejs') -%>
         <!--/////////////////////////////////////////////////////-->
 
         <div class="container-fluid row mt-3 position-relative">
             <!-- thongbao -->
-            <% if(typeof(alert)!=='undefined' ){ if(alert==='1' ){%>
-            <div
-                class="alert alert-warning position-absolute alert-dismissible fade show"
-            >
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                ></button>
-                <strong>Warning!</strong> Không thể thêm mới khi có Hội đồng
-                đang trong nhiệm kỳ
-            </div>
-            <%} else if(alert==='0' ){%>
-            <div
-                class="alert alert-success position-absolute alert-dismissible fade show"
-            >
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                ></button>
-                <strong>Success!</strong> Thêm thành công
-            </div>
-            <%}%> <%}%>
+
             <!--///////-->
             <div class="col-12 text-white">
                 <h4>Thêm mới Hội đồng khoa học</h4>
@@ -84,11 +86,11 @@
                 <div>
                     <button
                         type="submit"
-                        class="btn btn-primary btn-lg mt-2"
+                        class="btn btn-primary mt-2"
                         ata-bs-toggle="tooltip"
                         title="Lưu"
                     >
-                        <i class="fa-solid fa-floppy-disk"></i>
+                        Save
                     </button>
                 </div>
             </form>

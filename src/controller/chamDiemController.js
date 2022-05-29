@@ -27,6 +27,10 @@ let getDetailSangKien = async (req, res) => {
     if (detailSangKien.length !== 1) {
         return res.send('khong ton tai sang kien nay');
     }
+
+    if (detailSangKien[0].trangthaidotsangkien !== 1) {
+        return res.send('Sáng kiến này trong đợt đã kết thúc');
+    }
     let nguoiThamGia = await nguoiThamGiaService.getNguoiThamGia(id);
     let thanhVienHDDaDangNhap =
         await hoiDongKhoaHocService.getThanhVienHDDaDangNhap(req.nhanVienId);
