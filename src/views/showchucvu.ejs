@@ -15,9 +15,17 @@
 
 <body>
     <%- include('navAndSidebar') -%>
-        <h1>Danh sách chức vụ</h1>
-        <button onclick="myfunc()" id="themchucvu">Thêm Chức vụ</button>
-        <div id="themmoichucvu" style="display: none;">
+        <div class="container-fluid row" style="margin-top: 10px;">
+            <div class="col-6">
+                <h1>Danh sách chức vụ</h1>
+            </div>
+            <div class="col-6">
+                <button onclick="myfunc()" class="btn btn-primary btn-lg float-end" id="themchucvu"
+                    title="Thêm chức vụ" style="height: 50px; width: 50px;"><i class="fa-solid fa-plus"></i></button>
+            </div>
+
+        </div>
+        <div class="container" id="themmoichucvu" style="display: none;">
             <form action="/addchucvu" method="post">
                 <!-- Vertical -->
                 <div class="form-group">
@@ -25,7 +33,8 @@
                     <input type="text" name="tenchucvu" maxlength="100" class="form-control" value="">
                     <label>Mô tả chức vụ</label>
                     <textarea name="motachucvu" class="form-control" id="" cols="30" rows="10"></textarea>
-                    <button type=" submit" class="btn btn-primary">Submit</button>
+                    <br>
+                    <button type=" submit" class="btn btn-primary">Xác nhận</button>
                 </div>
 
             </form>
@@ -35,11 +44,11 @@
             function myfunc() {
                 if (document.getElementById("themmoichucvu").style.display == 'none') {
                     document.getElementById("themmoichucvu").style.display = 'block';
-                    document.getElementById("themchucvu").innerHTML = "Ẩn"
+                    document.getElementById("themchucvu").title = "Ẩn chức vụ"
                 }
                 else {
                     document.getElementById("themmoichucvu").style.display = 'none';
-                    document.getElementById("themchucvu").innerHTML = "Thêm chức vụ"
+                    document.getElementById("themchucvu").ititle = "Thêm chức vụ"
                 }
             }
 
@@ -51,7 +60,7 @@
                         <th scope="col">STT</th>
                         <th scope="col">Chức vụ</th>
                         <th scope="col">Mô tả chức vụ</th>
-                        <th scope="col">Tác vụ</th>
+                        <th scope="col" width="6%">Tác vụ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,8 +76,8 @@
                             <td>
                                 <%= dataChucvu[i].motachucvu %>
                             </td>
-                            <td><a href="/quanlychucvu/sua/<%= dataChucvu[i].machucvu %>" target="_self"
-                                    title="Sửa chức vụ"><i class="fa-solid fa-pen"></a></td>
+                            <td><a href="/quanlychucvu/sua/<%= dataChucvu[i].machucvu %>" class="btn btn-primary"
+                                    target="_self" title="Sửa chức vụ"><i class="fa-solid fa-pen"></a></td>
                         </tr>
                         <% } %>
                 </tbody>

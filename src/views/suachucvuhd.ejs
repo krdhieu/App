@@ -15,21 +15,25 @@
 
 <body>
     <%- include('navAndSidebar') -%>
-        <div>
+        <div class="container">
+            <h3>Sửa chức vụ hội đồng</h3>
             <form action="/uploadchucvuhd" method="post">
 
                 <!-- Vertical -->
                 <div class="form-group">
-                    <label>id</label>
+                    <label>Mã chức vụ hội đồng</label>
                     <input type="text" name="machucvuhd" class="form-control" value="<%= dataChucvuhd.machucvuhd %>"
                         readonly>
-                    <label>Tên Phòng Ban</label>
+                    <label>Tên Chức vụ hội đồng</label>
                     <input type="text" name="tenchucvuhd" maxlength="100" class="form-control"
                         value="<%= dataChucvuhd.tenchucvuhd %>" required>
                     <label>Mô tả chức vụ hội đồng</label>
                     <textarea name="motachucvuhd" class="form-control" id="" cols="30"
                         rows="10"><%= dataChucvuhd.motachucvuhd %></textarea>
-                    <button type=" submit" class="btn btn-primary">Submit</button>
+                    <br>
+                    <a href="/quanlychucvuhd"><button type="button" class="btn btn-primary">
+                            Trở về</button></a>
+                    <button type=" submit" class="btn btn-primary float-end">Xác nhận</button>
                 </div>
 
             </form>

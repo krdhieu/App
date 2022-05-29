@@ -23,7 +23,7 @@
                         <th scope="col">STT</th>
                         <th scope="col">Xếp loại</th>
                         <th scope="col">Mô tả xếp loại</th>
-                        <th scope="col">Tác vụ</th>
+                        <th scope="col" width="6%">Tác vụ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,7 +38,8 @@
                             <td>
                                 <%= dataXeploai[i].motaxeploai %>
                             </td>
-                            <td><a href="/quanlyxeploai/sua/<%= dataXeploai[i].maxeploai %>" target="_self">Sửa</a></td>
+                            <td><a href="/quanlyxeploai/sua/<%= dataXeploai[i].maxeploai %>" class="btn btn-primary"
+                                    target="_self" title="Sửa xếp loại"><i class="fa-solid fa-pen"></a></td>
                         </tr>
                         <% } %>
                 </tbody>

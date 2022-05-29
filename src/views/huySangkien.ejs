@@ -17,12 +17,18 @@
 
 <body>
     <%- include('navAndSidebar') -%>
-        <form action="/quanlysangkien/huysangkien" method="post">
-            <input type=" text" name="masangkien" class="form-control" id="" value="<%= masangkien %>" readonly>
-            <label for=""> ly do huy</label>
-            <input type="text" class="form-control" name="lydotuchoi" value="" required>
-            <button type="submit">Xác nhận</button>
-        </form>
+        <div class="container">
+            <form action="/quanlysangkien/huysangkien" method="post">
+                <label for="">Mã sáng kiến:</label>
+                <input type=" text" name="masangkien" class="form-control" id="" value="<%= masangkien %>" readonly>
+                <label for=""> Lý do hủy:</label>
+                <textarea name="lydotuchoi" id="lydotuchoi" class="form-control" cols="30" rows="5"></textarea>
+                <br>
+                <a href="/quanlyduyetsangkien"><button type="button" class="btn btn-primary">
+                        Trở về</button></a>
+                <button type="submit" class="btn btn-primary float-end">Xác nhận</button>
+            </form>
+        </div>
 </body>
 
 </html>

@@ -14,12 +14,13 @@
 
 <body>
     <%- include('navAndSidebar') -%>
-        <div>
+        <div class="container">
+            <h3>Sửa xếp loại</h3>
             <form action="/uploadxeploai" method="post">
 
                 <!-- Vertical -->
                 <div class="form-group">
-                    <label>id</label>
+                    <label>mã xếp loại</label>
                     <input type="text" name="maxeploai" class="form-control" value="<%= dataXeploai.maxeploai %>"
                         readonly>
                     <label>Tên xếp loại</label>
@@ -28,7 +29,10 @@
                     <label for="">Mô tả xếp loại</label>
                     <textarea name="motaxeploai" class="form-control" id="" cols="30"
                         rows="10"><%= dataXeploai.motaxeploai %></textarea>
-                    <button type=" submit" class="btn btn-primary">Submit</button>
+                    <br>
+                    <a href="/quanlyxeploai"><button type="button" class="btn btn-primary">
+                            Trở về</button></a>
+                    <button type=" submit" class="btn btn-primary float-end">Xác nhận</button>
                 </div>
 
             </form>

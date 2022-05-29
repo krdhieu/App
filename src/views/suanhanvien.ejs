@@ -15,10 +15,9 @@
 
 <body>
     <%- include('navAndSidebar') -%>
-        <div>
+        <div class="container">
+            <h3>Sửa thông tin nhân viên</h3>
             <form action="/uploadnhanvien" method="post">
-
-                <!-- Vertical -->
                 <div class="form-group">
                     <!-- Mã nhân viên -->
                     <label>Mã nhân viên</label>
@@ -27,7 +26,7 @@
                     <!-- Phòng ban -->
                     <label>Phòng ban</label>
                     <br>
-                    <select name="maphongban" required>
+                    <select name="maphongban" class="form-select" required>
                         <% for (let i=0; i<dataPhongban.length;i++){ %>
                             <option value="<%=dataPhongban[i].maphongban%>">
                                 <%=dataPhongban[i].tenphongban%>
@@ -38,7 +37,7 @@
                     <!-- chức vụ -->
                     <label>Chức vụ</label>
                     <br>
-                    <select name="machucvu" required>
+                    <select name="machucvu" class="form-select" required>
                         <% for (let i=0; i<dataChucvu.length;i++){ %>
                             <option value="<%=dataChucvu[i].machucvu%>">
                                 <%=dataChucvu[i].tenchucvu%>
@@ -56,12 +55,12 @@
                         required>
                     <!-- Giới tính  -->
                     <label>Giới tính</label>
-                    <select name="gioitinh" value>
+                    <select name="gioitinh" class="form-select">
                         <option value="1">Nam</option>
                         <option value="0">Nữ</option>
                     </select>
                     <!-- Năm sinh  -->
-                    <label>Năm sinh</label>
+                    <label>Ngày sinh</label>
                     <input type="date" name="ngaysinh" class="form-control"
                         value="<%=String(moment(dataNhanvien.ngaysinh).format('YYYY-MM-DD'));%>" required>
                     <!-- Ngày vào làm  -->
@@ -70,16 +69,21 @@
                         value="<%=String(moment(dataNhanvien.ngayvaolam).format('YYYY-MM-DD'));%>" required>
                     <!-- Số điện thoại  -->
                     <label>Số điện thoại</label>
-                    <input type="number" name="sdt" class="form-control" value="<%= dataNhanvien.sdt %>" required>
+                    <input type="text" name="sdt" class="form-control" max="10" min="10" value="<%= dataNhanvien.sdt %>"
+                        required>
                     <!-- Submit -->
-                    <button type=" submit" class="btn btn-primary">Submit</button>
+                    <br>
+                    <a href="/quanlynhanvien"><button type="button" class="btn btn-primary">
+                            Trở về</button></a>
+                    <button type=" submit" class="btn btn-primary float-end">Xác nhận</button>
+                    <a href="/setnghiviec?manhanvien=<%= dataNhanvien.manhanvien %>"><button type="button"
+                            class="btn btn-primary float-end" style="margin-right: 24px; background-color: red;">
+                            Nghỉ làm</button></a>
                 </div>
             </form>
 
             <form action="/setnghiviec" method="post">
-                <input type="text" name="manhanvien" class="form-control" value="<%= dataNhanvien.manhanvien %>"
-                    readonly hidden>
-                <button type="submit">Nghỉ làm</button>
+
             </form>
         </div>
 </body>

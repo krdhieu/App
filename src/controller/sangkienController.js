@@ -16,6 +16,12 @@ let createSangkien = async (req, res) => {
     if (dot.length === 0) {
         return res.redirect('/home?alerts=' + encodeURIComponent('chuamodotdangky'))
     }
+    const [checknguoithamgia] = await connectDB.execute(`select count(*) as soluong from nguoithamgia 
+        inner join sangkien on nguoithamgia.masangkien = sangkien.masangkien 
+        where manhanvien = ? and (matrangthai =? or matrangthai =?)`, [req.nhanVienId, 1, 2]);
+    if (checknguoithamgia[0].soluong !== 0) {
+        return res.redirect('/chitietsangkien')
+    }
     let { alert } = req.query;
     let { manhanvien } = req.query;
     let [nhanvien] = []
@@ -98,10 +104,10 @@ let viewSangkien = async (req, res) => {
         where sangkien.madotsangkien = ?`, [madotsangkien]);
         return res.render('showsangkien.ejs', { dataSangkien: rows, dataDotsangkien: datadotsangkien, dataTrangthai: datatrangthai });
     }
-    const [rows] = await connectDB.execute(`SELECT * FROM sangkien 
+    const [rows] = await connectDB.execute(`SELECT sangkien.* , trangthaisangkien.* , dotsangkien.* , xetduyet.manhanvien, xetduyet.ngayxetduyet, xetduyet.lydotuchoi FROM sangkien 
         inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai
         inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien 
-        inner join xetduyet on sangkien.masangkien = xetduyet.masangkien
+        LEFT JOIN xetduyet on sangkien.masangkien = xetduyet.masangkien
         where sangkien.madotsangkien = ? and sangkien.matrangthai=?`, [madotsangkien, matrangthai]);
     return res.render('showsangkien.ejs', { dataSangkien: rows, dataDotsangkien: datadotsangkien, dataTrangthai: datatrangthai });
 }
@@ -219,6 +225,23 @@ let duyetSangkien = async (req, res) => {
     await connectDB.execute('insert into xetduyet(manhanvien,masangkien,ngayxetduyet) values (?,?,?) ', [1, masangkien, currentDate])
     return res.redirect('/quanlyduyetsangkien');
 }
+let chitietduyetSangkien = async (req, res) => {
+    let masangkien = req.query.masangkien;
+    const [sangkien] = await connectDB.execute('SELECT * FROM sangkien where masangkien = ?', [req.query.masangkien]);
+    if (sangkien[0]) {
+        const [thanhvien] = await connectDB.execute('SELECT * FROM nguoithamgia inner join nhanvien on nguoithamgia.manhanvien = nhanvien.manhanvien where masangkien = ?', [sangkien[0].masangkien]);
+        if (thanhvien[0].vaitro == 0) {
+            return res.render('chitietsangkienduyet.ejs', {
+                dataSangkien: sangkien[0], dataChutri: thanhvien[0], dataTroly: thanhvien[1]
+            });
+        }
+        else {
+            return res.render('chitietsangkienduyet.ejs', {
+                dataSangkien: sangkien[0], dataChutri: thanhvien[1], dataTroly: thanhvien[0]
+            });
+        }
+    }
+}
 let huySangkien = async (req, res) => {
     let masangkien = req.params.masangkien;
     return res.render('huySangkien.ejs', { masangkien: masangkien });
@@ -238,7 +261,16 @@ let history = async (req, res) => {
         WHERE manhanvien = ?`, [req.nhanVienId]);
     return res.render('historySangkien.ejs', { dataSangkien: sangkien })
 }
+let tylevaitro = async (req, res) => {
+    let { masangkien, manhanvien1, manhanvien2, tyledonggop1, tyledonggop2 } = req.body;
+    await connectDB.execute('update nguoithamgia set tyledonggop = ? where masangkien=? and manhanvien=?', [tyledonggop1, masangkien, manhanvien1]);
+    if (manhanvien2) {
+        await connectDB.execute('update nguoithamgia set tyledonggop = ? where masangkien=? and manhanvien=?', [tyledonggop2, masangkien, manhanvien2]);
+    }
+    return res.redirect('/chitietsangkien')
+}
 module.exports = {
     addSangkien, createSangkien, viewSangkien, UploadProfileFile, detailSangkien, duyetSangkien,
-    huySangkien, huy1Sangkien, quanlyduyetSangkien, history, chitietSangkien
+    huySangkien, huy1Sangkien, quanlyduyetSangkien, history, chitietSangkien, chitietduyetSangkien,
+    tylevaitro
 }

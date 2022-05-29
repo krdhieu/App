@@ -16,7 +16,7 @@
 <body>
     <%- include('navAndSidebar') -%>
         <div>
-            <h1>Danh sách sáng kiến</h1>
+            <h1>Danh sách sáng kiến cần duyệt</h1>
             <table class="table">
                 <thead>
                     <tr>
@@ -29,7 +29,7 @@
                         <!-- <th scope="col">Đợt</th> -->
                         <th scope="col">Trạng thái</th>
                         <!-- <th scope="col">Đính kèm</th> -->
-                        <th scope="col">Tác vụ</th>
+                        <th scope="col" width="6%">Tác vụ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,10 +53,15 @@
                             <td>
                                 <%= dataSangkien[i].tentrangthai %>
                             </td>
-                            <td><a href="/quanlysangkien/duyet/<%= dataSangkien[i].masangkien %>" target="_self"
-                                    title="Duyệt sáng kiến"><i class="fa-solid fa-pen-to-square"></i></a>
-                                <a href="/quanlysangkien/huy/<%= dataSangkien[i].masangkien %>" target="_self"
-                                    title="Hủy sáng kiến"><i class="fa-solid fa-ban"></i></a>
+                            <td>
+                                <!-- <a href="/quanlysangkien/duyet/<%= dataSangkien[i].masangkien %>"
+                                    class="btn btn-primary" target="_self" title="Duyệt sáng kiến"><i
+                                        class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="/quanlysangkien/huy/<%= dataSangkien[i].masangkien %>" class="btn btn-primary"
+                                    target="_self" title="Hủy sáng kiến"><i class="fa-solid fa-ban"></i></a> -->
+                                <a href="/chitietduyetsangkien?masangkien=<%= dataSangkien[i].masangkien %>"
+                                    class="btn btn-primary" target="_self" title="Chi tiết sáng kiến"><i
+                                        class="fa-solid fa-file-alt"></i></a>
                             </td>
                         </tr>
                         <% } %>

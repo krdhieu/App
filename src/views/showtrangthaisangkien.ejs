@@ -23,7 +23,7 @@
                         <th scope="col">STT</th>
                         <th scope="col">Trạng thái</th>
                         <th scope="col">Mô tả trạng thái</th>
-                        <th scope="col">Tác vụ</th>
+                        <th scope="col" width="6%">Tác vụ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,7 +39,8 @@
                                 <%= dataTrangthaisangkien[i].motatrangthai %>
                             </td>
                             <td><a href="/quanlytrangthaisangkien/sua/<%= dataTrangthaisangkien[i].matrangthai %>"
-                                    target="_self" title="Sửa trạng thái sáng kiến"><i class="fa-solid fa-pen"></a></td>
+                                    class="btn btn-primary" target="_self" title="Sửa trạng thái sáng kiến"><i
+                                        class="fa-solid fa-pen"></a></td>
                         </tr>
                         <% } %>
                 </tbody>

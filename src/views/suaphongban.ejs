@@ -15,7 +15,8 @@
 
 <body>
     <%- include('navAndSidebar') -%>
-        <div>
+        <div class="container">
+            <h3>Sửa phòng ban</h3>
             <form action="/uploadphongban" method="post">
                 <!-- Vertical -->
                 <div class="form-group">
@@ -31,8 +32,12 @@
                     <label>Mô tả phòng ban</label>
                     <textarea name="motaphongban" class="form-control" id="" cols="30"
                         rows="10"><%= dataPhongban.motaphongban %></textarea>
-                    <button type=" submit" class="btn btn-primary">
-                        Submit</button>
+                    <br>
+                    <a href="/quanlyphongban"><button type="button" class="btn btn-primary">
+                            Trở về</button></a>
+                    <button type=" submit" class="btn btn-primary float-end">
+                        Xác nhận</button>
+
                 </div>
             </form>
         </div>

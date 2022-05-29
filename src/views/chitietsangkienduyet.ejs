@@ -10,7 +10,7 @@
     <!-- <script defer src="/src/showHideSideBar.js"></script> -->
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/scss/styles.scss" />
-    <title>Chi tiet sang kien</title>
+    <title>Chi tiết sáng kiến duyệt</title>
 </head>
 
 <body>
@@ -23,74 +23,57 @@
                     <label>Tên sáng kiến:</label>
                     <input type="text" name="tensangkien" class="form-control" value="<%= dataSangkien.tensangkien %>"
                         readonly />
-                    <!-- <label for="">Người chủ trì</label>
-            <input type="text" name="chutri" class="form-control" value="<% %>">
-            <label for="">Người trợ lý</label>
-            <input type="text" name="troly" class="form-control" value="<% %>"> -->
                     <label for="">Mục tiêu:</label>
                     <input type="text" name="muctieu" class="form-control" value="<%= dataSangkien.muctieu %>"
                         readonly />
                     <label for="">Nội dung:</label>
-                    <textarea name="noidung" id="" class="form-control" readonly cols="30" rows="10">
-                    <%= dataSangkien.noidung %>
-                    </textarea>
+                    <textarea name="noidung" id="" class="form-control" readonly cols="30"
+                        rows="10"><%= dataSangkien.noidung %></textarea>
                     <label for="">Lợi ích:</label>
                     <input type="text" name="loiich" class="form-control" value="<%= dataSangkien.loiich %>" readonly />
                     <label for="">Đối tượng:</label>
                     <input type="text" name="doituong" class="form-control" value="<%= dataSangkien.doituong %>"
                         readonly />
                 </div>
-                <!-- gui file  -->
-                <div class="col-sm-4" style="margin-top: 40px;">
-                    <div class="uploadfile">
-                        <form method="post" action="/upload-file" enctype="multipart/form-data">
-                            <div>
-                                <h4 for="">Upload file PDF : </h4>
-                                <input type="file" name="profile_file" />
-                            </div>
-                            <br>
-                            <div>
-                                <button type="submit" class="btn btn-primary">Lưu file</button>
-                            </div>
-                        </form>
-                    </div>
+                <div class="col-sm-4">
+                    <br>
                     <br>
                     <!-- nguoi tham gia -->
                     <div>
-                        <form action="/settylevaitro" method="post">
-                            <!-- mã sáng kiến -->
-                            <input type="text" name="masangkien" value="<%= dataSangkien.masangkien %>" readonly hidden>
-                            <!-- người chủ trì -->
+                        <form action="">
                             <h3>Người chủ trì</h3>
                             <label for="">Mã nhân viên</label>
-                            <input type="text" name="manhanvien1" class="form-control"
+                            <input type="text" name="manhanvien" class="form-control"
                                 value="<%= dataChutri.manhanvien %>" readonly />
                             <label for="">Tên nhân viên</label>
-                            <input type="text" name="tennhanvien1" class="form-control"
+                            <input type="text" name="tennhanvien" class="form-control"
                                 value="<%= dataChutri.tennhanvien %>" readonly />
                             <label for="">Tỷ lệ đóng góp</label>
-                            <input type="text" name="tyledonggop1" min="0" max="100" class="form-control"
-                                value="<%= dataChutri.tyledonggop %>%" />
-                            <!-- phụ tá nếu có -->
+                            <input type="number" name="tyledonggop" min="0" max="100" class="form-control"
+                                value="<%= dataChutri.tyledonggop %>" />
                             <%if(JSON.stringify(dataTroly)!=null) { %>
                                 <h3>Trợ lý</h3>
                                 <label for="">Mã nhân viên</label>
-                                <input type="text" name="manhanvien2" class="form-control"
-                                    value="<%= dataTroly.manhanvien %>" readonly />
+                                <input type="text" name="id" class="form-control" value="<%= dataTroly.manhanvien %>"
+                                    readonly />
                                 <label for="">Tên nhân viên</label>
-                                <input type="text" name="tennhanvien2" class="form-control"
+                                <input type="text" name="tennhanvien" class="form-control"
                                     value="<%= dataTroly.tennhanvien %>" readonly />
                                 <label for="">Tỷ lệ đóng góp</label>
-                                <input type="text" name="tyledonggop2" min="0" max="100" class="form-control"
-                                    value="<%= dataTroly.tyledonggop %>%" />
+                                <input type="text" name="tyledonggop" min="0" max="100" class="form-control"
+                                    value="<%= dataTroly.tyledonggop %>" />
                                 <% } %>
-                                    <!-- nút thêm tỷ lệ vai trờ -->
-                                    <br>
-                                    <button type="submit" class="btn btn-primary">Xác nhận</button>
                         </form>
                     </div>
-                    <!-- hết người tham gia -->
-                    <!-- <a href="">Xem đánh giá</a> -->
+                    <!-- end người tham gia -->
+                    <br>
+                    <br>
+                    <div>
+                        <a href="/quanlysangkien/duyet/<%= dataSangkien.masangkien %>" class="btn btn-primary"
+                            target="_self" title="Duyệt sáng kiến">Duyệt sáng kiến</a>
+                        <a href="/quanlysangkien/huy/<%= dataSangkien.masangkien %>" class="btn btn-primary"
+                            target="_self" title="Hủy sáng kiến" style="background-color: red;">Từ chối</a>
+                    </div>
                 </div>
             </div>
         </div>

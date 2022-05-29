@@ -17,27 +17,38 @@
     <%- include('navAndSidebar') -%>
         <div>
             <h1>Danh sách sáng kiến</h1>
-            <form action="/quanlysangkien" method="get">
-                <label for="">Đợt sáng kiến: </label>
-                <select name="dotsangkien" id="">
-                    <option value=""></option>
-                    <% for (let i=0; i<dataDotsangkien.length;i++){ %>
-                        <option value="<%=dataDotsangkien[i].madotsangkien%>">
-                            <%=dataDotsangkien[i].tendotsangkien%>
-                        </option>
-                        <% } %>
-                </select>
-                <label for="">Trạng thái sáng kiến: </label>
-                <select name="trangthai" id="">
-                    <option value=""></option>
-                    <% for (let i=0; i<dataTrangthai.length;i++){ %>
-                        <option value="<%=dataTrangthai[i].matrangthai%>">
-                            <%=dataTrangthai[i].tentrangthai%>
-                        </option>
-                        <% } %>
-                </select>
-                <button type="submit" class="submit"> search</button>
-            </form>
+            <br>
+            <div id="search" class="container-fluid">
+                <form action="/quanlysangkien" method="get">
+                    <div class="row">
+                        <div class="col-3">
+                            <select name="dotsangkien" class="form-select" id="">
+                                <option value="" selected>Chọn đợt sáng kiến</option>
+                                <% for (let i=0; i<dataDotsangkien.length;i++){ %>
+                                    <option value="<%=dataDotsangkien[i].madotsangkien%>">
+                                        <%=dataDotsangkien[i].tendotsangkien%>
+                                    </option>
+                                    <% } %>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <select name="trangthai" class="form-select" id="">
+                                <option value="" selected>Chọn trạng thái sáng kiến</option>
+                                <% for (let i=0; i<dataTrangthai.length;i++){ %>
+                                    <option value="<%=dataTrangthai[i].matrangthai%>">
+                                        <%=dataTrangthai[i].tentrangthai%>
+                                    </option>
+                                    <% } %>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <button type="submit" class="submit btn btn-primary">Tìm kiếm</button>
+                        </div>
+                        <div class="col-3"></div>
+                    </div>
+                </form>
+            </div>
+            <br>
             <table class="table" id="headerTable">
                 <thead>
                     <tr>
@@ -47,10 +58,10 @@
                         <!-- <th scope="col">Nội dung</th> -->
                         <th scope="col">Lợi ích</th>
                         <th scope="col">Đối tượng</th>
-                        <th scope="col">Đợt</th>
-                        <th scope="col">Trạng thái</th>
+                        <th scope="col" width="8%">Đợt</th>
+                        <th scope="col" width="8%">Trạng thái</th>
                         <!-- <th scope="col">Đính kèm</th> -->
-                        <th scope="col" width="100px">Tác vụ</th>
+                        <th scope="col" width="6%">Tác vụ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,6 +69,7 @@
                         <tr>
                             <th scope="row">
                                 <%= i +1 %>
+                                    <%= dataSangkien[i].masangkien %>
                             </th>
                             <td>
                                 <%= dataSangkien[i].tensangkien %>
@@ -82,7 +94,8 @@
                                     <!-- <a href="/chitietdiem-xeploai-nhanxet?masangkien=<%= dataSangkien[i].masangkien %>"
                                     target="_self" title="Chi tiết sáng kiến"><i class="fa-solid fa-file-alt"></a> -->
                                     <a href="/detailsangkien?masangkien=<%= dataSangkien[i].masangkien %>"
-                                        title="Chi tiết sáng kiến"><i class="fa-solid fa-file-alt"></i></a>
+                                        class="btn btn-primary" title="Chi tiết sáng kiến"><i
+                                            class="fa-solid fa-file-alt"></i></a>
                                     <% } else {%>
                                         <button type="button" onclick="myfunc()">Lý do</button>
                                         <%}%>
@@ -97,7 +110,7 @@
                 </tbody>
             </table>
             <iframe id="txtArea1" style="display:none"></iframe>
-            <button id="btnExport" onclick="fnExcelReport();"> EXPORT </button>
+            <button id="btnExport" class="btn btn-primary" onclick="fnExcelReport();"> EXPORT </button>
         </div>
         <script defer src="/src/downloadReport.js">
         </script>

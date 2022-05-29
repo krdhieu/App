@@ -26,6 +26,7 @@ import connectDB from '../configs/connectDB';
 
 const router = express.Router();
 
+// luu tru file tren may
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, appRoot + '/src/files');
@@ -42,12 +43,12 @@ const storage = multer.diskStorage({
         cb(
             null,
             'sangkien-' +
-                sangkien[0].masangkien +
-                path.extname(file.originalname)
+            sangkien[0].masangkien +
+            path.extname(file.originalname)
         );
     },
 });
-
+// check duoi file
 const Filter = function (req, file, cb) {
     // Accept file only
     if (!file.originalname.match(/\.(PDF|pdf)$/)) {
@@ -64,16 +65,19 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAdmin,
         phongbanController.viewPhongBan
     ); ////chinh
+    // bang sua phong ban
     router.get(
         '/quanlyphongban/sua/:maphongban',
         verifyAccessToken.verifyAccessTokenAdmin,
         phongbanController.editPhongBan
     );
+    // sua phong ban csdl
     router.post(
         '/uploadphongban',
         verifyAccessToken.verifyAccessTokenAdmin,
         phongbanController.uploadPhongban
     );
+    // them phong ban csdl
     router.post(
         '/addphongban',
         verifyAccessToken.verifyAccessTokenAdmin,
@@ -90,11 +94,13 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAdmin,
         chucvuController.editChucvu
     );
+    // sua chuc vu csdl
     router.post(
         '/uploadchucvu',
         verifyAccessToken.verifyAccessTokenAdmin,
         chucvuController.uploadChucvu
     );
+    //them chuc vu csdl
     router.post(
         '/addchucvu',
         verifyAccessToken.verifyAccessTokenAdmin,
@@ -111,11 +117,13 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAdmin,
         chucvuhdController.editChucvuhd
     );
+    // sua chuc vu hoi dong csdl
     router.post(
         '/uploadchucvuhd',
         verifyAccessToken.verifyAccessTokenAdmin,
         chucvuhdController.uploadChucvuhd
     );
+    // thêm chức vụ hội đồng csdl
     router.post(
         '/addchucvuhd',
         verifyAccessToken.verifyAccessTokenAdmin,
@@ -127,11 +135,13 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAdmin,
         xeploaiController.viewXeploai
     ); //chinh
+    /// bảng sửa xếp loại
     router.get(
         '/quanlyxeploai/sua/:maxeploai',
         verifyAccessToken.verifyAccessTokenAdmin,
         xeploaiController.editXeploai
     );
+    // sửa xếp loại csdl
     router.post(
         '/uploadxeploai',
         verifyAccessToken.verifyAccessTokenAdmin,
@@ -145,11 +155,13 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAdmin,
         trangthaisangkienController.viewTrangthaisangkien
     ); //chinh
+    // bảng sửa trạng thái sáng kiến
     router.get(
         '/quanlytrangthaisangkien/sua/:matrangthai',
         verifyAccessToken.verifyAccessTokenAdmin,
         trangthaisangkienController.editTrangthaisangkien
     );
+    // sửa trạng thái sáng kien csdl
     router.post(
         '/uploadtrangthaisangkien',
         verifyAccessToken.verifyAccessTokenAdmin,
@@ -167,41 +179,48 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAdmin,
         nhanvienController.viewNhanvien
     ); //chinh
+    // sửa thông tin nhân viên admin
     router.get(
         '/quanlynhanvien/sua/:manhanvien',
         verifyAccessToken.verifyAccessTokenAdmin,
         nhanvienController.editNhanvien
     );
+    // sửa thông tin nhân viên admin csdl
     router.post(
         '/uploadnhanvien',
         verifyAccessToken.verifyAccessTokenAdmin,
         nhanvienController.uploadNhanvien
     );
+    // thêm nhân viên csdl
     router.post(
         '/addnhanvien',
         verifyAccessToken.verifyAccessTokenAdmin,
         nhanvienController.addNhanvien
     );
+    // router.get(
+    //     '/quanlynhanvien',
+    //     verifyAccessToken.verifyAccessTokenAdmin,
+    //     nhanvienController.viewNhanvien
+    // );
+    // chuyển trạng thái nhân viên sang nghỉ việc
     router.get(
-        '/quanlynhanvien',
-        verifyAccessToken.verifyAccessTokenAdmin,
-        nhanvienController.viewNhanvien
-    );
-    router.post(
         '/setnghiviec',
         verifyAccessToken.verifyAccessTokenAdmin,
         nhanvienController.nghiviecNhanvien
     );
+    // hiện thông tin nhân viết mức cá nhân
     router.get(
         '/thongtincanhan',
         verifyAccessToken.verifyAccessTokenMiddleware,
         nhanvienController.thongtinNhanvien
     );
+    // sửa thông tin nhân viên
     router.post(
         '/suanhanvien-user',
         verifyAccessToken.verifyAccessTokenMiddleware,
         nhanvienController.suaNhanvienuser
     );
+    // sửa thông tin nhân viên mức nhân viên
     router.post(
         '/uploadnhanvien-user',
         verifyAccessToken.verifyAccessTokenMiddleware,
@@ -215,35 +234,52 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAdmin,
         sangkienController.viewSangkien
     );
+    // duyệt sáng kiên
     router.get(
         '/quanlyduyetsangkien',
         verifyAccessToken.verifyAccessTokenTruongPhong,
         sangkienController.quanlyduyetSangkien
     );
+    // chi tiet duyet sang kien
+    router.get('/chitietduyetsangkien',
+        verifyAccessToken.verifyAccessTokenTruongPhong,
+        sangkienController.chitietduyetSangkien
+    );
+    // xet duyet sang kien
     router.get(
         '/quanlysangkien/duyet/:masangkien',
         verifyAccessToken.verifyAccessTokenTruongPhong,
         sangkienController.duyetSangkien
     );
+    // ly do huy sang kien
     router.get(
         '/quanlysangkien/huy/:masangkien',
         verifyAccessToken.verifyAccessTokenTruongPhong,
         sangkienController.huySangkien
     );
+    // huy sang kien
     router.post(
         '/quanlysangkien/huysangkien',
         verifyAccessToken.verifyAccessTokenTruongPhong,
         sangkienController.huy1Sangkien
     );
+    // them sang kien vao csdl
     router.post(
         '/addsangkien',
         verifyAccessToken.verifyAccessTokenNhanVien,
         sangkienController.addSangkien
     );
+    // bang them sang kien
     router.get(
         '/create-sangkien',
         verifyAccessToken.verifyAccessTokenNhanVien,
         sangkienController.createSangkien
+    );
+    // thêm tỷ lệ vai trò vào sáng kiến
+    router.post(
+        '/settylevaitro',
+        verifyAccessToken.verifyAccessTokenNhanVien,
+        sangkienController.tylevaitro
     );
     //chi tiet sang kien dang thuc hien
     router.get(
@@ -251,7 +287,9 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenNhanVien,
         sangkienController.detailSangkien
     );
+    // chi tiet sang kien admin
     router.get('/detailsangkien', verifyAccessToken.verifyAccessTokenNhanVien, sangkienController.chitietSangkien)
+    // nhan vien tien hanh upload file
     router.post(
         '/upload-file',
         verifyAccessToken.verifyAccessTokenNhanVien,
@@ -276,16 +314,19 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAdmin,
         dotsangkienController.addDotsangkien
     );
+    // bang sua dot sang kien
     router.get(
         '/editdotsangkien',
         verifyAccessToken.verifyAccessTokenAdmin,
         dotsangkienController.suaDotsangkien
     );
+    // sua dot sang kien voi csdl
     router.post(
         '/uploaddotsangkien',
         verifyAccessToken.verifyAccessTokenAdmin,
         dotsangkienController.uploadDotsangkien
     );
+    // ket thuc dot sang kien hien tai
     router.get(
         '/ketthucdot',
         verifyAccessToken.verifyAccessTokenAdmin,

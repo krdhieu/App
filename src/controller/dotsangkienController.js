@@ -10,7 +10,7 @@ let viewDotsangkien = async (req, res) => {
 let addDotsangkien = async (req, res) => {
     let { tendotsangkien, ngaybatdau, ngayketthuc, ngaydungdangky, hannop } = req.body;
     if (!tendotsangkien || !ngaybatdau || !ngayketthuc || !ngaydungdangky || !hannop) {
-        res.status(200).send('vui lòng điền đủ thông tin');
+        return res.status(200).send('vui lòng điền đủ thông tin <a href="/quanlydotsangkien">Trở về</a> ');
     }
     await connectDB.execute('INSERT INTO `dotsangkien`(tendotsangkien, ngaybatdau,ngayketthuc,ngaydungdangky,hannop) VALUES (? ,?, ? ,? ,?)',
         [tendotsangkien, ngaybatdau, ngayketthuc, ngaydungdangky, hannop]);

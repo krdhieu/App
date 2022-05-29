@@ -15,8 +15,8 @@
 
 <body>
     <%- include('navAndSidebar') -%>
-        <div>
-            <h1>Chỉnh sửa đợt sáng kiến</h1>
+        <div class="container">
+            <h3>Chỉnh sửa đợt sáng kiến</h3>
             <form action="/uploaddotsangkien" method="post">
                 <div class="form-group">
                     <label>Mã đợt sáng kiến</label>
@@ -38,11 +38,17 @@
                     <input type="date" name="hannop" class="form-control"
                         value="<%= moment(dataDotsangkien.hannop).format('YYYY-MM-DD') %>" required>
                     <!-- submit -->
-                    <button type=" submit" class="btn btn-primary">Submit</button>
+                    <br>
+                    <a href="/quanlydotsangkien"><button type="button" class="btn btn-primary">
+                            Trở về</button></a>
+                    <button type=" submit" class="btn btn-primary float-end">Xác nhận</button>
+                    <a href="/ketthucdot"><button type="button" class="btn btn-primary float-end"
+                            style="background-color: red; margin-right: 20px;">
+                            Kết thúc đợt</button></a>
                 </div>
             </form>
-            <form action="/ketthucdot" method="get">
-                <button type="submit">Kết thúc đợt</button>
+            <form action="" method="get">
+                <button type="submit"></button>
             </form>
         </div>
 </body>

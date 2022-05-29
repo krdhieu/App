@@ -30,9 +30,8 @@
                     <input type="text" name="muctieu" class="form-control" value="<%= dataSangkien.muctieu %>"
                         readonly />
                     <label for="">Nội dung</label>
-                    <textarea name="noidung" id="" class="form-control" readonly cols="30" rows="10">
-                    <%= dataSangkien.noidung %>
-                    </textarea>
+                    <textarea name="noidung" id="" class="form-control" readonly cols="30"
+                        rows="10"><%= dataSangkien.noidung %></textarea>
                     <label for="">Lợi ích</label>
                     <input type="text" name="loiich" class="form-control" value="<%= dataSangkien.loiich %>" readonly />
                     <label for="">Đối tượng</label>
@@ -156,7 +155,7 @@
                         </table>
                     </div>
                     <div class="container-fluid mt-3 row">
-                        </table> -->
+                        </table>
                         <% for(let i=0;i<allChiTietDiem.length;i++){%>
                             <div class="card col m-3 bg-dark text-white">
                                 <div class="card-body">
