@@ -17,9 +17,7 @@ let createSangkien = async (req, res) => {
         [1]
     );
     if (dot.length === 0) {
-        return res.redirect(
-            '/home?alerts=' + encodeURIComponent('chuamodotdangky')
-        );
+        return res.redirect('/home?alert=' + encodeURIComponent('4'));
     }
     const [checknguoithamgia] = await connectDB.execute(
         `select count(*) as soluong from nguoithamgia 
@@ -329,6 +327,7 @@ let chitietSangkien = async (req, res) => {
 let duyetSangkien = async (req, res) => {
     let masangkien = req.params.masangkien;
     let currentDate = moment().utcOffset('+0700').format('YYYY-MM-DD');
+
     await connectDB.execute(
         'update sangkien set matrangthai = ? where masangkien = ?',
         [2, masangkien]
@@ -337,6 +336,7 @@ let duyetSangkien = async (req, res) => {
         'insert into xetduyet(manhanvien,masangkien,ngayxetduyet) values (?,?,?) ',
         [req.nhanVienId, masangkien, currentDate]
     );
+
     return res.redirect('/quanlyduyetsangkien');
 };
 let chitietduyetSangkien = async (req, res) => {
@@ -345,6 +345,7 @@ let chitietduyetSangkien = async (req, res) => {
         'SELECT * FROM sangkien where masangkien = ?',
         [req.query.masangkien]
     );
+
     if (sangkien[0]) {
         const [thanhvien] = await connectDB.execute(
             'SELECT * FROM nguoithamgia inner join nhanvien on nguoithamgia.manhanvien = nhanvien.manhanvien where masangkien = ?',
@@ -372,14 +373,16 @@ let huySangkien = async (req, res) => {
 let huy1Sangkien = async (req, res) => {
     let { masangkien, lydotuchoi } = req.body;
     let currentDate = moment().utcOffset('+0700').format('YYYY-MM-DD');
+
     await connectDB.execute(
         'update sangkien set matrangthai = ? where masangkien = ?',
         [4, masangkien]
     );
     await connectDB.execute(
         'insert into xetduyet(manhanvien,masangkien,ngayxetduyet,lydotuchoi) values (?,?,?,?) ',
-        [res.nhanVienId, masangkien, currentDate, lydotuchoi]
+        [req.nhanVienId, masangkien, currentDate, lydotuchoi]
     );
+
     return res.redirect('/quanlyduyetsangkien');
 };
 let history = async (req, res) => {
