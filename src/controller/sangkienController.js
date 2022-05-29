@@ -393,15 +393,29 @@ let huy1Sangkien = async (req, res) => {
     return res.redirect('/quanlyduyetsangkien');
 };
 let history = async (req, res) => {
+<<<<<<< HEAD
 
     const [sangkien] = await connectDB.execute(`select sangkien.* , trangthaisangkien.* , dotsangkien.* , xetduyet.manhanvien, xetduyet.ngayxetduyet, xetduyet.lydotuchoi from sangkien 
+=======
+    const [sangkien] = await connectDB.execute(
+        `select sangkien.* , trangthaisangkien.* , dotsangkien.* , xetduyet.manhanvien, xetduyet.ngayxetduyet, xetduyet.lydotuchoi from sangkien 
+>>>>>>> 30cd4d41d4942e9d72a7fa9d99c6013718116dac
         inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai
         inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien
         inner join nguoithamgia on sangkien.masangkien = nguoithamgia.masangkien
         LEFT JOIN xetduyet on sangkien.masangkien = xetduyet.masangkien
+<<<<<<< HEAD
         WHERE nguoithamgia.manhanvien = ?`, [req.nhanVienId]);
     return res.render('historySangkien.ejs', { dataSangkien: sangkien })
 }
+=======
+        WHERE nguoithamgia.manhanvien = ?`,
+        [req.nhanVienId]
+    );
+    return res.render('historySangkien.ejs', { dataSangkien: sangkien });
+};
+
+>>>>>>> 30cd4d41d4942e9d72a7fa9d99c6013718116dac
 let tylevaitro = async (req, res) => {
     let { masangkien, manhanvien1, manhanvien2, tyledonggop1, tyledonggop2 } =
         req.body;
