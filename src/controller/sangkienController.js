@@ -243,36 +243,27 @@ let UploadProfileFile = async (req, res) => {
     }
 };
 let detailSangkien = async (req, res) => {
-    const [nguoithamgia] = await connectDB.execute(
-        'SELECT * FROM nguoithamgia where manhanvien = ?',
-        [req.nhanVienId]
-    );
-    if (nguoithamgia[0]) {
-        const [sangkien] = await connectDB.execute(
-            'SELECT * FROM sangkien where masangkien = ? and matrangthai=?',
-            [nguoithamgia[0].masangkien, 2]
+    const [sangkien] = await connectDB.execute(
+        `SELECT * FROM sangkien inner join nguoithamgia on nguoithamgia.masangkien = sangkien.masangkien where manhanvien=? and matrangthai=?`,
+        [req.nhanVienId, 2])
+    if (sangkien[0]) {
+        let masangkien = sangkien[0].masangkien;
+        const [thanhvien] = await connectDB.execute(
+            'SELECT * FROM nguoithamgia inner join nhanvien on nguoithamgia.manhanvien = nhanvien.manhanvien where masangkien = ?',
+            [masangkien]
         );
-        if (sangkien[0]) {
-            let masangkien = sangkien[0].masangkien;
-            const [thanhvien] = await connectDB.execute(
-                'SELECT * FROM nguoithamgia inner join nhanvien on nguoithamgia.manhanvien = nhanvien.manhanvien where masangkien = ?',
-                [masangkien]
-            );
-            if (thanhvien[0].vaitro == 0) {
-                return res.render('chitietsangkien.ejs', {
-                    dataSangkien: sangkien[0],
-                    dataChutri: thanhvien[0],
-                    dataTroly: thanhvien[1],
-                });
-            } else {
-                return res.render('chitietsangkien.ejs', {
-                    dataSangkien: sangkien[0],
-                    dataChutri: thanhvien[1],
-                    dataTroly: thanhvien[0],
-                });
-            }
+        if (thanhvien[0].vaitro == 0) {
+            return res.render('chitietsangkien.ejs', {
+                dataSangkien: sangkien[0],
+                dataChutri: thanhvien[0],
+                dataTroly: thanhvien[1],
+            });
         } else {
-            return res.redirect('/home?alert=' + encodeURIComponent('5'));
+            return res.render('chitietsangkien.ejs', {
+                dataSangkien: sangkien[0],
+                dataChutri: thanhvien[1],
+                dataTroly: thanhvien[0],
+            });
         }
     } else {
         return res.redirect('/home?alert=' + encodeURIComponent('5'));
