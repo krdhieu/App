@@ -249,11 +249,13 @@ let detailSangkien = async (req, res) => {
         'SELECT * FROM nguoithamgia where manhanvien = ?',
         [req.nhanVienId]
     );
+    console.log(nguoithamgia[0]);
     if (nguoithamgia[0]) {
         const [sangkien] = await connectDB.execute(
             'SELECT * FROM sangkien where masangkien = ? and matrangthai=?',
             [nguoithamgia[0].masangkien, 2]
         );
+
         if (sangkien[0]) {
             let masangkien = sangkien[0].masangkien;
             const [thanhvien] = await connectDB.execute(
