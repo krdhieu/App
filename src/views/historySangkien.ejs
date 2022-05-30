@@ -65,8 +65,43 @@
                                         class="btn btn-primary" title="Chi tiết sáng kiến"><i
                                             class="fa-solid fa-file-alt"></i></a>
                                     <% } else {%>
-                                        <button type="button" onclick="myfunc()">Lý do</button>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#huymodal"
+                                            data-bs-whatever="<%= dataSangkien[i].lydotuchoi%>">
+                                            Lý do </button>
                                         <%}%>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="huymodal" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Lý
+                                                                do hủy</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p></p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Đóng</button>
+                                                            <!-- <button type="button" class="btn btn-primary">Save
+                                         changes</button> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <script>
+                                                let exampleModal = document.getElementById('huymodal')
+                                                exampleModal.addEventListener('show.bs.modal', function (event) {
+                                                    let button = event.relatedTarget
+                                                    let recipient = button.getAttribute('data-bs-whatever')
+                                                    let modalBody = exampleModal.querySelector('.modal-body p')
+                                                    modalBody.textContent = recipient
+                                                })
+                                            </script>
                                             <script>
                                                 function myfunc() {
                                                     alert("<%= dataSangkien[i].lydotuchoi%>");
