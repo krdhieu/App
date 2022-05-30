@@ -84,10 +84,25 @@ let getAllKhenThuongTheoDot = (maDotTimKiem) => {
         }
     });
 };
+
+// hoan thanh sang kien khi cham diem xong
+let setTrangThaiHoanThanhTatCaSK = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await connectDB.execute(
+                `UPDATE sangkien SET matrangthai= '3'  WHERE  matrangthai= '2'`
+            );
+            resolve();
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     createKhenThuong,
     updateKhenThuong,
     checkKhenThuong,
     getAllKhenThuong,
     getAllKhenThuongTheoDot,
+    setTrangThaiHoanThanhTatCaSK,
 };

@@ -108,5 +108,38 @@
             </table>          
         </div>
         <%}%>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#hoanThanh">
+           Hoàn thành đợt sáng kiến
+        </button>
+        <div class="modal" id="hoanThanh">
+            <div class="modal-dialog">
+              <div class="modal-content">
+          
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Hoàn Thành Đợt Sáng Kiến</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                
+                
+                <div class="modal-body">
+                    Sau khi <span style="color: red;">Xác Nhận</span>, tất cả sáng kiến sẽ được đặt trạng thái hoàn thành và không thể thay đổi thông tin sáng kiến
+                  
+                </div>
+          
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <form action="/hoanthanh-tatca-sangkien" method="post">
+                        <input type="text" value="1" class="form-control" name="hoanThanh" hidden>
+                        <button type="submit" class="btn btn-danger" >Xác Nhận</button>
+                    </form>
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+          
+              </div>
+            </div>
+          </div>
+        
     </body>
 </html>

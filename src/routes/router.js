@@ -43,8 +43,8 @@ const storage = multer.diskStorage({
         cb(
             null,
             'sangkien-' +
-            sangkien[0].masangkien +
-            path.extname(file.originalname)
+                sangkien[0].masangkien +
+                path.extname(file.originalname)
         );
     },
 });
@@ -241,7 +241,8 @@ const initRouter = (app) => {
         sangkienController.quanlyduyetSangkien
     );
     // chi tiet duyet sang kien
-    router.get('/chitietduyetsangkien',
+    router.get(
+        '/chitietduyetsangkien',
         verifyAccessToken.verifyAccessTokenTruongPhong,
         sangkienController.chitietduyetSangkien
     );
@@ -288,7 +289,11 @@ const initRouter = (app) => {
         sangkienController.detailSangkien
     );
     // chi tiet sang kien admin
-    router.get('/detailsangkien', verifyAccessToken.verifyAccessTokenNhanVien, sangkienController.chitietSangkien)
+    router.get(
+        '/detailsangkien',
+        verifyAccessToken.verifyAccessTokenNhanVien,
+        sangkienController.chitietSangkien
+    );
     // nhan vien tien hanh upload file
     router.post(
         '/upload-file',
@@ -543,6 +548,11 @@ const initRouter = (app) => {
     router.post(
         '/search-khenthuong-dot',
         khenThuongController.getAllKhenThuong
+    );
+
+    router.post(
+        '/hoanthanh-tatca-sangkien',
+        khenThuongController.setTrangThaiHoanThanhTatCaSK
     );
     return app.use('/', router);
 };

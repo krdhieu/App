@@ -5,7 +5,6 @@ let getKhenThuong = async (req, res) => {
     let { alert } = req.query;
     let sangKien =
         await sangKienService.getSangKienDangThucHienLeftJoinDanhGiaAndMucThuongByMaSangKien();
-    console.log(sangKien);
     if (sangKien.length === 0) {
         return res.render('khenThuong.ejs', { sangKien, alert: 0 });
     }
@@ -54,9 +53,20 @@ let getAllKhenThuong = async (req, res) => {
         allDot,
     });
 };
+// sau khi khen thuong tat ca sang kien set trang thai hoan thanh tat ca sang kien co ma trang thai la 2(dang thuc hien)
+let setTrangThaiHoanThanhTatCaSK = async (req, res) => {
+    let { hoanThanh } = req.body;
+    console.log(hoanThanh);
+    if (hoanThanh === '1') {
+        await khenThuongService.setTrangThaiHoanThanhTatCaSK();
+        return res.redirect('/get-khen-thuong');
+    }
+    return res.redirect('/get-khen-thuong');
+};
 
 module.exports = {
     getKhenThuong,
     createUpdateKhenThuong,
     getAllKhenThuong,
+    setTrangThaiHoanThanhTatCaSK,
 };
