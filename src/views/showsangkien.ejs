@@ -101,10 +101,12 @@
                                                 class="btn btn-primary" target="_self" title="Chi tiết sáng kiến"><i
                                                     class="fa-solid fa-file-alt"></i></a>
                                             <% }} else {%>
+
                                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                                     data-bs-target="#huymodal"
                                                     data-bs-whatever="<%= dataSangkien[i].lydotuchoi%>">
                                                     Lý do </button>
+
                                                 <%}%>
                                                     <!-- Modal -->
                                                     <div class="modal fade" id="huymodal" tabindex="-1"
@@ -141,7 +143,8 @@
                                                     </script>
                                                     <script>
                                                         function myfunc() {
-                                                            alert("<%= dataSangkien[i].lydotuchoi%>");
+                                                            
+                                                            alert("<%=dataSangkien[i].lydotuchoi%>");
                                                         }
                                                     </script>
                             </td>

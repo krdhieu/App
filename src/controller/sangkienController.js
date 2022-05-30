@@ -164,6 +164,7 @@ let viewSangkien = async (req, res) => {
         where sangkien.madotsangkien = ?`,
             [madotsangkien]
         );
+
         return res.render('showsangkien.ejs', {
             dataSangkien: rows,
             dataDotsangkien: datadotsangkien,
@@ -178,6 +179,7 @@ let viewSangkien = async (req, res) => {
         where sangkien.madotsangkien = ? and sangkien.matrangthai=?`,
         [madotsangkien, matrangthai]
     );
+
     return res.render('showsangkien.ejs', {
         dataSangkien: rows,
         dataDotsangkien: datadotsangkien,
@@ -382,15 +384,23 @@ let huy1Sangkien = async (req, res) => {
     return res.redirect('/quanlyduyetsangkien');
 };
 let history = async (req, res) => {
+    const [sangkien] = await connectDB.execute(
+        `select sangkien.* , trangthaisangkien.* , dotsangkien.* , xetduyet.manhanvien, xetduyet.ngayxetduyet, xetduyet.lydotuchoi from sangkien 
 
-    const [sangkien] = await connectDB.execute(`select sangkien.* , trangthaisangkien.* , dotsangkien.* , xetduyet.manhanvien, xetduyet.ngayxetduyet, xetduyet.lydotuchoi from sangkien 
         inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai
         inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien
         inner join nguoithamgia on sangkien.masangkien = nguoithamgia.masangkien
         LEFT JOIN xetduyet on sangkien.masangkien = xetduyet.masangkien
-        WHERE nguoithamgia.manhanvien = ?`, [req.nhanVienId]);
-    return res.render('historySangkien.ejs', { dataSangkien: sangkien })
-}
+
+
+
+
+        WHERE nguoithamgia.manhanvien = ?`,
+        [req.nhanVienId]
+    );
+    return res.render('historySangkien.ejs', { dataSangkien: sangkien });
+};
+
 let tylevaitro = async (req, res) => {
     let { masangkien, manhanvien1, manhanvien2, tyledonggop1, tyledonggop2 } =
         req.body;
