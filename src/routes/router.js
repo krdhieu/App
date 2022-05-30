@@ -43,8 +43,8 @@ const storage = multer.diskStorage({
         cb(
             null,
             'sangkien-' +
-                sangkien[0].masangkien +
-                path.extname(file.originalname)
+            sangkien[0].masangkien +
+            path.extname(file.originalname)
         );
     },
 });
@@ -337,7 +337,12 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAdmin,
         dotsangkienController.ketthucDotsangkien
     );
-
+    // xóa đợt sáng kiến
+    router.get(
+        '/xoadotsangkien',
+        verifyAccessToken.verifyAccessTokenAdmin,
+        dotsangkienController.xoaDotsangkien
+    );
     //-----------------------------------------------------------------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------//
     //sua nhan xet
