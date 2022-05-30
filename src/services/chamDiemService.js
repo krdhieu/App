@@ -106,10 +106,26 @@ let getAllChiTietDiemOfSangKien = (maSangKien) => {
         }
     });
 };
+
+// kiem tra thanh vien da cham diem chua truoc khi xoa
+let checkChamDiemDelThanhVien = (idThanhVienHD) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [check] = await connectDB.execute(
+                `SELECT * FROM chitietchamdiem WHERE mathanhvien=?`,
+                [idThanhVienHD]
+            );
+            resolve(check);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     createChiTietChamDiem: createChiTietChamDiem,
     checkDaChamDiem: checkDaChamDiem,
     getChiTietDiemOfThanhVien: getChiTietDiemOfThanhVien,
     editChiTietDiem: editChiTietDiem,
     getAllChiTietDiemOfSangKien: getAllChiTietDiemOfSangKien,
+    checkChamDiemDelThanhVien: checkChamDiemDelThanhVien,
 };

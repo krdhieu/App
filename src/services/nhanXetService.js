@@ -42,8 +42,22 @@ let editNhanXet = (mathanhvien, masangkien, noidung, thoigiannhanxet) => {
     });
 };
 
+let checkNhanXetDelThanhVien = (idThanhVien) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [check] = await connectDB.execute(
+                `SELECT * FROM nhanxet WHERE mathanhvien=?`,
+                [idThanhVien]
+            );
+            resolve(check);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     getNhanXet,
     createNhanXet,
+    checkNhanXetDelThanhVien: checkNhanXetDelThanhVien,
     editNhanXet,
 };

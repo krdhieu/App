@@ -74,6 +74,19 @@ let checkThanhVienHD = (maNhanVien, maHoiDong) => {
     });
 };
 
+let deleteThanhVienKhongCoRangBuoc = (maThanhVien) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await connectDB.execute(
+                `DELETE FROM thanhvienhoidong WHERE mathanhvien=?`,
+                [maThanhVien]
+            );
+            resolve();
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     getAllThanhVienHDKH,
     createThanhVien: createThanhVien,
@@ -81,4 +94,5 @@ module.exports = {
     getAllThanhVienHDKHJoinNhanVienJoinChucVu:
         getAllThanhVienHDKHJoinNhanVienJoinChucVu,
     checkThanhVienHD,
+    deleteThanhVienKhongCoRangBuoc,
 };

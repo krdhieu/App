@@ -33,7 +33,7 @@ let getAllAccount = () => {
     return new Promise(async (resolve, reject) => {
         try {
             let [allAccount] = await connectDB.execute(
-                'SELECT * FROM `taikhoan` INNER JOIN nhanvien on taikhoan.manhanvien=nhanvien.manhanvien INNER JOIN quyen on quyen.maquyen=taikhoan.maquyen'
+                `SELECT taikhoan.*,nhanvien.manhanvien as manhanvienNhanVien FROM taikhoan INNER JOIN nhanvien on taikhoan.manhanvien=nhanvien.manhanvien INNER JOIN quyen on quyen.maquyen=taikhoan.maquyen`
             );
             resolve(allAccount);
         } catch (e) {
@@ -114,6 +114,21 @@ let searchAccountByName = (name) => {
     });
 };
 
+//xoa tai khoan
+let deleteAccount = (email) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await connectDB.execute(
+                `DELETE FROM taikhoan WHERE tentaikhoan=?`,
+                [email]
+            );
+            resolve();
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 module.exports = {
     createAccount: createAccount,
     getOneAccount: getOneAccount,
@@ -123,4 +138,5 @@ module.exports = {
     checkNhanVienDaCoTaiKhoan: checkNhanVienDaCoTaiKhoan,
     paginationAccount: paginationAccount,
     searchAccountByName: searchAccountByName,
+    deleteAccount,
 };
