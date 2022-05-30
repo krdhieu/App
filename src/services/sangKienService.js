@@ -73,7 +73,7 @@ let getSangKienDangThucHienLeftJoinDanhGiaByMaSangKien = (maSangKien) => {
                 FROM sangkien 
                 LEFT JOIN danhgiasangkien on sangkien.masangkien= danhgiasangkien.masangkien 
                 LEFT JOIN xeploai ON xeploai.maxeploai= danhgiasangkien.maxeploai
-                WHERE sangkien.masangkien=?`,
+                WHERE sangkien.masangkien=? `,
                 [maSangKien]
             );
             resolve(sangkien);

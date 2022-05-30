@@ -22,7 +22,20 @@
     </head>
 
     <body class="mycolor-gray">
-        <% if(typeof(alert)!== 'undefined' && alert==='1' ){%>
+        <% if(typeof(alert)!== 'undefined' &&
+        alert==='khongcosangkiencandanhgia' ){%>
+        <div
+            class="alert alert-warning alert-dismissible position-absolute"
+            style="z-index: 1"
+        >
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+            ></button>
+            <strong>Warning!</strong> Không có sáng kiến cần đánh giá
+        </div>
+        <%}%> <% if(typeof(alert)!== 'undefined' && alert==='1' ){%>
         <div
             class="alert alert-warning alert-dismissible position-absolute"
             style="z-index: 1"

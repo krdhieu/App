@@ -9,9 +9,9 @@ let getDiemByMaSangKien = async (req, res) => {
         await sangKienService.getSangKienDangThucHienLeftJoinDanhGia();
     let { alert } = req.query;
     if (sangKienDangThucHien.length === 0) {
-        return res.render('danhGiaSangKien.ejs', {
-            alert: 1,
-        });
+        return res.redirect(
+            '/home?alert=' + encodeURIComponent('khongcosangkiencandanhgia')
+        );
     }
     // console.log(sangKienDangThucHien);
     let diemSangKien = [];
