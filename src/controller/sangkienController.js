@@ -207,6 +207,7 @@ let quanlyduyetSangkien = async (req, res) => {
 
 const upload = multer().single('profile_file');
 let UploadProfileFile = async (req, res) => {
+    let { masangkien } = req.body;
     const [dot] = await connectDB.execute(
         `select hannop from dotsangkien where trangthai = ?`,
         [1]
@@ -229,8 +230,8 @@ let UploadProfileFile = async (req, res) => {
             }
             let filename = req.file.filename;
 
-            await connectDB.execute(`update sangkien set dinhkem = ?`, [
-                filename,
+            await connectDB.execute(`update sangkien set dinhkem = ? where masangkien=?`, [
+                filename, masangkien
             ]);
             // Display uploaded image for user validation
             return res.send(
