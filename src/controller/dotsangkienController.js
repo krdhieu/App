@@ -3,8 +3,9 @@ import res from 'express/lib/response';
 import connectDB from '../configs/connectDB';
 
 let viewDotsangkien = async (req, res) => {
+    let { alert } = req.query;
     const [rows] = await connectDB.execute('SELECT * FROM `dotsangkien`');
-    return res.render('quanlydotsangkien.ejs', { dataSangkien: rows });
+    return res.render('quanlydotsangkien.ejs', { dataSangkien: rows, alert: alert });
 };
 
 let addDotsangkien = async (req, res) => {
@@ -31,7 +32,17 @@ let ketthucDotsangkien = async (req, res) => {
         [0, 1]);
     return res.redirect('/quanlydotsangkien');
 }
+let xoaDotsangkien = async (req, res) => {
+    let { madotsangkien } = req.query;
+    console.log(madotsangkien);
+    let [dot] = await connectDB.execute('SELECT COUNT(*) as soluong FROM `dotsangkien` INNER JOIN sangkien on dotsangkien.madotsangkien = sangkien.madotsangkien WHERE dotsangkien.madotsangkien=?', [madotsangkien])
+    if (dot[0].soluong >= 1) {
+        return res.redirect('/quanlydotsangkien?alert=' + encodeURIComponent('1'))
+    }
+    await connectDB.execute('DELETE FROM `dotsangkien` WHERE madotsangkien = ?', [madotsangkien])
+    return res.redirect('/quanlydotsangkien?alert=' + encodeURIComponent('2'))
+}
 module.exports = {
-    viewDotsangkien, addDotsangkien, suaDotsangkien, uploadDotsangkien, ketthucDotsangkien
+    viewDotsangkien, addDotsangkien, suaDotsangkien, uploadDotsangkien, ketthucDotsangkien, xoaDotsangkien
 }
 
