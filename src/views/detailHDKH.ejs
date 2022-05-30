@@ -87,7 +87,33 @@
                             ></button>
                             <strong>Success!</strong> Cập nhật thông tin thành công
                         </div>
-                        <%}%>
+                        <%} else
+                        if(alert==='xoathanhvienthanhcong' ){%>
+                            <div
+                                class="alert alert-success position-absolute alert-dismissible fade show"
+                                style="z-index: 1"
+                            >
+                                <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="alert"
+                                ></button>
+                                <strong>Success!</strong> Xóa thành viên thành công
+                            </div>
+                            <%} else
+                        if(alert==='xoathanhvienkhongthanhcong' ){%>
+                            <div
+                                class="alert alert-danger position-absolute alert-dismissible fade show"
+                                style="z-index: 1"
+                            >
+                                <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="alert"
+                                ></button>
+                                <strong>Danger!</strong> Không thể xóa thành viên này
+                            </div>
+                            <%}%>
             <%}%>
 
         <%- include('navAndSidebar.ejs'); -%>
@@ -173,17 +199,21 @@
 
                         
         <!-- form sua thong tin giam khao -->
-                    <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tv<%=allThanhVien[i].mathanhvien%>" title="Sửa thông tin thành viên"><i class="fa-solid fa-pen"></i></button></td>
+                    <td>
+                        <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#tv<%=allThanhVien[i].mathanhvien%>" title="Sửa thông tin thành viên"><i class="fa-solid fa-pen"></i></button>
+                        <button type="button" class="btn btn-danger" style="min-width: 42px;" data-bs-toggle="modal" data-bs-target="#deltv<%=allThanhVien[i].mathanhvien%>" title="Xóa thành viên"><i class="fa-solid fa-xmark"></i></button>
+                        
+                    </td>
                     <div class="modal" id="tv<%=allThanhVien[i].mathanhvien%>">
                         <div class="modal-dialog">
                           <div class="modal-content">
-                            <!-- Modal Header -->
+                            
                             <div class="modal-header">
                               <h4 class="modal-title">Cập nhật thông tin thành viên</h4>
                               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                       
-                            <!-- Modal body -->
+                            
                             <div class="modal-body" >
                                 <form action="/edit-thanhvien-hd" method="post" >   
                                     <div>
@@ -233,7 +263,7 @@
                                 </form>
                             </div>
                       
-                            <!-- Modal footer -->
+                            
                             <div class="modal-footer">
                               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                             </div>
@@ -241,7 +271,75 @@
                           </div>
                         </div>
                       </div>
-                        
+
+
+
+                        <!--modal xoa-->
+                        <div class="modal" id="deltv<%=allThanhVien[i].mathanhvien%>">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Xóa thành viên</h4>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                          
+
+                                <div class="modal-body" >
+                                    <form action="/delete-thanhvien-hd" method="post" >   
+                                        <div>
+                                            <label for="id">Mã Hội đồng</label>
+                                            <input
+                                            class="form-control"
+                                            type="text"
+                                            name="idHDKH"
+                                            value="<%=detail.mahoidong%>"
+                                            placeholder="ID thanh vien"
+                                            required
+                                            readonly
+                                        />
+                                        </div>       
+                                        <div>
+                                            <label for="id">Mã thành viên</label>
+                                            <input
+                                            class="form-control"
+                                            type="text"
+                                            name="idThanhVienHD"
+                                            value="<%=allThanhVien[i].mathanhvien%>"
+                                            placeholder="ID thanh vien"
+                                            required
+                                            readonly
+                                        />
+                                        </div>
+                                        <div>
+                                            <label for="id">Mã nhân viên</label>
+                                            <input
+                                                class="form-control"
+                                                type="text"
+                                                name="idNhanVien"
+                                                placeholder="ID nhân viên"
+                                                value="<%=allThanhVien[i].manhanvien%>"
+                                                required
+                                                readonly
+                                            />
+                                        </div>
+                                        <div>
+                                            <label for="chucVuHD">Chức vụ</label>
+                                            <input type="text" value="<%=allThanhVien[i].tenchucvuhd%>" class="form-control" readonly> 
+                                        </div>
+                                        <div class="mt-2"><button class="btn btn-danger" type="submit">Delete</button></div>
+                                    </form>
+                                </div>
+                          
+
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                </div>
+                          
+                              </div>
+                            </div>
+                          </div>
+                            
                     
                     <%}%>
                 </tr>

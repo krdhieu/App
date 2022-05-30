@@ -21,6 +21,20 @@
         <title>Quản Lý Tài Khoản</title>
     </head>
     <body class="mycolor-gray">
+        <% if(typeof(alert )!=='undefined'){ if(alert ==='xoataikhoanthanhcong') {%>
+            <div
+                class="alert alert-success position-absolute alert-dismissible fade show"
+                style="z-index: 1"
+            >
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                ></button>
+                <strong>Success!</strong> Xóa tài khoản thành công
+            </div>
+            
+        <%}}%>
         <%- include('navAndSidebar.ejs') -%>
         <div class="container-fluid row mt-3">
             <form action="/get-account-byname" class="col-3" method="post" >
@@ -34,8 +48,9 @@
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Email</th>
-                    <th scope="col">TenNhanVien</th>
-                    <th scope="col">Quyen</th>
+                    <th scope="col">Mã nhân viên</th>
+                    <th scope="col">Tên nhân viên</th>
+                    <th scope="col">Quyền</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -44,15 +59,49 @@
                   <tr>
                     <th scope="row"><%=i + 1 + page*perpage - perpage%></th>
                     <td><%=allAccount[i].tentaikhoan%></td>
+                    <td><%=allAccount[i].manhanvien%></td>
                     <td><%=allAccount[i].tennhanvien%></td>
                     <td><%=allAccount[i].tenquyen%></td>
                     <td>
-                        <a href="/get-edit-account?email=<%=allAccount[i].tentaikhoan%>" class="btn btn-primary active "> 
+                        <a href="/get-edit-account?email=<%=allAccount[i].tentaikhoan%>" class="btn btn-primary" title="Sửa thông tin tài khoản"> 
                             
-                            Edit
+                            <i class="fa-solid fa-pen"></i>
                         </a>
-                        <!-- <a href="/delete-account?email=<%=allAccount[i].tentaikhoan%>" class="btn btn-secondary btn-lg active ">Delete</a> -->
+                        <button type="button" class="btn btn-danger" style="min-width: 42px;" data-bs-toggle="modal" data-bs-target="#<%='id'+i %>" title="Xóa tài khoản"><i class="fa-solid fa-xmark"></i></button>
                     </td>
+                    <div class="modal" id="<%= 'id'+i %>">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            
+                            <div class="modal-header">
+                              <h4 class="modal-title">Xóa tài khoản</h4>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                      
+                            
+                            <div class="modal-body" >
+                                Bạn có chắc muốn xóa tài khoản này không?
+                                <form action="/delete-taikhoan" method="post" >   
+                                    <div>
+                                        <label >Email</label>
+                                        <input
+                                        class="form-control"
+                                        type="text"
+                                        name="email"
+                                        value="<%=allAccount[i].tentaikhoan%>"
+                                        required
+                                        readonly
+                                    />
+                                    </div>       
+                                    <div class="mt-2"><button class="btn btn-danger" type="submit">Delete</button></div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                   </tr>
                   <%}%>
                 </tbody>

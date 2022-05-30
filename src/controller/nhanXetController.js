@@ -1,5 +1,6 @@
 import nhanXetService from '../services/nhanXetService';
 import moment from 'moment-timezone';
+import connectDB from '../configs/connectDB';
 let createNhanXet = async (req, res) => {
     let { maSangKien, maThanhVien, nhanXet } = req.body;
 

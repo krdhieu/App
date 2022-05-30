@@ -389,6 +389,13 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAdmin,
         thanhVienHDKHController.createThanhVienHD
     );
+
+    //xoa thanh vien hd
+    router.post(
+        '/delete-thanhvien-hd',
+        verifyAccessToken.verifyAccessTokenAdmin,
+        thanhVienHDKHController.deleteThanhVienKhongCoRangBuoc
+    );
     // ket thuc nhiem ky hoi dong khoa hoc
     router.get(
         '/change-status-hdkh',
@@ -465,6 +472,8 @@ const initRouter = (app) => {
     );
     //dang xuat
     router.get('/logout', loginController.handleLogout);
+    //xoa tai khoan
+    router.post('/delete-taikhoan', manageAccountController.deleteAccount);
     //sua quyen cua tai khoan
     router.post(
         '/edit-role',
@@ -544,12 +553,12 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAdmin,
         khenThuongController.getAllKhenThuong
     );
-
+    // tim kiem khen thuong theo dot
     router.post(
         '/search-khenthuong-dot',
         khenThuongController.getAllKhenThuong
     );
-
+    // set trang thai hoan thanh sang kien co trang thai la dang thuc hien
     router.post(
         '/hoanthanh-tatca-sangkien',
         khenThuongController.setTrangThaiHoanThanhTatCaSK

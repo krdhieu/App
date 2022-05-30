@@ -68,11 +68,12 @@ let createAccount = async (req, res) => {
 
 // hien thi ta ca tai khoan - phan trang
 let manageAccount = async (req, res) => {
+    let { alert } = req.query;
+
     let page = parseInt(req.query.page) || 1;
     let perpage = 5;
 
     let allAccount = await taikhoanService.getAllAccount();
-
     // phan trang
     let numOfResults = allAccount.length;
     let numOfPages = Math.ceil(numOfResults / perpage);
@@ -109,6 +110,7 @@ let manageAccount = async (req, res) => {
         endingLink,
         numOfPages,
         perpage,
+        alert,
     });
 };
 
@@ -209,6 +211,16 @@ let changePassword = async (req, res) => {
     );
 };
 
+// xoa tai khoan
+
+let deleteAccount = async (req, res) => {
+    let { email } = req.body;
+    await taikhoanService.deleteAccount(email);
+    return res.redirect(
+        '/manage-account?alert=' + encodeURIComponent('xoataikhoanthanhcong')
+    );
+};
+
 module.exports = {
     getCreateAccount: getCreateAccount,
     createAccount: createAccount,
@@ -219,4 +231,5 @@ module.exports = {
     changePassword: changePassword,
     getChangePassword: getChangePassword,
     searchAccountByName: searchAccountByName,
+    deleteAccount: deleteAccount,
 };

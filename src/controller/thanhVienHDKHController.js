@@ -1,6 +1,7 @@
 import thanhVienHDKHService from '../services/thanhVienHDKHService';
 import nhanVienService from '../services/nhanvienService';
-import connectDB from '../configs/connectDB';
+import chamDiemService from '../services/chamDiemService';
+import nhanXetService from '../services/nhanXetService';
 
 let createThanhVienHD = async (req, res) => {
     let { idNhanVien, idChucVu, idHDKH } = req.body;
@@ -60,7 +61,37 @@ let editThanhVienHD = async (req, res) => {
     );
 };
 
+let deleteThanhVienKhongCoRangBuoc = async (req, res) => {
+    let { idThanhVienHD, idHDKH } = req.body;
+    console.log(idThanhVienHD);
+    let checkChiTietChamDiem = await chamDiemService.checkChamDiemDelThanhVien(
+        idThanhVienHD
+    );
+    let checkNhanXet = await nhanXetService.checkNhanXetDelThanhVien(
+        idThanhVienHD
+    );
+    if (checkNhanXet.length === 0 && checkChiTietChamDiem.length === 0) {
+        await thanhVienHDKHService.deleteThanhVienKhongCoRangBuoc(
+            idThanhVienHD
+        );
+        return res.redirect(
+            '/get-detail-hdkh?id=' +
+                encodeURIComponent(idHDKH) +
+                '&alert=' +
+                encodeURIComponent('xoathanhvienthanhcong')
+        );
+    } else {
+        return res.redirect(
+            '/get-detail-hdkh?id=' +
+                encodeURIComponent(idHDKH) +
+                '&alert=' +
+                encodeURIComponent('xoathanhvienkhongthanhcong')
+        );
+    }
+};
+
 module.exports = {
     createThanhVienHD: createThanhVienHD,
     editThanhVienHD: editThanhVienHD,
+    deleteThanhVienKhongCoRangBuoc,
 };
