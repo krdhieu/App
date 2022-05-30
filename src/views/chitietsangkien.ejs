@@ -61,7 +61,9 @@
                             <!-- mã sáng kiến -->
                             <input type="text" name="masangkien" value="<%= dataSangkien.masangkien %>" readonly hidden>
                             <!-- người chủ trì -->
-                            <h3>Người chủ trì</h3>
+                            <a href="/thongtincanhan?manhanvien=<%= dataChutri.manhanvien %>">
+                                <h3>Người chủ trì</h3>
+                            </a>
                             <label for="">Mã nhân viên</label>
                             <input type="text" name="manhanvien1" class="form-control"
                                 value="<%= dataChutri.manhanvien %>" readonly />
@@ -73,7 +75,9 @@
                                 value="<%= dataChutri.tyledonggop %>%" />
                             <!-- phụ tá nếu có -->
                             <%if(JSON.stringify(dataTroly)!=null) { %>
-                                <h3>Trợ lý</h3>
+                                <a href="/thongtincanhan?manhanvien=<%= dataTroly.manhanvien %>">
+                                    <h3>Trợ lý</h3>
+                                </a>
                                 <label for="">Mã nhân viên</label>
                                 <input type="text" name="manhanvien2" class="form-control"
                                     value="<%= dataTroly.manhanvien %>" readonly />

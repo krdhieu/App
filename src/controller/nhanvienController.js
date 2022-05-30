@@ -84,12 +84,17 @@ let addNhanvien = async (req, res) => {
     return res.redirect('/quanlynhanvien')
 }
 let nghiviecNhanvien = async (req, res) => {
-    let { manhanvien } = req.query;
+    let { manhanvien } = req.queryw;
     await connectDB.execute('update nhanvien set trangthai = ? where manhanvien = ?', [0, manhanvien]);
     return res.redirect('/quanlynhanvien');
 }
 
 let thongtinNhanvien = async (req, res) => {
+    let { manhanvien } = req.query;
+    if (manhanvien) {
+        const [nhanvien] = await connectDB.execute('SELECT * FROM nhanvien where manhanvien = ?', [manhanvien]);
+        res.render('thongtincanhan.ejs', { dataNhanvien: nhanvien[0] });
+    }
     const [nhanvien] = await connectDB.execute('SELECT * FROM nhanvien where manhanvien = ?', [req.nhanVienId]);
     res.render('thongtincanhan.ejs', { dataNhanvien: nhanvien[0] });
 }

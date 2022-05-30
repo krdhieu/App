@@ -164,7 +164,7 @@ let viewSangkien = async (req, res) => {
         where sangkien.madotsangkien = ?`,
             [madotsangkien]
         );
-        console.log(rows);
+
         return res.render('showsangkien.ejs', {
             dataSangkien: rows,
             dataDotsangkien: datadotsangkien,
@@ -179,7 +179,7 @@ let viewSangkien = async (req, res) => {
         where sangkien.madotsangkien = ? and sangkien.matrangthai=?`,
         [madotsangkien, matrangthai]
     );
-    console.log(rows);
+
     return res.render('showsangkien.ejs', {
         dataSangkien: rows,
         dataDotsangkien: datadotsangkien,
@@ -400,6 +400,9 @@ let history = async (req, res) => {
         inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien
         inner join nguoithamgia on sangkien.masangkien = nguoithamgia.masangkien
         LEFT JOIN xetduyet on sangkien.masangkien = xetduyet.masangkien
+
+
+
 
         WHERE nguoithamgia.manhanvien = ?`,
         [req.nhanVienId]

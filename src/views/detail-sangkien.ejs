@@ -47,7 +47,9 @@
                     <div>
                         <!-- nguoi tham gia -->
                         <form action="">
-                            <h3>Người chủ trì</h3>
+                            <a href="/thongtincanhan?manhanvien=<%= dataChutri.manhanvien %>">
+                                <h3>Người chủ trì</h3>
+                            </a>
                             <label for="">Mã nhân viên</label>
                             <input type="text" name="manhanvien" class="form-control"
                                 value="<%= dataChutri.manhanvien %>" readonly />
@@ -58,7 +60,9 @@
                             <input type="number" name="tyledonggop" min="0" max="100" class="form-control"
                                 value="<%= dataChutri.tyledonggop %>" />
                             <%if(JSON.stringify(dataTroly)!=null) { %>
-                                <h3>Trợ lý</h3>
+                                <a href="/thongtincanhan?manhanvien=<%= dataTroly.manhanvien %>">
+                                    <h3>Trợ lý</h3>
+                                </a>
                                 <label for="">Mã nhân viên</label>
                                 <input type="text" name="id" class="form-control" value="<%= dataTroly.manhanvien %>"
                                     readonly />
