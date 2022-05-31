@@ -18,7 +18,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-8">
-                    <h1>Chi tiết sáng kiến <%= dataSangkien.masangkien %>
+                    <h1>Chi tiết sáng kiến
                     </h1>
                     <label>Tên sáng kiến:</label>
                     <input type="text" name="tensangkien" class="form-control" value="<%= dataSangkien.tensangkien %>"
@@ -46,6 +46,8 @@
                         <form method="post" action="/upload-file" enctype="multipart/form-data">
                             <div>
                                 <h4 for="">Upload file PDF : </h4>
+                                <input type="text" name="masangkien" value="<%= dataSangkien.masangkien %>" readonly
+                                    hidden>
                                 <input type="file" name="profile_file" />
                             </div>
                             <br>
