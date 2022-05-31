@@ -21,6 +21,7 @@
         <title>Quản Lý Tài Khoản</title>
     </head>
     <body class="mycolor-gray">
+        
         <% if(typeof(alert )!=='undefined'){ if(alert ==='xoataikhoanthanhcong') {%>
             <div
                 class="alert alert-success position-absolute alert-dismissible fade show"
@@ -36,6 +37,9 @@
             
         <%}}%>
         <%- include('navAndSidebar.ejs') -%>
+        <div class="container-fluid mb-0">
+            <h1 class="mb-0 text-white">Quản lý tài khoản</h1>
+        </div>
         <div class="container-fluid row mt-3">
             <form action="/get-account-byname" class="col-3" method="post" >
                 <input type="text" name="accountName" class="form-control" placeholder="Tên tài khoản">
@@ -137,9 +141,9 @@
                 </nav>
               </div>
 
-              <a href="/get-create-account" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">
+              <a href="/get-create-account" class="btn btn-primary " role="button" aria-pressed="true">
 
-                Add User</a>
+                Thêm tài khoản</a>
         </div>
         
     
