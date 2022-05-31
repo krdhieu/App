@@ -43,8 +43,8 @@ const storage = multer.diskStorage({
         cb(
             null,
             'sangkien-' +
-            sangkien[0].masangkien +
-            path.extname(file.originalname)
+                sangkien[0].masangkien +
+                path.extname(file.originalname)
         );
     },
 });
@@ -478,7 +478,11 @@ const initRouter = (app) => {
     //dang xuat
     router.get('/logout', loginController.handleLogout);
     //xoa tai khoan
-    router.post('/delete-taikhoan', manageAccountController.deleteAccount);
+    router.post(
+        '/delete-taikhoan',
+        verifyAccessToken.verifyAccessTokenAdmin,
+        manageAccountController.deleteAccount
+    );
     //sua quyen cua tai khoan
     router.post(
         '/edit-role',
@@ -559,14 +563,24 @@ const initRouter = (app) => {
         khenThuongController.getAllKhenThuong
     );
     // tim kiem khen thuong theo dot
-    router.post(
-        '/search-khenthuong-dot',
-        khenThuongController.getAllKhenThuong
-    );
+    // khong dung nua comment lai
+    // router.post(
+    //     '/search-khenthuong-dot',
+    //     verifyAccessToken.verifyAccessTokenAdmin,
+
+    //     khenThuongController.getAllKhenThuong
+    // );
     // set trang thai hoan thanh sang kien co trang thai la dang thuc hien
     router.post(
         '/hoanthanh-tatca-sangkien',
+        verifyAccessToken.verifyAccessTokenAdmin,
         khenThuongController.setTrangThaiHoanThanhTatCaSK
+    );
+    //tat ca sang kien
+    router.get(
+        '/tatcaxeploai',
+        verifyAccessToken.verifyAccessTokenAdmin,
+        danhGiaSangKienController.tatCaXepLoai
     );
     return app.use('/', router);
 };

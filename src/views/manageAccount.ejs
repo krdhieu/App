@@ -37,13 +37,13 @@
             
         <%}}%>
         <%- include('navAndSidebar.ejs') -%>
-        <div class="container-fluid mb-0">
+        <div class="container-fluid mb-0 mt-3">
             <h1 class="mb-0 text-white">Quản lý tài khoản</h1>
         </div>
         <div class="container-fluid row mt-3">
-            <form action="/get-account-byname" class="col-3" method="post" >
-                <input type="text" name="accountName" class="form-control" placeholder="Tên tài khoản">
-                <button type="submit" class="btn btn-info">Tìm Kiếm</button>
+            <form action="/get-account-byname" class="col-12 container-fluid row" method="post" >
+                <input type="text" name="accountName" class="form-control col-4 w-25" placeholder="Email?">
+                <button type="submit" class="btn btn-info col-1 mx-1">Tìm Kiếm</button>
             </form>
         </div>
         <div class="container-fluid mt-3 ">

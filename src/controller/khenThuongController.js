@@ -33,7 +33,7 @@ let createUpdateKhenThuong = async (req, res) => {
 // trang tat ca khen thuong
 
 let getAllKhenThuong = async (req, res) => {
-    let { maDotTimKiem } = req.body;
+    let { maDotTimKiem } = req.query;
     if (!maDotTimKiem) {
         let allKhenThuong = await khenThuongService.getAllKhenThuong();
         let allDot = await dotSangKienService.getAllDot();

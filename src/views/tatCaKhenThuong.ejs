@@ -26,8 +26,9 @@
         <!-- sidebar -->
        <%- include('navAndSidebar.ejs') -%>
         <div class="container-fluid row mt-3">
-            <form action="/search-khenthuong-dot" class="col-3" method="post" >
+            <form action="/get-all-khenthuong" class="col-3" method="get" >
                 <select name="maDotTimKiem" class="form-select">
+                    <option value="">Tất Cả Các Đợt</option>
                     <% for (let i=0;i<allDot.length;i++){%>
                             <option value="<%=allDot[i].madotsangkien%>"><%=allDot[i].tendotsangkien%></option>
                         <%}%>
@@ -46,8 +47,8 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Mã Sáng Kiến</th>
-                        <th scope="col">Đợt Sáng Kiến</th>
                         <th scope="col">Tên Sáng Kiến</th>
+                        <th scope="col">Đợt Sáng Kiến</th>
                         <th scope="col">Xếp Loại</th>
                         <th scope="col">Mức thưởng</th>
                     </tr>

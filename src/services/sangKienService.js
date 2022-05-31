@@ -1,3 +1,4 @@
+import { resolve } from 'app-root-path';
 import connectDB from '../configs/connectDB';
 // hien thi nhung sang kien
 let getSangKienDaDuyet = () => {
@@ -103,6 +104,41 @@ let getSangKienDangThucHienLeftJoinDanhGiaAndMucThuongByMaSangKien = () => {
     });
 };
 
+// lay nhuwng sang kien co xep loai hien thi o trang tat ca xep loai
+let getSangKienCoXepLoai = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [sangKien] =
+                await connectDB.execute(`SELECT sangkien.*,danhgiasangkien.maxeploai,xeploai.tenxeploai, tendotsangkien 
+            FROM sangkien 
+            INNER JOIN danhgiasangkien on sangkien.masangkien= danhgiasangkien.masangkien 
+            INNER JOIN xeploai ON xeploai.maxeploai= danhgiasangkien.maxeploai
+            INNER JOIN dotsangkien ON dotsangkien.madotsangkien = sangkien.madotsangkien`);
+            resolve(sangKien);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+// lay nhuwng sang kien co xep loai hien thi o trang tat ca xep loai tim kiem theo dot sang kein
+let getSangKienCoXepLoaiTheoDot = (maDotSangKien) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [sangKien] = await connectDB.execute(
+                `SELECT sangkien.*,danhgiasangkien.maxeploai,xeploai.tenxeploai, tendotsangkien 
+                FROM sangkien 
+                INNER JOIN danhgiasangkien on sangkien.masangkien= danhgiasangkien.masangkien 
+                INNER JOIN xeploai ON xeploai.maxeploai= danhgiasangkien.maxeploai
+                INNER JOIN dotsangkien ON dotsangkien.madotsangkien = sangkien.madotsangkien WHERE sangkien.madotsangkien=?`,
+                [maDotSangKien]
+            );
+            resolve(sangKien);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     getSangKienDaDuyet,
     getDetailSangKien,
@@ -110,4 +146,6 @@ module.exports = {
     getSangKienDangThucHienLeftJoinDanhGia,
     getSangKienDangThucHienLeftJoinDanhGiaByMaSangKien,
     getSangKienDangThucHienLeftJoinDanhGiaAndMucThuongByMaSangKien,
+    getSangKienCoXepLoai,
+    getSangKienCoXepLoaiTheoDot,
 };
