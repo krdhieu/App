@@ -84,8 +84,9 @@ let addNhanvien = async (req, res) => {
     return res.redirect('/quanlynhanvien')
 }
 let nghiviecNhanvien = async (req, res) => {
-    let { manhanvien } = req.queryw;
+    let { manhanvien } = req.query;
     await connectDB.execute('update nhanvien set trangthai = ? where manhanvien = ?', [0, manhanvien]);
+    await connectDB.execute('update taikhoan set maquyen = ? where manhanvien = ?', [5, manhanvien]);
     return res.redirect('/quanlynhanvien');
 }
 
