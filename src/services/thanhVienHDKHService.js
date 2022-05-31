@@ -87,6 +87,25 @@ let deleteThanhVienKhongCoRangBuoc = (maThanhVien) => {
         }
     });
 };
+
+let getThanhVienHDTrongNhiemKy = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [allThanhVien] = await connectDB.execute(
+                `SELECT tennhanvien, thanhvienhoidong.mathanhvien,
+                nhanvien.manhanvien ,chucvuhd.machucvuhd , tenchucvuhd
+                FROM thanhvienhoidong 
+                INNER JOIN nhanvien ON thanhvienhoidong.manhanvien = nhanvien.manhanvien
+                INNER JOIN chucvuhd  ON thanhvienhoidong.machucvuhd = chucvuhd.machucvuhd
+                INNER JOIN hoidongkhoahoc ON thanhvienhoidong.mahoidong = hoidongkhoahoc.mahoidong
+                WHERE hoidongkhoahoc.trangthai =1 `
+            );
+            resolve(allThanhVien);
+        } catch (e) {
+            return reject(e);
+        }
+    });
+};
 module.exports = {
     getAllThanhVienHDKH,
     createThanhVien: createThanhVien,
@@ -95,4 +114,5 @@ module.exports = {
         getAllThanhVienHDKHJoinNhanVienJoinChucVu,
     checkThanhVienHD,
     deleteThanhVienKhongCoRangBuoc,
+    getThanhVienHDTrongNhiemKy,
 };

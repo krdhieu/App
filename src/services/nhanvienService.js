@@ -28,7 +28,24 @@ let checkNhanVienTonTai = (idNhanVien) => {
     });
 };
 
+// thong tin nhan vien dang nhap
+let thongTinNhanVienDangNhap = (maNhanVienDangNhap) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [thongtin] = await connectDB.execute(
+                `SELECT * FROM nhanvien 
+                INNER JOIN phongban on nhanvien.maphongban = phongban.maphongban 
+                INNER JOIN chucvu on chucvu.machucvu = nhanvien.machucvu WHERE nhanvien.manhanvien = ?`,
+                [maNhanVienDangNhap]
+            );
+            resolve(thongtin);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     getAllNhanVien: getAllNhanVien,
     checkNhanVienTonTai: checkNhanVienTonTai,
+    thongTinNhanVienDangNhap: thongTinNhanVienDangNhap,
 };
