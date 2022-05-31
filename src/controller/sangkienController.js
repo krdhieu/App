@@ -17,9 +17,9 @@ let createSangkien = async (req, res) => {
         [1]
     );
     const [checkhoidong] = await connectDB.execute(`
-    select * from thanhvienhoidong where manhanvien = ? and 
+    select count(*) as soluong from thanhvienhoidong where manhanvien = ? and 
     mahoidong=(select mahoidong from hoidongkhoahoc where trangthai =1)`, [req.nhanVienId]);
-    if (checkhoidong.length >= 0) {
+    if (checkhoidong[0].soluong !== 0) {
         return res.redirect('/home?alert=' + encodeURIComponent('4'));
     }
     if (dot.length === 0) {
