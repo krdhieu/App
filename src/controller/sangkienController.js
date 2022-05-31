@@ -13,17 +13,24 @@ import chuanhoachuoi, { chuanhoavanban } from '../services/chuanhoachuoi';
 // chuyển tới trang tạo sáng kiến
 let createSangkien = async (req, res) => {
     const [dot] = await connectDB.execute(
-        `select ngaybatdau,ngaydungdangky from dotsangkien where trangthai = ?`,
+        `select * from dotsangkien where trangthai = ?`,
         [1]
     );
+    const [checkhoidong] = await connectDB.execute(`
+    select * from thanhvienhoidong where manhanvien = ? and 
+    mahoidong=(select mahoidong from hoidongkhoahoc where trangthai =1)`, [req.nhanVienId]);
+    if (checkhoidong.length >= 0) {
+        return res.redirect('/home?alert=' + encodeURIComponent('4'));
+    }
     if (dot.length === 0) {
         return res.redirect('/home?alert=' + encodeURIComponent('4'));
     }
+    let madot = dot[0].madotsangkien;
     const [checknguoithamgia] = await connectDB.execute(
         `select count(*) as soluong from nguoithamgia 
         inner join sangkien on nguoithamgia.masangkien = sangkien.masangkien 
-        where manhanvien = ? and (matrangthai =? or matrangthai =?)`,
-        [req.nhanVienId, 1, 2]
+        where manhanvien = ? and (matrangthai =? or matrangthai =?) and madotsangkien = ?`,
+        [req.nhanVienId, 1, 2, madot]
     );
     if (checknguoithamgia[0].soluong !== 0) {
         return res.redirect('/chitietsangkien');
@@ -246,39 +253,10 @@ let UploadProfileFile = async (req, res) => {
     }
 };
 let detailSangkien = async (req, res) => {
-    // const [nguoithamgia] = await connectDB.execute(
-    //     'SELECT * FROM nguoithamgia where manhanvien = ?',
-    //     [req.nhanVienId]
-    // );
-    // console.log(nguoithamgia[0]);
-    // if (nguoithamgia[0]) {
-    //     const [sangkien] = await connectDB.execute(
-    //         'SELECT * FROM sangkien where masangkien = ? and matrangthai=?',
-    //         [nguoithamgia[0].masangkien, 2]
-    //     );
-
-    //     if (sangkien[0]) {
-    //         let masangkien = sangkien[0].masangkien;
-    //         const [thanhvien] = await connectDB.execute(
-    //             'SELECT * FROM nguoithamgia inner join nhanvien on nguoithamgia.manhanvien = nhanvien.manhanvien where masangkien = ?',
-    //             [masangkien]
-    //         );
-    //         if (thanhvien[0].vaitro == 0) {
-    //             return res.render('chitietsangkien.ejs', {
-    //                 dataSangkien: sangkien[0],
-    //                 dataChutri: thanhvien[0],
-    //                 dataTroly: thanhvien[1],
-    //             });
-    //         } else {
-    //             return res.render('chitietsangkien.ejs', {
-    //                 dataSangkien: sangkien[0],
-    //                 dataChutri: thanhvien[1],
-    //                 dataTroly: thanhvien[0],
-    //             });
-    //         }
-
     const [sangkien] = await connectDB.execute(
-        `SELECT * FROM sangkien inner join nguoithamgia on nguoithamgia.masangkien = sangkien.masangkien where manhanvien=? and matrangthai=?`,
+        `SELECT * FROM sangkien 
+        inner join nguoithamgia on nguoithamgia.masangkien = sangkien.masangkien 
+        where manhanvien=? and matrangthai=? and sangkien.madotsangkien = (select max(madotsangkien) from dotsangkien)`,
         [req.nhanVienId, 2]
     );
     if (sangkien[0]) {
