@@ -17,15 +17,17 @@
         ></script>
         <!-- <script defer src="/src/showHideSideBar.js"></script> -->
         <link rel="stylesheet" href="/css/styles.css" />
+        <link rel="stylesheet" href="/scss/styles.scss" />
         <title>Sửa phòng ban</title>
     </head>
+
     <body>
         <%- include('navAndSidebar') -%>
-        <div>
+        <div class="container">
+            <h3>Sửa chức vụ</h3>
             <form action="/uploadchucvu" method="post">
-                <!-- Vertical -->
                 <div class="form-group">
-                    <label>id</label>
+                    <label>Mã chức vụ</label>
                     <input
                         type="text"
                         name="machucvu"
@@ -42,7 +44,6 @@
                         value="<%= dataChucvu.tenchucvu %>"
                     />
                     <label>Mô tả chức vụ</label>
-
                     <textarea
                         name="motachucvu"
                         class="form-control"
@@ -60,19 +61,6 @@
                     >
                     <button type=" submit" class="btn btn-primary float-end">
                         Xác nhận
-                    </button>
-
-                    <textarea
-                        name="motachucvu"
-                        class="form-control"
-                        id=""
-                        cols="30"
-                        rows="10"
-                    >
-<%= dataChucvu.motachucvu %></textarea
-                    >
-                    <button type=" submit" class="btn btn-primary">
-                        Submit
                     </button>
                 </div>
             </form>

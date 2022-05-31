@@ -8,6 +8,10 @@ const verifyAccessTokenMiddleware = async (req, res, next) => {
     const access_token = req.cookies.access_token.split(' ')[1];
     try {
         let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
+        let check = await quyenService.checkQuyen(payLoad.roleId);
+        if (check === 'NULL') {
+            return res.redirect('/');
+        }
         req.emailLogin = payLoad.email;
         req.nhanVienId = payLoad.nhanVienId;
         req.roleId = payLoad.roleId;
@@ -27,6 +31,9 @@ let verifyAccessTokenGiamKhao = async (req, res, next) => {
     try {
         let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
         let check = await quyenService.checkQuyen(payLoad.roleId);
+        if (check === 'NULL') {
+            return res.redirect('/');
+        }
         if (check !== 'GIAMKHAO' && check !== 'ADMIN') {
             return res.redirect('/home?alert=' + encodeURIComponent('1'));
         }
@@ -49,6 +56,9 @@ const verifyAccessTokenAdmin = async (req, res, next) => {
     try {
         let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
         let check = await quyenService.checkQuyen(payLoad.roleId);
+        if (check === 'NULL') {
+            return res.redirect('/');
+        }
         if (check !== 'ADMIN') {
             return res.redirect('/home?alert=' + encodeURIComponent('1'));
         }
@@ -70,6 +80,9 @@ const verifyAccessTokenNhanVien = async (req, res, next) => {
     try {
         let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
         let check = await quyenService.checkQuyen(payLoad.roleId);
+        if (check === 'NULL') {
+            return res.redirect('/');
+        }
         if (
             check !== 'ADMIN' &&
             check !== 'NHANVIEN' &&
@@ -95,6 +108,9 @@ const verifyAccessTokenTruongPhong = async (req, res, next) => {
     try {
         let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
         let check = await quyenService.checkQuyen(payLoad.roleId);
+        if (check === 'NULL') {
+            return res.redirect('/');
+        }
         if (check !== 'ADMIN' && check !== 'TRUONGPHONG') {
             return res.redirect('/home?alert=' + encodeURIComponent('1'));
         }
