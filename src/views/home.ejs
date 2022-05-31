@@ -20,7 +20,6 @@
         <link rel="stylesheet" href="/css/styles.css" />
         <title>Trang Chủ</title>
     </head>
-
     <body class="mycolor-gray">
         <% if(typeof(alert)!== 'undefined' &&
         alert==='khongcosangkiencandanhgia' ){%>
@@ -99,35 +98,107 @@
         <%}%> <%- include('navAndSidebar.ejs') -%>
         <%if(typeof(dotHienTai)!=='undefined' && dotHienTai.length!==0){%>
 
-        <div class="container-fluid">
-            <div class="text-center text-white">
-                <div>
-                    <h1>Thông báo đợt sáng kiến</h1>
-                    <h2><%=dotHienTai[0].tendotsangkien%></h2>
+        <div class="container-fluid row pe-0" style="height: 90vh">
+            <div
+                class="col-3 mt-3 mb-3 rounded-3 container-fluid"
+                style="background-color: #1f1b1b"
+            >
+                <% if(typeof(thongTin)!=='undefined' && thongTin.length !==0 )
+                {%>
+                <div class="bg-secondary rounded-bottom">
+                    <h3 class="text-white p-3 text-center col-12">
+                        <%= thongTin[0].tennhanvien%>
+                    </h3>
                 </div>
                 <div>
-                    <h4>
-                        Ngày bắt đầu:
-                        <%=moment(dotHienTai[0].ngaybatdau).format('MM/DD/YYYY');%>
-                    </h4>
+                    <h5 class="text-white mt-3 col-12">Phòng ban</h5>
+                    <h5 class="text-white col-12">
+                        <%= thongTin[0].tenphongban%>
+                    </h5>
                 </div>
                 <div>
-                    <h4>
-                        Ngày kết thúc:
-                        <%=moment(dotHienTai[0].ngayketthuc).format('MM/DD/YYYY');%>
-                    </h4>
+                    <h5 class="text-white mt-3 col-12">Chức vụ</h5>
+                    <h5 class="text-white col-12">
+                        <%= thongTin[0].tenchucvu%>
+                    </h5>
                 </div>
-                <div>
-                    <h4>
-                        Hạn đăng ký:
-                        <%=moment(dotHienTai[0].ngaydungdangky).format('MM/DD/YYYY');%>
-                    </h4>
+
+                <img
+                    src="/image/ideah.png"
+                    class="col-12 mt-3"
+                    style="max-width: 100%"
+                />
+                <%}%>
+            </div>
+            <div class="text-center text-white col-8 mt-3 container-fluid px-0 ">
+                <div
+                    style="background-color: #1f1b1b"
+                    class="pb-2 rounded col-12 "
+                >
+                   
+                    <div >
+                        <div >
+                            <h1 >Thông báo đợt sáng kiến</h1>
+                            <h2 ><%=dotHienTai[0].tendotsangkien%></h2>
+                        </div>
+                        <table class="table table-dark text-center h-100 ">
+                        <tr>
+                            <th>
+                                <div>
+                                    <h4 class="h4">
+                                        Ngày bắt đầu
+                                        <%=moment(dotHienTai[0].ngaybatdau).format('MM/DD/YYYY');%>
+                                    </h4>
+                                </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <h4  class="h4">
+                                        Ngày kết thúc
+                                        <%=moment(dotHienTai[0].ngayketthuc).format('MM/DD/YYYY');%>
+                                    </h4>
+                                </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <h4  class="h4">
+                                        Hạn đăng ký
+                                        <%=moment(dotHienTai[0].ngaydungdangky).format('MM/DD/YYYY');%>
+                                    </h4>
+                                </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <h4  class="h4">
+                                        Hạn nộp báo cáo
+                                        <%=moment(dotHienTai[0].hannop).format('MM/DD/YYYY');%>
+                                    </h4>
+                                </div>
+                            </th>
+                        </tr>
+                    </table>
+                    </div>
                 </div>
-                <div>
-                    <h4>
-                        Hạn nộp báo cáo:
-                        <%=moment(dotHienTai[0].hannop).format('MM/DD/YYYY');%>
-                    </h4>
+                <% if(typeof(thanhVien)!== 'undefined' &&
+                thanhVien.length!==0) { %>
+                <div class="w-100 d-inline-block mt-3 h-50 mt-5 rounded" style="background-color: #1f1b1b">
+
+                    <div >
+                        <h1>Thành viên hội đồng</h1>
+                    </div>
+                    <table class="table table-dark text-center h-100">
+                        <tr>
+                            <th>Tên thành viên</th>
+                            <th>Chức vụ</th>
+                        </tr>
+                        <% for(let i=0;i<thanhVien.length ;i++){ %>
+                        <tr>
+                            <td><%= thanhVien[i].tennhanvien %></td>
+                            <td><%= thanhVien[i].tenchucvuhd %></td>
+                        </tr>
+                        <%}%>
+                    </table>
+                    <%}%>
                 </div>
             </div>
         </div>
