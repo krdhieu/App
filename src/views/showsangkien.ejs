@@ -143,7 +143,7 @@
                                                     </script>
                                                     <script>
                                                         function myfunc() {
-                                                            
+
                                                             alert("<%=dataSangkien[i].lydotuchoi%>");
                                                         }
                                                     </script>
@@ -153,7 +153,7 @@
                 </tbody>
             </table>
             <iframe id="txtArea1" style="display:none"></iframe>
-            <button id="btnExport" class="btn btn-primary" onclick="fnExcelReport();"> EXPORT </button>
+            <button id="btnExport" class="btn btn-primary" onclick="fnExcelReport('headerTable');"> EXPORT </button>
         </div>
         <script defer src="/src/downloadReport.js">
         </script>
