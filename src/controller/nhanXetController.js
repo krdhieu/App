@@ -16,7 +16,10 @@ let createNhanXet = async (req, res) => {
         nhanXet,
         currentDate
     );
-    return res.send('create nhan xet');
+    return res.redirect(
+        `/detail-sangkien?id=${maSangKien}&alert=` +
+            encodeURIComponent('nhanxetthanhcong')
+    );
 };
 
 let editNhanXet = async (req, res) => {
