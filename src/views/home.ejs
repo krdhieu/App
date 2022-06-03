@@ -95,6 +95,8 @@
             ></button>
             <strong>Warning!</strong> Chưa tới đợt đăng ký
         </div>
+
+
         <%}%> <%- include('navAndSidebar.ejs') -%>
 
 
@@ -130,16 +132,18 @@
                 />
                 <%}%>
             </div>
-        <%if(typeof(dotHienTai)!=='undefined' && dotHienTai.length!==0){%>
-
-        
-           
+            
             <div class="text-center text-white col-8 mt-3 container-fluid px-0 ">
+                <%if(typeof(message)!== 'undefined'){%>
+                    <div class="container-fluid col-9">
+                        <div class="text-center text-white"><h2><%=message%></h2></div>
+                    </div>
+                    <%}%>
+                <%if(typeof(dotHienTai)!=='undefined' && dotHienTai.length!==0){%>
                 <div
                     style="background-color: #1f1b1b"
                     class="pb-2 rounded col-12 "
                 >
-                   
                     <div >
                         <div >
                             <h1 >Thông báo đợt sáng kiến</h1>
@@ -183,10 +187,11 @@
                     </table>
                     </div>
                 </div>
+             
+                <%}%>
                 <% if(typeof(thanhVien)!== 'undefined' &&
                 thanhVien.length!==0) { %>
                 <div class="w-100 d-inline-block mt-3 h-50 mt-5 rounded" style="background-color: #1f1b1b">
-
                     <div >
                         <h1>Thành viên hội đồng</h1>
                     </div>
@@ -205,11 +210,8 @@
                     <%}%>
                 </div>
             </div>
+            
         </div>
-        <%}%> <%if(typeof(message)!== 'undefined'){%>
-        <div class="container-fluid col-9">
-            <div class="text-center text-white"><h2><%=message%></h2></div>
-        </div>
-        <%}%>
+         
     </body>
 </html>
