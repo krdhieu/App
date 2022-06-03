@@ -73,7 +73,7 @@
         </div>
         <%}%> <% if(typeof(alert)!== 'undefined' && alert==='3' ){%>
         <div
-            class="alert alert-warning alert-dismissible position-absolute"
+            class="alert alert-success alert-dismissible position-absolute"
             style="z-index: 1"
         >
             <button
@@ -81,7 +81,7 @@
                 class="btn-close"
                 data-bs-dismiss="alert"
             ></button>
-            <strong>Warning!</strong> Đăng ký thành công, chờ xét duyệt
+            <strong>Success!</strong> Đăng ký thành công, chờ xét duyệt
         </div>
         <%}%> <% if(typeof(alert)!== 'undefined' && alert==='4' ){%>
         <div
@@ -96,7 +96,7 @@
             <strong>Warning!</strong> Chưa tới đợt đăng ký
         </div>
         <%}%> <%- include('navAndSidebar.ejs') -%>
-        <%if(typeof(dotHienTai)!=='undefined' && dotHienTai.length!==0){%>
+
 
         <div class="container-fluid row pe-0" style="height: 90vh">
             <div
@@ -130,6 +130,10 @@
                 />
                 <%}%>
             </div>
+        <%if(typeof(dotHienTai)!=='undefined' && dotHienTai.length!==0){%>
+
+        
+           
             <div class="text-center text-white col-8 mt-3 container-fluid px-0 ">
                 <div
                     style="background-color: #1f1b1b"
@@ -147,7 +151,7 @@
                                 <div>
                                     <h4 class="h4">
                                         Ngày bắt đầu
-                                        <%=moment(dotHienTai[0].ngaybatdau).format('MM/DD/YYYY');%>
+                                        <%=moment(dotHienTai[0].ngaybatdau).format('DD/MM/YYYY');%>
                                     </h4>
                                 </div>
                             </th>
@@ -155,7 +159,7 @@
                                 <div>
                                     <h4  class="h4">
                                         Ngày kết thúc
-                                        <%=moment(dotHienTai[0].ngayketthuc).format('MM/DD/YYYY');%>
+                                        <%=moment(dotHienTai[0].ngayketthuc).format('DD/MM/YYYY');%>
                                     </h4>
                                 </div>
                             </th>
@@ -163,7 +167,7 @@
                                 <div>
                                     <h4  class="h4">
                                         Hạn đăng ký
-                                        <%=moment(dotHienTai[0].ngaydungdangky).format('MM/DD/YYYY');%>
+                                        <%=moment(dotHienTai[0].ngaydungdangky).format('DD/MM/YYYY');%>
                                     </h4>
                                 </div>
                             </th>
@@ -171,7 +175,7 @@
                                 <div>
                                     <h4  class="h4">
                                         Hạn nộp báo cáo
-                                        <%=moment(dotHienTai[0].hannop).format('MM/DD/YYYY');%>
+                                        <%=moment(dotHienTai[0].hannop).format('DD/MM/YYYY');%>
                                     </h4>
                                 </div>
                             </th>
@@ -203,7 +207,7 @@
             </div>
         </div>
         <%}%> <%if(typeof(message)!== 'undefined'){%>
-        <div class="container-fluid">
+        <div class="container-fluid col-9">
             <div class="text-center text-white"><h2><%=message%></h2></div>
         </div>
         <%}%>
