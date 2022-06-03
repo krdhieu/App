@@ -59,7 +59,7 @@
                         <th scope="col">Đối tượng</th>
                         <th scope="col" width="8%">Đợt</th>
                         <th scope="col" width="8%">Trạng thái</th>
-                        <!-- <th scope="col">Đính kèm</th> -->
+                        <th scope="col">Người xét duyệt</th>
                         <th scope="col" width="6%">Tác vụ</th>
                     </tr>
                 </thead>
@@ -86,6 +86,14 @@
                             </td>
                             <td>
                                 <%= dataSangkien[i].tentrangthai %>
+                            </td>
+                            <td>
+                                <% if (dataSangkien[i].manhanvien!==null){%>
+                                    <p
+                                        title="Ngày xét duyệt: <%= moment(dataSangkien[i].ngayxetduyet).format('DD-MM-YYYY') %>">
+                                        <%= dataSangkien[i].manhanvien + '. ' +dataSangkien[i].tennhanvien %>
+                                    </p>
+                                    <%}%>
                             </td>
                             <td>
                                 <% if (dataSangkien[i].matrangthai !==4){ %>

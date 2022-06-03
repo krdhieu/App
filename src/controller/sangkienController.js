@@ -1,14 +1,10 @@
-import req from 'express/lib/request';
 import connectDB from '../configs/connectDB';
 import sangKienService from '../services/sangKienService';
 import diemTrungBinhService from '../services/diemTrungBinhService';
-import xepLoaiService from '../services/xepLoaiService';
 import chamDiemService from '../services/chamDiemService';
-import jwt from 'jsonwebtoken';
-import res, { redirect } from 'express/lib/response';
 import multer from 'multer';
 import moment from 'moment';
-import chuanhoachuoi, { chuanhoavanban } from '../services/chuanhoachuoi';
+import chuanhoachuoi from '../services/chuanhoachuoi';
 
 // chuyển tới trang tạo sáng kiến
 let createSangkien = async (req, res) => {
@@ -99,15 +95,10 @@ let addSangkien = async (req, res) => {
             'SELECT count(*) as "soluong" FROM thanhvienhoidong WHERE manhanvien = ? and mahoidong = (select max(mahoidong) from hoidongkhoahoc)',
             [manhanvien_2]
         );
-        if (nguoithamgia_2[0].soluong >= 1 || checkhoidong[0].soluong >= 1) {
+        if (nguoithamgia_2[0].soluong >= 1 || checkhoidong[0].soluong >= 1 || manhanvien_2 == req.nhanVienId) {
             return res.redirect(
                 '/create-sangkien?alert=' + encodeURIComponent('2')
             );
-            return res
-                .status(200)
-                .send(
-                    '<p>Đã trong 1 dự án <a href="/create-sangkien">Trở về</a></p>'
-                );
         }
     }
     let [dotsangkien] = await connectDB.execute(
@@ -164,11 +155,13 @@ let viewSangkien = async (req, res) => {
         matrangthai = trangthai;
     } else {
         const [rows] = await connectDB.execute(
-            `SELECT sangkien.* , trangthaisangkien.* , dotsangkien.* , xetduyet.manhanvien, xetduyet.ngayxetduyet, xetduyet.lydotuchoi FROM sangkien 
-        inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai
-        inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien
-        LEFT JOIN xetduyet on sangkien.masangkien = xetduyet.masangkien
-        where sangkien.madotsangkien = ?`,
+            `SELECT sangkien.* , trangthaisangkien.* , dotsangkien.* , xetduyet.manhanvien, 
+            xetduyet.ngayxetduyet, xetduyet.lydotuchoi , nhanvien.tennhanvien FROM sangkien 
+            inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai 
+            inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien 
+            LEFT JOIN xetduyet on sangkien.masangkien = xetduyet.masangkien 
+            LEFT JOIN nhanvien on nhanvien.manhanvien = xetduyet.manhanvien 
+            where sangkien.madotsangkien =  ?`,
             [madotsangkien]
         );
 
@@ -179,10 +172,12 @@ let viewSangkien = async (req, res) => {
         });
     }
     const [rows] = await connectDB.execute(
-        `SELECT sangkien.* , trangthaisangkien.* , dotsangkien.* , xetduyet.manhanvien, xetduyet.ngayxetduyet, xetduyet.lydotuchoi FROM sangkien 
-        inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai
+        `SELECT sangkien.* , trangthaisangkien.* , dotsangkien.* , xetduyet.manhanvien, 
+        xetduyet.ngayxetduyet, xetduyet.lydotuchoi , nhanvien.tennhanvien FROM sangkien 
+        inner join trangthaisangkien on sangkien.matrangthai = trangthaisangkien.matrangthai 
         inner join dotsangkien on sangkien.madotsangkien = dotsangkien.madotsangkien 
-        LEFT JOIN xetduyet on sangkien.masangkien = xetduyet.masangkien
+        LEFT JOIN xetduyet on sangkien.masangkien = xetduyet.masangkien 
+        LEFT JOIN nhanvien on nhanvien.manhanvien = xetduyet.manhanvien 
         where sangkien.madotsangkien = ? and sangkien.matrangthai=?`,
         [madotsangkien, matrangthai]
     );
