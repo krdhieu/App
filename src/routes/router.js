@@ -23,6 +23,7 @@ import thanhVienHDKHController from '../controller/thanhVienHDKHController';
 import chamDiemController from '../controller/chamDiemController';
 import downloadAttachFileController from '../controller/downloadAttachFileController';
 import connectDB from '../configs/connectDB';
+import likesangkienController from '../controller/likesangkienController'
 
 const router = express.Router();
 
@@ -43,8 +44,8 @@ const storage = multer.diskStorage({
         cb(
             null,
             'sangkien-' +
-                sangkien[0].masangkien +
-                path.extname(file.originalname)
+            sangkien[0].masangkien +
+            path.extname(file.originalname)
         );
     },
 });
@@ -59,6 +60,15 @@ const Filter = function (req, file, cb) {
 };
 let upload = multer({ storage: storage, fileFilter: Filter });
 const initRouter = (app) => {
+    // view like 
+    router.get('/viewlikesangkien',
+        verifyAccessToken.verifyAccessTokenNhanVien,
+        likesangkienController.viewlikeSangkien
+    )
+    router.post('/addlike',
+        verifyAccessToken.verifyAccessTokenNhanVien,
+        likesangkienController.addlikeSangkien
+    )
     //phong ban
     router.get(
         '/quanlyphongban',
