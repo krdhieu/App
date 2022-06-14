@@ -20,11 +20,14 @@
 
                 <!-- Vertical -->
                 <div class="form-group">
-                    <label>mã xếp loại</label>
+                    <label>Mã xếp loại</label>
                     <input type="text" name="maxeploai" class="form-control" value="<%= dataXeploai.maxeploai %>"
                         readonly>
                     <label>Tên xếp loại</label>
                     <input type="text" name="tenxeploai" class="form-control" value="<%= dataXeploai.tenxeploai %>"
+                        required>
+                    <label>Mức thưởng</label>
+                    <input type="text" name="mucthuong" class="form-control" value="<%= dataXeploai.mucthuong %>"
                         required>
                     <label for="">Mô tả xếp loại</label>
                     <textarea name="motaxeploai" class="form-control" id="" cols="30"

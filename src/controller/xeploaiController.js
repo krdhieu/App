@@ -15,13 +15,16 @@ let editXeploai = async (req, res) => {
 };
 
 let uploadXeploai = async (req, res) => {
-    let { maxeploai, tenxeploai, motaxeploai } = req.body;
+    let { maxeploai, tenxeploai, mucthuong, motaxeploai } = req.body;
     if (!tenxeploai || !maxeploai) {
-        res.redirect('/quanlyxeploai');
+        return res.redirect('/quanlyxeploai');
+    }
+    if (mucthuong <= 0) {
+        return res.redirect('/quanlyxeploai');
     }
     await connectDB.execute(
-        'update xeploai set tenxeploai = ?, motaxeploai = ? where maxeploai = ?',
-        [tenxeploai, motaxeploai, maxeploai]
+        'update xeploai set tenxeploai = ?,mucthuong=?, motaxeploai = ? where maxeploai = ?',
+        [tenxeploai, mucthuong, motaxeploai, maxeploai]
     );
     let hientai = moment().utcOffset('+0700').format();
     await connectDB.execute('insert into hanhdongadmin(manhanvien,hanhdong,ngaygio) values (?,?,?)', [req.nhanVienId, 'Chỉnh sửa xếp loại mã: ' + maxeploai, hientai])
