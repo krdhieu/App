@@ -28,6 +28,20 @@ let updateKhenThuong = (maKhenThuong, mucKhenThuong) => {
     });
 };
 
+let updateKhenThuongByMaSK = (maSangKien, mucKhenThuong) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await connectDB.execute(
+                `UPDATE  khenthuong set muckhenthuong= ? WHERE masangkien =?`,
+                [mucKhenThuong, maSangKien]
+            );
+            resolve('ok');
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 let checkKhenThuong = (maSangKien) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -105,4 +119,5 @@ module.exports = {
     getAllKhenThuong,
     getAllKhenThuongTheoDot,
     setTrangThaiHoanThanhTatCaSK,
+    updateKhenThuongByMaSK,
 };
