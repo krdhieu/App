@@ -129,6 +129,20 @@ let deleteAccount = (email) => {
     });
 };
 
+// dem so tai khoan admin
+let countAdmin = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [adminAccount] = await connectDB.execute(
+                `SELECT * from taikhoan WHERE maquyen=1`
+            );
+            resolve(adminAccount);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 module.exports = {
     createAccount: createAccount,
     getOneAccount: getOneAccount,
@@ -139,4 +153,5 @@ module.exports = {
     paginationAccount: paginationAccount,
     searchAccountByName: searchAccountByName,
     deleteAccount,
+    countAdmin,
 };

@@ -150,8 +150,24 @@ let editRole = async (req, res) => {
     if (!email || !quyen) {
         return res.redirect('/get-edit-account');
     }
-    await taikhoanService.editRole(email, quyen);
-    return res.redirect('/manage-account');
+    let taiKhoan = await taikhoanService.getOneAccount(email);
+    let taiKhoanAdmin = await taikhoanService.countAdmin();
+    if (
+        taiKhoan[0].maquyen === 1 &&
+        quyen !== '1' &&
+        taiKhoanAdmin.length > 1
+    ) {
+        await taikhoanService.editRole(email, quyen);
+        return res.redirect('/manage-account');
+    } else if (quyen === '1' && taiKhoanAdmin.length < 3) {
+        await taikhoanService.editRole(email, quyen);
+        return res.redirect('/manage-account');
+    } else if (taiKhoan[0].maquyen !== 1 && quyen !== '1') {
+        await taikhoanService.editRole(email, quyen);
+        return res.redirect('/manage-account');
+    } else {
+        return res.send('Tối thiểu 1 và tối đa 3 tài khoản Admin');
+    }
 };
 // admin reset pass word
 let resetPassword = async (req, res) => {

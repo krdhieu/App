@@ -3,6 +3,11 @@ import sangKienService from '../services/sangKienService';
 import nguoiThamGiaService from '../services/nguoiThamGiaService';
 import hoiDongKhoaHocService from '../services/hoiDongKhoaHocService';
 import nhanXetService from '../services/nhanXetService';
+import danhGiaSKService from '../services/danhGiaSKService';
+import diemTrungBinhService from '../services/diemTrungBinhService';
+import khenThuongService from '../services/khenThuongService';
+import xepLoaiService from '../services/xepLoaiService';
+
 //hien trhi trang cham diem
 let getChamDiemPage = async (req, res) => {
     let { alert } = req.query;
@@ -84,6 +89,7 @@ let createChiTietChamDiem = async (req, res) => {
     ) {
         return res.send('Missing required parameter');
     }
+
     let checkDaChamDiem = await chamDiemService.checkDaChamDiem(
         thanhVienHDId,
         sangKienId
@@ -101,6 +107,103 @@ let createChiTietChamDiem = async (req, res) => {
         diemUngDung,
         diemTrinhBay
     );
+    if (check === 'ok') {
+        let dtb = await diemTrungBinhService.getDiemByMaSangKien(sangKienId);
+        let { tbmucdich, tbnoidung, tbungdung, tbtrinhbay } = dtb[0];
+        let tbt = (tbmucdich + tbnoidung + tbungdung + tbtrinhbay) / 4;
+        console.log(tbt);
+        let maXL;
+        if (9 < tbt && tbt <= 10) {
+            maXL = 1;
+        }
+        if (8 < tbt && tbt <= 9) {
+            maXL = 2;
+        }
+        if (6 < tbt && tbt <= 8) {
+            maXL = 3;
+        }
+        if (5 <= tbt && tbt <= 6) {
+            maXL = 4;
+        }
+        if (tbt < 5) {
+            maXL = 5;
+        }
+
+        // kiem tra xem sang kien co danh gia chua
+        let checkDanhGiaByMaSangKien =
+            await danhGiaSKService.checkDanhGiaByMaSK(sangKienId);
+        let checkKhenThuong = await khenThuongService.checkKhenThuong(
+            sangKienId
+        );
+        // sang kien chua co danh gia thi them danh gia xep loai
+        if (checkDanhGiaByMaSangKien.length === 0) {
+            await danhGiaSKService.createDanhGiaSangKien(sangKienId, maXL);
+            // kiem tra xem co khen thuong chua neu chua co thi them khen thuong
+
+            let xepLoai = await xepLoaiService.getAllLoaiXepLoai();
+            let mucThuong;
+            if (maXL === 1) {
+                mucThuong = xepLoai[0].mucthuong;
+            }
+            if (maXL === 2) {
+                mucThuong = xepLoai[1].mucthuong;
+            }
+            if (maXL === 3) {
+                mucThuong = xepLoai[2].mucthuong;
+            }
+            if (maXL === 4) {
+                mucThuong = xepLoai[3].mucthuong;
+            }
+            if (maXL === 5) {
+                mucThuong = xepLoai[4].mucthuong;
+            }
+            console.log('mucthuong', mucThuong);
+            if (checkKhenThuong.length === 0) {
+                await khenThuongService.createKhenThuong(sangKienId, mucThuong);
+            } else {
+                await khenThuongService.updateKhenThuongByMaSK(
+                    sangKienId,
+                    mucThuong
+                );
+            }
+        } else {
+            // co danh gia roi thi sua danh gia xep loai theo trung binh tong diem
+            let maxeploaicu = checkDanhGiaByMaSangKien[0].maxeploai;
+            await danhGiaSKService.editDanhGiaSangKien(
+                sangKienId,
+                maXL,
+                maxeploaicu
+            );
+            let xepLoai = await xepLoaiService.getAllLoaiXepLoai();
+            let mucThuong;
+
+            if (maXL === 1) {
+                mucThuong = xepLoai[0].mucthuong;
+            }
+            if (maXL === 2) {
+                mucThuong = xepLoai[1].mucthuong;
+            }
+            if (maXL === 3) {
+                mucThuong = xepLoai[2].mucthuong;
+            }
+            if (maXL === 4) {
+                mucThuong = xepLoai[3].mucthuong;
+            }
+            if (maXL === 5) {
+                mucThuong = xepLoai[4].mucthuong;
+            }
+            console.log('mucthuong', mucThuong);
+
+            if (checkKhenThuong.length === 0) {
+                await khenThuongService.createKhenThuong(sangKienId, mucThuong);
+            } else {
+                await khenThuongService.updateKhenThuongByMaSK(
+                    sangKienId,
+                    mucThuong
+                );
+            }
+        }
+    }
     return res.redirect(
         `/detail-sangkien?id=${sangKienId}&&alert=` +
             encodeURIComponent('suadiemthanhcong')
@@ -136,6 +239,102 @@ let editChiTietChamDiem = async (req, res) => {
         diemTrinhBay
     );
 
+    if (check === 'ok') {
+        let dtb = await diemTrungBinhService.getDiemByMaSangKien(sangKienId);
+        let { tbmucdich, tbnoidung, tbungdung, tbtrinhbay } = dtb[0];
+        let tbt = (tbmucdich + tbnoidung + tbungdung + tbtrinhbay) / 4;
+        console.log(tbt);
+        let maXL;
+        if (9 < tbt && tbt <= 10) {
+            maXL = 1;
+        }
+        if (8 < tbt && tbt <= 9) {
+            maXL = 2;
+        }
+        if (6 < tbt && tbt <= 8) {
+            maXL = 3;
+        }
+        if (5 <= tbt && tbt <= 6) {
+            maXL = 4;
+        }
+        if (tbt < 5) {
+            maXL = 5;
+        }
+        let checkDanhGiaByMaSangKien =
+            await danhGiaSKService.checkDanhGiaByMaSK(sangKienId);
+        let checkKhenThuong = await khenThuongService.checkKhenThuong(
+            sangKienId
+        );
+        if (checkDanhGiaByMaSangKien.length === 0) {
+            await danhGiaSKService.createDanhGiaSangKien(sangKienId, maXL);
+
+            let xepLoai = await xepLoaiService.getAllLoaiXepLoai();
+            let mucThuong;
+            console.log(xepLoai);
+            if (maXL === 1) {
+                mucThuong = xepLoai[0].mucthuong;
+            }
+            if (maXL === 2) {
+                mucThuong = xepLoai[1].mucthuong;
+            }
+            if (maXL === 3) {
+                mucThuong = xepLoai[2].mucthuong;
+            }
+            if (maXL === 4) {
+                mucThuong = xepLoai[3].mucthuong;
+            }
+            if (maXL === 5) {
+                mucThuong = xepLoai[4].mucthuong;
+            }
+            if (checkKhenThuong.length === 0) {
+                await khenThuongService.createKhenThuong(sangKienId, mucThuong);
+            } else {
+                await khenThuongService.updateKhenThuongByMaSK(
+                    sangKienId,
+                    mucThuong
+                );
+            }
+        } else {
+            let maxeploaicu = checkDanhGiaByMaSangKien[0].maxeploai;
+            await danhGiaSKService.editDanhGiaSangKien(
+                sangKienId,
+                maXL,
+                maxeploaicu
+            );
+            let checkKhenThuong = await khenThuongService.checkKhenThuong(
+                sangKienId
+            );
+            console.log('checkKhenthuong', checkKhenThuong);
+            let xepLoai = await xepLoaiService.getAllLoaiXepLoai();
+            let mucThuong;
+            console.log(xepLoai);
+            if (maXL === 1) {
+                mucThuong = xepLoai[0].mucthuong;
+            }
+            if (maXL === 2) {
+                mucThuong = xepLoai[1].mucthuong;
+            }
+            if (maXL === 3) {
+                mucThuong = xepLoai[2].mucthuong;
+            }
+            if (maXL === 4) {
+                mucThuong = xepLoai[3].mucthuong;
+            }
+            if (maXL === 5) {
+                mucThuong = xepLoai[4].mucthuong;
+            }
+            console.log('mucthuong', mucThuong);
+
+            if (checkKhenThuong.length === 0) {
+                await khenThuongService.createKhenThuong(sangKienId, mucThuong);
+            } else {
+                await khenThuongService.updateKhenThuongByMaSK(
+                    sangKienId,
+                    mucThuong
+                );
+            }
+        }
+    }
     return res.redirect(
         `/detail-sangkien?id=${sangKienId}&&alert=` +
             encodeURIComponent('suadiemthanhcong')

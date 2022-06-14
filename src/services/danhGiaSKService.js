@@ -28,6 +28,22 @@ let checkDanhGia = (maSangKien, maXepLoai) => {
         }
     });
 };
+
+//kiem tra danh gia ton tai chua bang masangkien
+let checkDanhGiaByMaSK = (maSangKien) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [check] = await connectDB.execute(
+                `SELECT * FROM danhgiasangkien WHERE masangkien = ? `,
+                [maSangKien]
+            );
+            resolve(check);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 // sua danh gia
 
 let editDanhGiaSangKien = (masangkien, maxeploaimoi, maxeploaicu) => {
@@ -48,4 +64,5 @@ module.exports = {
     createDanhGiaSangKien,
     editDanhGiaSangKien,
     checkDanhGia,
+    checkDanhGiaByMaSK,
 };
