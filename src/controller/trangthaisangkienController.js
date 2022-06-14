@@ -18,6 +18,8 @@ let uploadTrangthaisangkien = async (req, res) => {
     }
     await connectDB.execute('update trangthaisangkien set tentrangthai = ? , motatrangthai = ? where matrangthai = ?',
         [tentrangthai, motatrangthai, matrangthai]);
+    let hientai = moment().utcOffset('+0700').format();
+    await connectDB.execute('insert into hanhdongadmin(manhanvien,hanhdong,ngaygio) values (?,?,?)', [req.nhanVienId, 'Sửa trạng thái sáng kiến mã: ' + matrangthai, hientai])
     return res.redirect('/quanlytrangthaisangkien')
 }
 
