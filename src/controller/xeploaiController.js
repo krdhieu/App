@@ -1,4 +1,5 @@
 import connectDB from '../configs/connectDB';
+import moment from 'moment';
 
 let viewXeploai = async (req, res) => {
     const [rows, fields] = await connectDB.execute('SELECT * FROM `xeploai`');
@@ -22,6 +23,8 @@ let uploadXeploai = async (req, res) => {
         'update xeploai set tenxeploai = ?, motaxeploai = ? where maxeploai = ?',
         [tenxeploai, motaxeploai, maxeploai]
     );
+    let hientai = moment().utcOffset('+0700').format();
+    await connectDB.execute('insert into hanhdongadmin(manhanvien,hanhdong,ngaygio) values (?,?,?)', [req.nhanVienId, 'Chỉnh sửa xếp loại mã: ' + maxeploai, hientai])
     return res.redirect('/quanlyxeploai');
 };
 
