@@ -58,7 +58,11 @@
                     >
                 </li>
                 <li>
-                    <a class="dropdown-item text-danger" href="/logout">
+                    <a
+                        class="dropdown-item text-danger"
+                        href="/logout"
+                        onclick="del()"
+                    >
                         <i class="fa-solid fa-arrow-right-from-bracket small">
                         </i>
                         <span>Đăng xuất</span>
@@ -160,3 +164,8 @@
         </div>
     </div>
 </div>
+<script defer>
+    function del(e) {
+        sessionStorage.clear();
+    }
+</script>

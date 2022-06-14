@@ -77,7 +77,10 @@ let editHDKH = async (req, res) => {
         return res.send('missing required parameter');
     }
     await hoiDongKhoaHocService.editHDKH(id, nhiemVu, ngayThanhLap);
-
+    let nhanVienId = req.nhanVienId;
+    let hanhDong = `Sửa thông tin Hội đồng có mã: ${id}`;
+    let hientai = moment().utcOffset('+0700').format();
+    await lichSuHanhDongService.themLichSu(nhanVienId, hanhDong, hientai);
     return res.redirect(
         `/get-edit-hdkh?id=${id}&alert=` + encodeURIComponent('1')
     );

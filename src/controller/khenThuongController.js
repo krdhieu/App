@@ -23,10 +23,18 @@ let createUpdateKhenThuong = async (req, res) => {
     let checkKhenThuong = await khenThuongService.checkKhenThuong(maSangKien);
     if (checkKhenThuong.length === 0) {
         await khenThuongService.createKhenThuong(maSangKien, mucThuongMoi);
+        let nhanVienId = req.nhanVienId;
+        let hanhDong = `Thêm khen thưởng sáng kiến ${maSangKien}`;
+        let hientai = moment().utcOffset('+0700').format();
+        await lichSuHanhDongService.themLichSu(nhanVienId, hanhDong, hientai);
         return res.redirect(
             '/get-khen-thuong?alert=' + encodeURIComponent('1')
         );
     }
+    let nhanVienId = req.nhanVienId;
+    let hanhDong = `Sửa khen thưởng sáng kiến ${maSangKien}`;
+    let hientai = moment().utcOffset('+0700').format();
+    await lichSuHanhDongService.themLichSu(nhanVienId, hanhDong, hientai);
     await khenThuongService.updateKhenThuong(maMucThuongHienTai, mucThuongMoi);
 
     return res.redirect('/get-khen-thuong?alert=' + encodeURIComponent('1'));
