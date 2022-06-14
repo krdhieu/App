@@ -2,28 +2,32 @@ import req from 'express/lib/request';
 import connectDB from '../configs/connectDB';
 import jwt from 'jsonwebtoken';
 import chuanhoachuoi from '../services/chuanhoachuoi';
+import moment from 'moment';
 
 let viewNhanvien = async (req, res) => {
     let search = '';
     let { searchPhongban, searchChucvu } = req.query;
+    let { alert } = req.query;
     if (req.query.search != null) {
         search = req.query.search;
     }
     const [phongban, fields_phongban] = await connectDB.execute('SELECT * FROM phongban ');
-    const [chucvu, fields_chucvu] = await connectDB.execute('SELECT * FROM chucvu ');
+    const [chekgiamdoc] = await connectDB.execute('SELECT count(*) as soluong from nhanvien where machucvu = 1');
+    const [chekphogiamdoc] = await connectDB.execute('SELECT count(*) as soluong from nhanvien where machucvu = 2');
+    const [chucvu] = await connectDB.execute('SELECT * FROM chucvu');
     if (!searchPhongban && !searchChucvu) {
         const [rows, fields] = await connectDB.execute(`SELECT * FROM nhanvien 
         INNER JOIN phongban On nhanvien.maphongban = phongban.maphongban 
         INNER JOIN chucvu ON nhanvien.machucvu = chucvu.machucvu where tennhanvien LIKE ? `,
             ['%' + search + '%']);
-        return res.render('shownhanvien.ejs', { dataNhanvien: rows, dataPhongban: phongban, dataChucvu: chucvu });
+        return res.render('shownhanvien.ejs', { dataNhanvien: rows, dataPhongban: phongban, dataChucvu: chucvu, alert: alert, chekgiamdoc: chekgiamdoc[0], chekphogiamdoc: chekphogiamdoc[0] });
     }
     if (searchPhongban && searchChucvu) {
         const [rows, fields] = await connectDB.execute(`SELECT * FROM nhanvien 
         INNER JOIN phongban On nhanvien.maphongban = phongban.maphongban 
         INNER JOIN chucvu ON nhanvien.machucvu = chucvu.machucvu where nhanvien.maphongban = ? and  nhanvien.machucvu = ? and  tennhanvien LIKE ? `,
             [searchPhongban, searchChucvu, '%' + search + '%']);
-        return res.render('shownhanvien.ejs', { dataNhanvien: rows, dataPhongban: phongban, dataChucvu: chucvu });
+        return res.render('shownhanvien.ejs', { dataNhanvien: rows, dataPhongban: phongban, dataChucvu: chucvu, alert: alert, chekgiamdoc: chekgiamdoc[0], chekphogiamdoc: chekphogiamdoc[0] });
     }
     else {
         if (searchPhongban) {
@@ -31,14 +35,14 @@ let viewNhanvien = async (req, res) => {
             INNER JOIN phongban On nhanvien.maphongban = phongban.maphongban 
             INNER JOIN chucvu ON nhanvien.machucvu = chucvu.machucvu where nhanvien.maphongban = ? and tennhanvien LIKE ? `,
                 [searchPhongban, '%' + search + '%']);
-            return res.render('shownhanvien.ejs', { dataNhanvien: rows, dataPhongban: phongban, dataChucvu: chucvu });
+            return res.render('shownhanvien.ejs', { dataNhanvien: rows, dataPhongban: phongban, dataChucvu: chucvu, alert: alert, chekgiamdoc: chekgiamdoc[0], chekphogiamdoc: chekphogiamdoc[0] });
         }
         if (searchChucvu) {
             const [rows, fields] = await connectDB.execute(`SELECT * FROM nhanvien 
             INNER JOIN phongban On nhanvien.maphongban = phongban.maphongban 
             INNER JOIN chucvu ON nhanvien.machucvu = chucvu.machucvu where nhanvien.machucvu = ? and tennhanvien LIKE ? `,
                 [searchChucvu, '%' + search + '%']);
-            return res.render('shownhanvien.ejs', { dataNhanvien: rows, dataPhongban: phongban, dataChucvu: chucvu });
+            return res.render('shownhanvien.ejs', { dataNhanvien: rows, dataPhongban: phongban, dataChucvu: chucvu, alert: alert, chekgiamdoc: chekgiamdoc[0], chekphogiamdoc: chekphogiamdoc[0] });
         }
     }
 
@@ -72,16 +76,22 @@ let addNhanvien = async (req, res) => {
     }
     tennhanvien = chuanhoachuoi.chuanhoaten(tennhanvien);
     trinhdohocvan = chuanhoachuoi.chuanhoa(trinhdohocvan);
+    let checkngaysinh = moment(ngaysinh).format('YYYYMMDD');
+    let checkngayvaolam = moment(ngayvaolam).format('YYYYMMDD');
+    if (checkngayvaolam - checkngaysinh < 180000) {
+        return res.redirect('/quanlynhanvien?alert=' + encodeURIComponent('2'));
+    }
     for (let i = 0; i < sdt.length; i++) {
         if (sdt[i] >= '0' && sdt[i] <= '9') {
         }
         else {
-            return res.status(200).send('<p>sai dinh dang dien thoai <a href="/quanlynhanvien">Trở về</a></p>');
+            return res.redirect('/quanlynhanvien?alert=' + encodeURIComponent('1'));
+            //return res.status(200).send('<p>sai dinh dang dien thoai <a href="/quanlynhanvien">Trở về</a></p>');
         }
     }
     await connectDB.execute('INSERT INTO nhanvien(maphongban, machucvu, trinhdohocvan, tennhanvien, gioitinh, ngaysinh, ngayvaolam, sdt)  VALUES (?,?,?,?,?,?,?,? )',
         [maphongban, machucvu, trinhdohocvan, tennhanvien, gioitinh, ngaysinh, ngayvaolam, sdt]);
-    return res.redirect('/quanlynhanvien')
+    return res.redirect('/quanlynhanvien?alert=' + encodeURIComponent('3'));
 }
 let nghiviecNhanvien = async (req, res) => {
     let { manhanvien } = req.query;

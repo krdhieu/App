@@ -38,11 +38,12 @@
                                         <div class="form-group">
                                             <!-- Tên sáng kiến -->
                                             <label>Tên sáng kiến</label>
-                                            <input type="text" name="tensangkien" class="form-control" value=""
-                                                required>
+                                            <input type="text" name="tensangkien" id="tensangkien" class="form-control"
+                                                value="" required>
                                             <!-- muctieu  -->
                                             <label>Mục tiêu</label>
-                                            <input type="text" name="muctieu" class="form-control" value="" required>
+                                            <input type="text" name="muctieu" id="muctieu" class="form-control" value=""
+                                                required>
                                             <!-- noidung  -->
                                             <label>Nội dung</label>
                                             <br>
@@ -51,10 +52,12 @@
                                             <br>
                                             <!-- loiich  -->
                                             <label>Lợi ích</label>
-                                            <input type="text" name="loiich" class="form-control" value="" required>
+                                            <input type="text" name="loiich" id="loiich" class="form-control" value=""
+                                                required>
                                             <!-- doituong  -->
                                             <label>Đối tượng</label>
-                                            <input type="text" name="doituong" class="form-control" value="" required>
+                                            <input type="text" name="doituong" id="doituong" class="form-control"
+                                                value="" required>
                                         </div>
                                         <div class="nguoithamgia_2" id="troly">
                                             <label>Mã trợ lý</label>
@@ -68,13 +71,38 @@
                                         </div>
                                         <br>
                                         <%if(typeof(alert)!=='undefined') { if(alert==='1' ){%>
-                                            <p style="color: red;"><strong>Warning!</strong> Không tồn tại nhân viên</p>
+                                            <p style="color: red;"><strong>Warning!</strong> Số điện thoại không hợp lệ
+                                            </p>
                                             <%} else {%>
                                                 <p style="color: red;"><strong>Warning!</strong> Nhân viên đã trong dự
                                                     án khác</p>
                                                 <% }}%>
                                                     <!-- Submit -->
                                                     <button type=" submit" class="btn btn-primary">Submit</button>
+                                                    <script>
+                                                        let tensangkien = document.getElementById('tensangkien');
+                                                        let muctieu = document.getElementById('muctieu');
+                                                        let noidung = document.getElementById('noidung');
+                                                        let loiich = document.getElementById('loiich');
+                                                        let doituong = document.getElementById('doituong');
+                                                        tensangkien.value = sessionStorage.getItem('tensangkien');
+                                                        muctieu.value = sessionStorage.getItem('muctieu');
+                                                        noidung.value = sessionStorage.getItem('noidung');
+                                                        loiich.value = sessionStorage.getItem('loiich');
+                                                        doituong.value = sessionStorage.getItem('doituong');
+                                                        tensangkien.addEventListener('change', updateSession);
+                                                        muctieu.addEventListener('change', updateSession);
+                                                        noidung.addEventListener('change', updateSession);
+                                                        loiich.addEventListener('change', updateSession);
+                                                        doituong.addEventListener('change', updateSession);
+                                                        function updateSession() {
+                                                            sessionStorage.setItem('tensangkien', tensangkien.value);
+                                                            sessionStorage.setItem('muctieu', muctieu.value);
+                                                            sessionStorage.setItem('noidung', noidung.value);
+                                                            sessionStorage.setItem('loiich', loiich.value);
+                                                            sessionStorage.setItem('doituong', doituong.value);
+                                                        }
+                                                    </script>
                                     </form>
                                 </div>
                                 <div class="col-sm-4">

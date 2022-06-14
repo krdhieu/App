@@ -32,27 +32,32 @@
                         <label>Phòng ban</label>
                         <select name="maphongban" class="form-control" required>
                             <% for (let i=0; i<dataPhongban.length;i++){ %>
-                                <option value="<%=dataPhongban[i].maphongban%>">
-                                    <%=dataPhongban[i].tenphongban%>
-                                </option>
-                                <% } %>
+                                <%if (chekgiamdoc.soluong>0 && chekphogiamdoc.soluong>0 &&
+                                    dataPhongban[i].maphongban==1){continue;} %>
+                                    <option value="<%=dataPhongban[i].maphongban%>">
+                                        <%=dataPhongban[i].tenphongban%>
+                                    </option>
+                                    <% } %>
                         </select>
                         <!-- chức vụ -->
                         <label>Chức vụ</label>
                         <select name="machucvu" class="form-control" required>
                             <% for (let i=0; i<dataChucvu.length;i++){ %>
-                                <option value="<%=dataChucvu[i].machucvu%>">
-                                    <%=dataChucvu[i].tenchucvu%>
-                                </option>
-                                <% } %>
+                                <% if (dataChucvu[i].machucvu==1) {if (chekgiamdoc.soluong>0){continue;}} %>
+                                    <%if (dataChucvu[i].machucvu==2) {if (chekphogiamdoc.soluong>0){continue;}} %>
+                                        <option value="<%=dataChucvu[i].machucvu%>">
+                                            <%=dataChucvu[i].tenchucvu%>
+                                        </option>
+                                        <% } %>
                         </select>
                         <br>
                         <!-- Trình độ  -->
                         <label>Trình độ học vấn</label>
-                        <input type="text" name="trinhdohocvan" class="form-control" value="" required>
+                        <input type="text" name="trinhdohocvan" id="trinhdohocvan" class="form-control" value=""
+                            required>
                         <!-- Tên nhân viên  -->
                         <label>Tên nhân viên</label>
-                        <input type="text" name="tennhanvien" class="form-control" value="" required>
+                        <input type="text" name="tennhanvien" id="tennhanvien" class="form-control" value="" required>
                         <!-- Giới tính  -->
                         <label>Giới tính</label>
                         <select name="gioitinh" class="form-control" required>
@@ -61,26 +66,59 @@
                         </select>
                         <!-- Năm sinh  -->
                         <label>Ngày sinh</label>
-                        <input type="date" name="ngaysinh" class="form-control" min="1950-01-01" max="2006-01-01"
-                            value="" required>
+                        <input type="date" name="ngaysinh" id="ngaysinh" class="form-control" min="1950-01-01"
+                            max="2006-01-01" value="" required>
                         <!-- Ngày vào làm  -->
                         <label>Ngày vào làm</label>
                         <% let currentDate=moment().utcOffset('+0700').format('YYYY-MM-DD'); %>
-                            <input type="date" name="ngayvaolam" class="form-control" min="2000-01-01"
+                            <input type="date" name="ngayvaolam" id="ngayvaolam" class="form-control" min="2000-01-01"
                                 max="<%= currentDate %>" value="" required>
                             <!-- Số điện thoại  -->
                             <label>Số điện thoại</label>
-                            <input type="text" name="sdt" class="form-control" value="" maxlength="10" minlength="10"
-                                required>
+                            <input type="text" name="sdt" id="sdt" class="form-control" value="" maxlength="10"
+                                minlength="10" required>
                             <!-- Submit -->
-                            <br>
-                            <button type=" submit" class="btn btn-primary">Xác nhận</button>
+                            <%if(typeof(alert)!=='undefined') { if(alert==='1' ){%>
+                                <p style="color: red;"><strong>Warning!</strong> Sai định dạng số điện thoại</p>
+                                <!-- <script>window.onload = myfunc()</script> -->
+                                <%} if(alert==='2' ) {%>
+                                    <p style="color: red;"><strong>Warning!</strong>Ngày sinh hoặc ngày vào làm có lỗi
+                                        (nhân viên vào làm lớn hơn 18 tuổi)
+                                    </p>
+                                    <% }if(alert==='3' ) {%>
+                                        <script>sessionStorage.clear();</script>
+                                        <%}}%>
+                                            <br>
+                                            <button type=" submit" class="btn btn-primary">Xác nhận</button>
+                                            <script>
+                                                let trinhdohocvan = document.getElementById('trinhdohocvan');
+                                                let tennhanvien = document.getElementById('tennhanvien');
+                                                let ngaysinh = document.getElementById('ngaysinh');
+                                                let ngayvaolam = document.getElementById('ngayvaolam');
+                                                let sdt = document.getElementById('sdt');
+                                                trinhdohocvan.value = sessionStorage.getItem('trinhdohocvan');
+                                                tennhanvien.value = sessionStorage.getItem('tennhanvien');
+                                                ngaysinh.value = sessionStorage.getItem('ngaysinh');
+                                                ngayvaolam.value = sessionStorage.getItem('ngayvaolam');
+                                                sdt.value = sessionStorage.getItem('sdt');
+                                                trinhdohocvan.addEventListener('change', updateSessionNhanvien);
+                                                tennhanvien.addEventListener('change', updateSessionNhanvien);
+                                                ngaysinh.addEventListener('change', updateSessionNhanvien);
+                                                ngayvaolam.addEventListener('change', updateSessionNhanvien);
+                                                sdt.addEventListener('change', updateSessionNhanvien);
+                                                function updateSessionNhanvien() {
+                                                    sessionStorage.setItem('trinhdohocvan', trinhdohocvan.value);
+                                                    sessionStorage.setItem('tennhanvien', tennhanvien.value);
+                                                    sessionStorage.setItem('ngaysinh', ngaysinh.value);
+                                                    sessionStorage.setItem('ngayvaolam', ngayvaolam.value);
+                                                    sessionStorage.setItem('sdt', sdt.value);
+                                                }
+                                            </script>
                     </div>
                 </form>
             </div>
         </div>
         <script language="javascript">
-
             function myfunc() {
                 if (document.getElementById("themmoinhanvien").style.display == 'none') {
                     document.getElementById("themmoinhanvien").style.display = 'block';
