@@ -27,7 +27,7 @@ let uploadXeploai = async (req, res) => {
         [tenxeploai, mucthuong, motaxeploai, maxeploai]
     );
     let hientai = moment().utcOffset('+0700').format();
-    await connectDB.execute('insert into hanhdongadmin(manhanvien,hanhdong,ngaygio) values (?,?,?)', [req.nhanVienId, 'Chỉnh sửa xếp loại mã: ' + maxeploai, hientai])
+    await connectDB.execute('insert into lichsuhanhdong(manhanvien,hanhdong,ngaygio) values (?,?,?)', [req.nhanVienId, 'Chỉnh sửa xếp loại mã: ' + maxeploai, hientai])
     return res.redirect('/quanlyxeploai');
 };
 

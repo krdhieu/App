@@ -92,13 +92,15 @@ let addNhanvien = async (req, res) => {
     let [themnhanvien] = await connectDB.execute('INSERT INTO nhanvien(maphongban, machucvu, trinhdohocvan, tennhanvien, gioitinh, ngaysinh, ngayvaolam, sdt)  VALUES (?,?,?,?,?,?,?,? )',
         [maphongban, machucvu, trinhdohocvan, tennhanvien, gioitinh, ngaysinh, ngayvaolam, sdt]);
     let hientai = moment().utcOffset('+0700').format();
-    await connectDB.execute('insert into hanhdongadmin(manhanvien,hanhdong,ngaygio) values (?,?,?)', [req.nhanVienId, 'Thêm nhân viên mới mã: ' + themnhanvien.insertId, hientai])
+    await connectDB.execute('insert into lichsuhanhdong(manhanvien,hanhdong,ngaygio) values (?,?,?)', [req.nhanVienId, 'Thêm nhân viên mới mã: ' + themnhanvien.insertId, hientai])
     return res.redirect('/quanlynhanvien?alert=' + encodeURIComponent('3'));
 }
 let nghiviecNhanvien = async (req, res) => {
     let { manhanvien } = req.query;
     await connectDB.execute('update nhanvien set trangthai = ? where manhanvien = ?', [0, manhanvien]);
     await connectDB.execute('update taikhoan set maquyen = ? where manhanvien = ?', [5, manhanvien]);
+    let hientai = moment().utcOffset('+0700').format();
+    await connectDB.execute('insert into lichsuhanhdong(manhanvien,hanhdong,ngaygio) values (?,?,?)', [req.nhanVienId, 'Sửa thôi việc nhân viên có mã: ' + manhanvien, hientai])
     return res.redirect('/quanlynhanvien');
 }
 
