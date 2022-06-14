@@ -3,6 +3,8 @@ import quyenService from '../services/quyenService';
 import taikhoanService from '../services/taikhoanService';
 import bcrypt from 'bcryptjs';
 import connectDB from '../configs/connectDB';
+import moment from 'moment';
+import lichSuHanhDongService from '../services/lichSuHanhDongService';
 
 // hien thi trang them tai khoan
 let getCreateAccount = async (req, res) => {
@@ -232,6 +234,10 @@ let changePassword = async (req, res) => {
 let deleteAccount = async (req, res) => {
     let { email } = req.body;
     await taikhoanService.deleteAccount(email);
+    let nhanVienId = req.nhanVienId;
+    let hanhDong = `Xóa tài khoản ${email}`;
+    let hientai = moment().utcOffset('+0700').format();
+    await lichSuHanhDongService.themLichSu(nhanVienId, hanhDong, hientai);
     return res.redirect(
         '/manage-account?alert=' + encodeURIComponent('xoataikhoanthanhcong')
     );

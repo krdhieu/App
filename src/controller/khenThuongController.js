@@ -1,6 +1,8 @@
 import sangKienService from '../services/sangKienService';
 import khenThuongService from '../services/khenThuongService';
 import dotSangKienService from '../services/dotSangKienService';
+import lichSuHanhDongService from '../services/lichSuHanhDongService';
+import moment from 'moment';
 let getKhenThuong = async (req, res) => {
     let { alert } = req.query;
     let sangKien =
@@ -59,6 +61,10 @@ let setTrangThaiHoanThanhTatCaSK = async (req, res) => {
     console.log(hoanThanh);
     if (hoanThanh === '1') {
         await khenThuongService.setTrangThaiHoanThanhTatCaSK();
+        let nhanVienId = req.nhanVienId;
+        let hanhDong = `Hoàn thành khen thưởng tất cả sáng kiến`;
+        let hientai = moment().utcOffset('+0700').format();
+        await lichSuHanhDongService.themLichSu(nhanVienId, hanhDong, hientai);
         return res.redirect('/get-khen-thuong');
     }
     return res.redirect('/get-khen-thuong');

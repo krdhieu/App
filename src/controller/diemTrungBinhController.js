@@ -2,7 +2,6 @@ import sangKienService from '../services/sangKienService';
 import diemTrungBinhService from '../services/diemTrungBinhService';
 import xepLoaiService from '../services/xepLoaiService';
 import chamDiemService from '../services/chamDiemService';
-import { all } from 'express/lib/application';
 /// hien thi diem cua nhung sang kien co trang thai dang thuc hien - trang xep loai sang kien
 let getDiemByMaSangKien = async (req, res) => {
     let sangKienDangThucHien =
