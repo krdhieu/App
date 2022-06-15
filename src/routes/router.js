@@ -15,6 +15,7 @@ import nhanXetController from '../controller/nhanXetController';
 import diemTrungBinhController from '../controller/diemTrungBinhController';
 import danhGiaSangKienController from '../controller/danhGiaSangKienController';
 import khenThuongController from '../controller/khenThuongController';
+import lichSuHanhDongController from '../controller/lichSuHanhDongController';
 import jwt from 'jsonwebtoken';
 import path from 'path';
 import multer from 'multer';
@@ -582,6 +583,17 @@ const initRouter = (app) => {
         verifyAccessToken.verifyAccessTokenAdmin,
         danhGiaSangKienController.tatCaXepLoai
     );
+    router.get(
+        '/lichsuhanhdong',
+        verifyAccessToken.verifyAccessTokenAdmin,
+        lichSuHanhDongController.hienThiToanBoLichSu
+    );
+    router.post(
+        '/getActionFromTo',
+        verifyAccessToken.verifyAccessTokenAdmin,
+        lichSuHanhDongController.timKiemHanhDongTuNgayDenNgay
+    );
+
     return app.use('/', router);
 };
 
