@@ -2,6 +2,9 @@ import danhGiaSK from '../services/danhGiaSKService';
 import sangKienService from '../services/sangKienService';
 import diemTrungBinhService from '../services/diemTrungBinhService';
 import dotSangKienService from '../services/dotSangKienService';
+import lichSuHanhDongService from '../services/lichSuHanhDongService';
+import moment from 'moment';
+
 // xep loai|| sua xep loai sang kien
 let createUpdateDanhGiaSK = async (req, res) => {
     let { maSangKien, maXepLoaiMoi, maXepLoaiCu } = req.body;
@@ -20,11 +23,19 @@ let createUpdateDanhGiaSK = async (req, res) => {
             maXepLoaiMoi,
             maXepLoaiCu
         );
+        let nhanVienId = req.nhanVienId;
+        let hanhDong = `Thay đổi xếp loại của sáng kiến ${maSangKien}`;
+        let hientai = moment().utcOffset('+0700').format();
+        await lichSuHanhDongService.themLichSu(nhanVienId, hanhDong, hientai);
         return res.redirect(
             '/danhgia-sangkien?alert=' + encodeURIComponent('2')
         );
     }
     await danhGiaSK.createDanhGiaSangKien(maSangKien, maXepLoaiMoi);
+    let nhanVienId = req.nhanVienId;
+    let hanhDong = `Thay đổi xếp loại của sáng kiến ${maSangKien}`;
+    let hientai = moment().utcOffset('+0700').format();
+    await lichSuHanhDongService.themLichSu(nhanVienId, hanhDong, hientai);
     return res.redirect('/danhgia-sangkien?alert=' + encodeURIComponent('2'));
 };
 

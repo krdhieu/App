@@ -58,7 +58,11 @@
                     >
                 </li>
                 <li>
-                    <a class="dropdown-item text-danger" href="/logout">
+                    <a
+                        class="dropdown-item text-danger"
+                        href="/logout"
+                        onclick="del()"
+                    >
                         <i class="fa-solid fa-arrow-right-from-bracket small">
                         </i>
                         <span>Đăng xuất</span>
@@ -157,6 +161,14 @@
             <a href="/get-all-khenthuong" class="btn btn-dark btn-sm text-start"
                 >Tất Cả Khen Thưởng</a
             >
+            <a href="/lichsuhanhdong" class="btn btn-dark btn-sm text-start"
+                >Lịch sử hành động</a
+            >
         </div>
     </div>
 </div>
+<script defer>
+    function del(e) {
+        sessionStorage.clear();
+    }
+</script>

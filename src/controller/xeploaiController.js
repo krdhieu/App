@@ -27,19 +27,12 @@ let uploadXeploai = async (req, res) => {
         [tenxeploai, mucthuong, motaxeploai, maxeploai]
     );
     let hientai = moment().utcOffset('+0700').format();
-    await connectDB.execute('insert into lichsuhanhdong(manhanvien,hanhdong,ngaygio) values (?,?,?)', [req.nhanVienId, 'Chỉnh sửa xếp loại mã: ' + maxeploai, hientai])
+    await connectDB.execute(
+        'insert into lichsuhanhdong(manhanvien,hanhdong,ngaygio) values (?,?,?)',
+        [req.nhanVienId, 'Chỉnh sửa xếp loại mã: ' + maxeploai, hientai]
+    );
     return res.redirect('/quanlyxeploai');
 };
-
-// let addXeploai = async (req, res) => {
-//     let { tenxeploai, motaxeploai } = req.body;
-//     if (!tenxeploai) {
-//         res.redirect('/quanlyxeploai');
-//     }
-//     await connectDB.execute('INSERT INTO xeploai(tenxeploai, motaxeploai)  VALUES (? ,? )',
-//         [tenxeploai, motaxeploai]);
-//     return res.redirect('/quanlyxeploai')
-// }
 
 module.exports = {
     viewXeploai,

@@ -126,7 +126,7 @@
                                 <option value="<%=allNhanVien[i].manhanvien%>"><%=allNhanVien[i].manhanvien%>-<%=allNhanVien[i].tennhanvien%></option>
                             <%}%>
                         </select> -->
-                        <input type="text" name="idNhanVien"  class="form-control" required>
+                        <input type="text" name="idNhanVien" id="manhanvien"  class="form-control" required>
                     </div>
                 </div>
 
@@ -136,6 +136,25 @@
                 </button>
             </form>
         </div>
-        
+        <script>
+            let email = document.getElementById('email');
+            let password = document.getElementById('password');
+            let selection = document.getElementById('inputState');
+            let manhanvien = document.getElementById('manhanvien');
+            email.value = sessionStorage.getItem('email');
+            password.value = sessionStorage.getItem('password');
+            selection.value = sessionStorage.getItem('inputState');
+            manhanvien.value = sessionStorage.getItem('manhanvien');
+            email.addEventListener('change', updateSession);
+            password.addEventListener('change', updateSession);
+            selection.addEventListener('change', updateSession);
+            manhanvien.addEventListener('change', updateSession);
+            function updateSession() {
+                sessionStorage.setItem('email', email.value);
+                sessionStorage.setItem('password', password.value);
+                sessionStorage.setItem('selection', selection.value);
+                sessionStorage.setItem('manhanvien', manhanvien.value);
+            }
+        </script>
     </body>
 </html>

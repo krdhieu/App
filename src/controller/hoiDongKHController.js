@@ -2,6 +2,7 @@ import moment from 'moment';
 import hoiDongKhoaHocService from '../services/hoiDongKhoaHocService';
 import thanhVienHDKHService from '../services/thanhVienHDKHService';
 import chuVuHDKH from '../services/chucVuHDKHService';
+import lichSuHanhDongService from '../services/lichSuHanhDongService';
 // trang tao moi hdkh
 const getCreateHDKH = (req, res) => {
     let { alert } = req.query;
@@ -76,7 +77,10 @@ let editHDKH = async (req, res) => {
         return res.send('missing required parameter');
     }
     await hoiDongKhoaHocService.editHDKH(id, nhiemVu, ngayThanhLap);
-
+    let nhanVienId = req.nhanVienId;
+    let hanhDong = `Sửa thông tin Hội đồng có mã: ${id}`;
+    let hientai = moment().utcOffset('+0700').format();
+    await lichSuHanhDongService.themLichSu(nhanVienId, hanhDong, hientai);
     return res.redirect(
         `/get-edit-hdkh?id=${id}&alert=` + encodeURIComponent('1')
     );
@@ -88,10 +92,12 @@ let changeStateHDKH = async (req, res) => {
     if (!id) {
         return res.send('missing id');
     }
-
     let currentDate = moment().utcOffset('+0700').format('YYYY-MM-DD');
-
     await hoiDongKhoaHocService.changeStateHDKH(currentDate, id);
+    let nhanVienId = req.nhanVienId;
+    let hanhDong = `Kết thúc nhiệm kỳ hội đồng có mã: ${id}`;
+    let hientai = moment().utcOffset('+0700').format();
+    await lichSuHanhDongService.themLichSu(nhanVienId, hanhDong, hientai);
     return res.redirect('/get-hdkh');
 };
 
