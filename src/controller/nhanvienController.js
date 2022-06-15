@@ -1,8 +1,10 @@
 import req from 'express/lib/request';
 import connectDB from '../configs/connectDB';
 import jwt from 'jsonwebtoken';
+import multer from 'multer';
 import chuanhoachuoi from '../services/chuanhoachuoi';
 import moment from 'moment';
+import xlsx from 'xlsx';
 
 let viewNhanvien = async (req, res) => {
     let search = '';
@@ -135,6 +137,26 @@ let suaNhanvienuser = async (req, res) => {
     res.render('suanhanvien-user.ejs', { dataNhanvien: nhanvien[0] });
 }
 
+let addMultiNhanvien = async (req, res) => {
+
+    const file = xlsx.readFile('src/addnhanvien/nhanvien.xlsx');
+    const sheets = file.SheetNames;
+    const data = [];
+    const sheetData = xlsx.utils.sheet_to_json(file.Sheets[sheets])
+
+    sheetData.forEach(async (a) => {
+        data.push(a);
+        await connectDB.execute(`insert into nhanvien
+            (maphongban,machucvu,tennhanvien,trinhdohocvan,gioitinh,ngaysinh,sdt,ngayvaolam,trangthai) values (?,?,?,?,?,?,?,?,?)
+           `, [a.maphongban, a.machucvu, a.tennhanvien, a.trinhdohocvan, a.gioitinh, a.ngaysinh, a.sdt, a.ngayvaolam, a.trangthai])
+
+
+    });
+
+
+    return res.send('thanhcong');
+}
 module.exports = {
-    viewNhanvien, editNhanvien, uploadNhanvien, addNhanvien, nghiviecNhanvien, thongtinNhanvien, uploadNhanvienuser, suaNhanvienuser
+    viewNhanvien, editNhanvien, uploadNhanvien, addNhanvien, nghiviecNhanvien, thongtinNhanvien, uploadNhanvienuser, suaNhanvienuser,
+    addMultiNhanvien
 }

@@ -35,7 +35,6 @@ const storage = multer.diskStorage({
     filename: async function (req, file, cb) {
         const access_token = req.cookies.access_token.split(' ')[1];
         let payLoad = jwt.verify(access_token, process.env.JWT_ACCESS_KEY);
-
         let [sangkien] = await connectDB.execute(
             'SELECT * FROM `sangkien` INNER JOIN nguoithamgia ON sangkien.masangkien = nguoithamgia.masangkien WHERE manhanvien = ? and matrangthai = 2',
             [payLoad.nhanVienId]
@@ -43,21 +42,43 @@ const storage = multer.diskStorage({
         cb(
             null,
             'sangkien-' +
-                sangkien[0].masangkien +
-                path.extname(file.originalname)
+            sangkien[0].masangkien +
+            path.extname(file.originalname)
+        );
+    },
+});
+const storage2 = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, appRoot + '/src/addnhanvien');
+    },
+
+    filename: async function (req, file, cb) {
+        cb(
+            null,
+            'nhanvien' +
+            path.extname(file.originalname)
         );
     },
 });
 // check duoi file
 const Filter = function (req, file, cb) {
-    // Accept file only
+    //Accept file only
     if (!file.originalname.match(/\.(PDF|pdf)$/)) {
         req.fileValidationError = 'Only PDF files are allowed!';
         return cb(new Error('Only PDF files are allowed!'), false);
     }
     cb(null, true);
 };
+const Filter2 = function (req, file, cb) {
+    //Accept file only
+    if (!file.originalname.match(/\.(xlsx)$/)) {
+        req.fileValidationError = 'Only xlsx files are allowed!';
+        return cb(new Error('Only PDF files are allowed!'), false);
+    }
+    cb(null, true);
+};
 let upload = multer({ storage: storage, fileFilter: Filter });
+let upload2 = multer({ storage: storage2, fileFilter: Filter2 });
 const initRouter = (app) => {
     //phong ban
     router.get(
@@ -196,6 +217,13 @@ const initRouter = (app) => {
         '/addnhanvien',
         verifyAccessToken.verifyAccessTokenAdmin,
         nhanvienController.addNhanvien
+    );
+    // theem nhieeuf nhan vien
+    router.post(
+        '/addnhieunhanvien',
+        verifyAccessToken.verifyAccessTokenAdmin,
+        upload2.single('profile_file'),
+        nhanvienController.addMultiNhanvien
     );
     // router.get(
     //     '/quanlynhanvien',
