@@ -116,13 +116,14 @@
                                             </script>
                     </div>
                 </form>
+                <div class="addnhieunhanvien mt-4">
+                    <form action="/addnhieunhanvien" method="post" enctype="multipart/form-data">
+                        <input type="file" name="profile_file" />
+                        <button type="submit" class="btn btn-primary">Thêm danh sách nhân viên</button>
+                    </form>
+                </div>
             </div>
-            <div class="addnhieunhanvien">
-                <form action="/addnhieunhanvien" method="post" enctype="multipart/form-data">
-                    <input type="file" name="profile_file" />
-                    <button type="submit" class="btn btn-primary">Thên nhiều nhân viên</button>
-                </form>
-            </div>
+            
         </div>
         <script language="javascript">
             function myfunc() {
